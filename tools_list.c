@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/24 09:38:02 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:14:29 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,23 @@ void    ft_exit(char **cmd)
 	int status;
 
 	flag = 0;
-	if (count_arrays(cmd) > 2)
-	{
-		ft_putstr_fd("exit: too many arguments\n", 2);
-		return ;
-	}
-	else if (count_arrays(cmd) == 2)
+	status = 0;
+	ft_putstr_fd("exit\n", 2);
+	if (count_arrays(cmd) >= 2)
 	{
 		status = atoi_(cmd[1], &flag);
 		if (flag == 1)
 		{
-			printf("%s: numeric argument required\n", cmd[1]);
+			printf("mini-shell: exit: %s: numeric argument required\n", cmd[1]);
 			exit(255);
 		}
-		exit(status);   
+		else if (count_arrays(cmd) > 2)
+		{
+			ft_putstr_fd("mini-shell: exit: too many arguments\n", 2);
+			return ;
+		}
+		exit(status);
 	}
-	exit(0);
+	else
+		exit(status);
 }
