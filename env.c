@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/22 18:05:15 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/23 14:30:52 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,32 @@ char *get_path(char *cmd)
 		if (access(tmp, X_OK) == 0)
 			break ;
 		free(tmp);
+		tmp = NULL;
 		i++;
 	}
 	free(path);
 	free_arrays(full_path);
 	return (tmp);
+}
+
+bool	is_builtin(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd)
+		return (false);
+	while (i < 4)
+	{
+		if (!ft_strncmp(cmd, BLT_CMDS[i], ft_strlen(cmd)))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+void	handle_blt(char **cmd)
+{
+	if (!ft_strcmp(cmd[0], BLT_CMDS[3]))
+		ft_exit(cmd);
 }
