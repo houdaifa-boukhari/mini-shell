@@ -1,6 +1,6 @@
 NAME = mini-shell
 HEADER = mini-shelll.h
-SRC = mini_shell.c env.c execution.c tools_list.c
+SRC = mini_shell.c env.c execution.c tools_list.c utilise_blt.c
 OBJS = $(SRC:.c=.o)
 CFLAGS =
 LIBS = -L./libft -lft -lreadline

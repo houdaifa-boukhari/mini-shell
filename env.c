@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/23 14:30:52 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:03:43 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	is_builtin(char *cmd)
 	i = 0;
 	if (!cmd)
 		return (false);
-	while (i < 4)
+	while (i < 7)
 	{
 		if (!ft_strncmp(cmd, BLT_CMDS[i], ft_strlen(cmd)))
 			return (true);
@@ -56,8 +56,17 @@ bool	is_builtin(char *cmd)
 	return (false);
 }
 
-void	handle_blt(char **cmd)
+void	handle_blt(char **cmd, char **envp)
 {
-	if (!ft_strcmp(cmd[0], BLT_CMDS[3]))
+	if (!ft_strcmp(cmd[0], BLT_CMDS[0]))
+		change_directory(cmd);
+	else if (!ft_strcmp(cmd[0], BLT_CMDS[1]))
+		echo_handling(cmd, envp);
+	else if (!ft_strcmp(cmd[0], BLT_CMDS[2]))
+		get_current_path();
+	else if (!ft_strcmp(cmd[0], BLT_CMDS[5]))
+		print_env(envp);
+	else if (!ft_strcmp(cmd[0], BLT_CMDS[6]))
 		ft_exit(cmd);
+	
 }
