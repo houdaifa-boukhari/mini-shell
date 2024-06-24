@@ -6,22 +6,17 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:11:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/24 09:19:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:28:41 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	check(long long nb, int n, int signe)
+static int	check(long long nb, int n)
 {
 	if ((nb >= 922337203685477580 && n > 7) || (nb < 0))
-	{
-		if (signe > 0)
-			return (-1);
-		else if (signe < 0)
-			return (0);
-	}
-	return (1);
+			return (1);
+	return (0);
 }
 
 static int	convert(const char *str, int signe)
@@ -35,7 +30,7 @@ static int	convert(const char *str, int signe)
 	cheack = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		cheack = check(result, str[i] - 48, signe);
+		cheack = check(result, str[i] - 48);
 		if (cheack == 1)
 			result = result * 10 + (str[i] - 48);
 		else
@@ -65,9 +60,9 @@ int	ft_atoi(const char *str)
 
 int	atoi_(char *str, int *flag)
 {
-	int		i;
-	int		sign;
-	long	result;
+	int			i;
+	int			sign;
+	long long	result;
 
 	i = 0;
 	sign = 1;
@@ -83,7 +78,7 @@ int	atoi_(char *str, int *flag)
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + (str[i] - '0');
-		if ((result * sign > INT_MAX) || (result * sign < INT_MIN))
+		if (check(result, (str[i] - '0')))
 			*flag = 1;
 		i++;
 	}
