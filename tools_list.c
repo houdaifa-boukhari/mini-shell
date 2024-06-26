@@ -6,31 +6,43 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/24 12:47:20 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:05:04 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    creat_list(t_cmd **cmds, char *line)
+void    creat_list(t_envp **envp, char *line)
 {
-	t_cmd   *ptr;
-	t_cmd   *new_cmd;
+	t_envp   *ptr;
+	t_envp   *new_env;
 
-	if (!cmds)
+	if (!envp)
 		return ;
-	new_cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!new_cmd)
+	new_env = (t_envp *)malloc(sizeof(t_envp));
+	if (!new_env)
 		return ;
-	new_cmd->cmd = ft_split(line, ' ');
-	new_cmd->next = NULL;
-	if (!*cmds)
+	new_env->env = ft_strdup(line);
+	new_env->next = NULL;
+	if (!*envp)
 	{
-		*cmds = new_cmd;
+		*envp = new_env;
 		return ;
 	}
-	ptr = *cmds;
+	ptr = *envp;
 	while (ptr->next)
 		ptr = ptr->next;
-	ptr->next = new_cmd;
+	ptr->next = new_env;
+}
+
+void	parsing_env(t_envp **env, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		creat_list(env, envp[i]);
+		i++;
+	}
 }

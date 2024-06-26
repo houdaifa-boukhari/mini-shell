@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/24 16:20:30 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:19:05 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,38 @@ void    ft_exit(char **cmd)
 		exit(status);
 }
 
-void	print_env(char **envp)
+void	print_env(t_envp *envp)
 {
-	while (*envp)
+	while (envp)
 	{
-		printf("%s\n", *envp);
-		envp++;
+		printf("%s\n", envp->env);
+		envp = envp->next;
+	}
+}
+
+void	print_export(t_envp *envp)
+{
+	int		j;
+	bool	check;
+
+	while (envp)
+	{
+		j = 0;
+		check = true;
+		ft_putstr_fd("declare -x ", 1);
+		while (envp->env[j])
+		{
+			if (envp->env[j] == '=' && check == true)
+			{
+				write(1, "=\"", 2);
+				check = false;
+			}
+			else
+				write(1, &envp->env[j], 1);
+			j++;
+		}
+		printf("\"\n");
+		envp = envp->next;
 	}
 }
 
@@ -84,5 +110,17 @@ void	change_directory(char **cmd)
 		ft_putstr_fd("mini-shell: cd: ", 2);
 		ft_putstr_fd(cmd[1], 2);
 		ft_putendl_fd(": No such file or directory", 2);
+	}
+}
+
+void	export_handling(char **cmd, t_envp *env)
+{
+	int		size_envp;
+	char	*new_env;
+
+	if (count_arrays(cmd) == 1)
+	{
+		print_export(env);
+		return ;
 	}
 }

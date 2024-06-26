@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/24 15:37:00 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:17:03 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int main(int argc, char **argv, char **envp)
 {
 	char	*cmd;
 	char	**cmds;
+	t_envp	*env;
 
+	env = NULL;
+	parsing_env(&env, envp);
 	while (1)
 	{
 		cmd = readline("$ ");
@@ -25,10 +28,9 @@ int main(int argc, char **argv, char **envp)
 		cmds = ft_split(cmd, ' ');
 		free(cmd);
 		if (is_builtin(cmds[0]))
-			handle_blt(cmds, envp);
+			handle_blt(cmds, env, envp);
 		else
 			execution(cmds, envp);
-	}	 
+	}
 	return (0);
 }
-
