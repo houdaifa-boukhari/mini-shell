@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/26 16:05:04 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/06/27 16:09:03 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ void    creat_list(t_envp **envp, char *line)
 	if (!*envp)
 	{
 		*envp = new_env;
+		(*envp)->prev = NULL;
 		return ;
 	}
 	ptr = *envp;
 	while (ptr->next)
 		ptr = ptr->next;
 	ptr->next = new_env;
+	new_env->prev = ptr; 
 }
 
 void	parsing_env(t_envp **env, char **envp)
