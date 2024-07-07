@@ -9,6 +9,7 @@
 # include "libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "../parsing/min.h"
 
 #define BLT_CMDS (char *[]){"cd", "echo", "pwd", "export", "unset", "env", "exit"}
 
@@ -19,15 +20,24 @@ typedef struct s_envp
 	struct  s_envp	*next;
 }                   t_envp;
 
+typedef struct s_fd
+{
+	int	fd_in;
+	int	save_out;
+	int	fd_p[2];
+	int	pid;
+}		t_fd;
+
 void    ft_exit(char **cmd);
 char    *get_path(char *cmd);
 bool	is_builtin(char *cmd);
 void    get_current_path(void);
 void	print_env(t_envp *envp);
 void    sorte_env(t_envp *head);
+int		count_cmds(t_args_n *lst);
 void	print_export(t_envp *envp);
 void	change_directory(char **cmd);
-void    execution(char **cmd, char **envp);
+void    execution(t_args_n *cmd, char **envp);
 t_envp	*search_env(t_envp *env, char *str);
 void	adding_env(t_envp **env, char *str);
 void    creat_list(t_envp **envp, char *line);
@@ -35,6 +45,7 @@ void	parsing_env(t_envp **env, char **envp);
 void    echo_handling(char **cmd, char **envp);
 void	unset_hadnling(t_envp **env, char *str);
 void	export_handling(char **cmd, t_envp *envp);
+void	execut_(t_args_n *cmds, char **envp, t_fd fd);
 void	handle_blt(char **cmd, t_envp **env, char **envp);
 
 #endif

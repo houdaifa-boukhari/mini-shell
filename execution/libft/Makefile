@@ -12,7 +12,7 @@
 
 NAME :=libft.a
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := 
 RM := rm -f
 head := libft.h
 SRC :=	ft_memset.c ft_isalpha.c ft_strjoin.c  ft_strmapi.c ft_isprint.c \

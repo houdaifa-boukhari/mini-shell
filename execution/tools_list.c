@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/27 16:09:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/07 12:40:54 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,21 @@ void	parsing_env(t_envp **env, char **envp)
 	{
 		creat_list(env, envp[i]);
 		i++;
+	}
+}
+
+void	managing_input(t_inp *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i].inp)
+	{
+		if (input[i].is_h)
+			managing_herdoc();
+		else
+		{
+			fd.fd_in = open();
+		}
 	}
 }

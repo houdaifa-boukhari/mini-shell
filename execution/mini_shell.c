@@ -12,26 +12,44 @@
 
 #include "mini_shell.h"
 
+int	count_cmds(t_args_n *lst)
+{
+	int	count;
+
+	count = 0;
+	if (!lst)
+		return (count);
+	while (lst)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
+}
 int main(int argc, char **argv, char **envp)
 {
-	char	*cmd;
-	char	**cmds;
-	t_envp	*env;
+	t_args_n	*cmd;
+	t_envp		*env;
+	t_fd		fd;
+	char		*line;
 
 	env = NULL;
+	cmd = NULL;
+	fd.fd_in = 0;
+	fd.save_out = dup(STDOUT_FILENO);
 	parsing_env(&env, envp);
 	while (1)
 	{
-		cmd = readline("$ ");
-		add_history(cmd);
-		if (!cmd || !*cmd)
+		line = readline("hel-bouk>$ ");
+		add_history(line);
+		if (!line || !*line)
 			continue ;
-		cmds = ft_split(cmd, ' ');
-		free(cmd);
-		if (is_builtin(cmds[0]))
-			handle_blt(cmds, &env, envp);
+		cmd = initialization_list(line);
+		free(line);
+		if (count_cmds(cmd) == 1)
+			execution(cmd, envp);
 		else
-			execution(cmds, envp);
+			execut_(cmd ,envp, fd);
 	}
 	return (0);
 }

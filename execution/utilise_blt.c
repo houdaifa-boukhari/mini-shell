@@ -79,8 +79,8 @@ void    echo_handling(char **cmd, char **envp)
 {
     if (count_arrays(cmd) == 2 && !ft_strcmp(cmd[1], "-n"))
         printf("\n");
-    else
-        execution(cmd, envp);
+    // else
+    //     execution(cmd, envp);
 }
 
 void    get_current_path(void)
