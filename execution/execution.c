@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/23 12:28:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:33:11 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    execution(t_args_n *cmd, char **envp)
+void    execution(t_args_n *cmd, char **envp, t_fd fd)
 {
     int     pid;
     char    *path;
@@ -20,6 +20,10 @@ void    execution(t_args_n *cmd, char **envp)
     pid = fork();
     if (pid == 0)
     {
+		if (managing_input(cmd->inp, &fd))
+			dup2(fd.fd_in, STDIN_FILENO);
+		if (managing_output(cmd->out, &fd))
+			dup2(fd.fd_out, STDOUT_FILENO);
         path = get_path(cmd->arguments[0]);
         if (!path)
         {
@@ -104,6 +108,8 @@ void	execut_(t_args_n *cmds, char **envp, t_fd fd)
 		return ;
 	while (cmds)
 	{
+		managing_input(cmds->inp, &fd);
+		managing_output(cmds->out, &fd);
 		pipe(fd.fd_p);
 		fd.pid = fork();
 		if (fd.pid == 0)

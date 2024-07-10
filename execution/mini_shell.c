@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/27 16:18:43 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/10 11:34:56 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	count_cmds(t_args_n *lst)
 	}
 	return (count);
 }
+
 int main(int argc, char **argv, char **envp)
 {
 	t_args_n	*cmd;
@@ -36,6 +37,7 @@ int main(int argc, char **argv, char **envp)
 	env = NULL;
 	cmd = NULL;
 	fd.fd_in = 0;
+	fd.save_in = dup(STDIN_FILENO);
 	fd.save_out = dup(STDOUT_FILENO);
 	parsing_env(&env, envp);
 	while (1)
@@ -46,8 +48,10 @@ int main(int argc, char **argv, char **envp)
 			continue ;
 		cmd = initialization_list(line);
 		free(line);
+		fd.fd_in = fd.save_in;
+		fd.fd_out = fd.save_out;
 		if (count_cmds(cmd) == 1)
-			execution(cmd, envp);
+			execution(cmd, envp, fd);
 		else
 			execut_(cmd ,envp, fd);
 	}
