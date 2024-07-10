@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/10 11:33:11 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:21:19 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,16 @@ void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
 	char	*path;
 
 	path = NULL;
-    if (fd.fd_in != 0)
+	if (managing_input(cmd->inp, &fd))
+		dup2(fd.fd_in, STDIN_FILENO);
+    else if (fd.fd_in != 0)
 	{
-		if (dup2(fd.fd_in, 0) == -1)
+		if (dup2(fd.fd_in, STDIN_FILENO) == -1)
 			perror("dup2 failed");
 	}
-	if (cmd->next)
+	if (managing_output(cmd->out, &fd))
+		dup2(fd.fd_out, STDOUT_FILENO);
+	else if (cmd->next)
 		change_fd_ouput(fd.fd_p[1], fd.fd_p[0]);
 	else
 		change_fd_ouput(fd.save_out, fd.fd_p[1]);
@@ -108,15 +112,13 @@ void	execut_(t_args_n *cmds, char **envp, t_fd fd)
 		return ;
 	while (cmds)
 	{
-		managing_input(cmds->inp, &fd);
-		managing_output(cmds->out, &fd);
 		pipe(fd.fd_p);
 		fd.pid = fork();
 		if (fd.pid == 0)
 			execute_child(cmds, envp, fd);
 		else 
 		{
-			pids[i++] = fd.pid; 
+			pids[i++] = fd.pid;
 			close(fd.fd_p[1]);
 			if (!cmds->next)
 				break ;

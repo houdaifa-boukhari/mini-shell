@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/10 12:02:58 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/10 18:16:49 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	managing_input(t_inp *input, t_fd *fd)
 	int	i;
 
 	i = 0;
-	if (!input)
+	if (!input->inp)
 		return (false);
 	while (input[i].inp)
 	{
@@ -76,7 +76,7 @@ bool	managing_output(t_out *output, t_fd *fd)
 	int	i;
 
 	i = 0;
-	if (!output)
+	if (!output->out)
 		return (false);
 	while (output[i].out)
 	{
