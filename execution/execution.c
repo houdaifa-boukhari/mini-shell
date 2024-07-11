@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/10 18:21:19 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:43:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	wait_children(int *pids, int size)
 		i++;
 	}
 	free(pids);
-	unlink("/tmp/herdoc");
 }
 
 void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
@@ -81,12 +80,14 @@ void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
 		if (dup2(fd.fd_in, STDIN_FILENO) == -1)
 			perror("dup2 failed");
 	}
+	close(fd.fd_in);
 	if (managing_output(cmd->out, &fd))
 		dup2(fd.fd_out, STDOUT_FILENO);
 	else if (cmd->next)
 		change_fd_ouput(fd.fd_p[1], fd.fd_p[0]);
 	else
 		change_fd_ouput(fd.save_out, fd.fd_p[1]);
+	close(fd.fd_out);
 	path = get_path(cmd->arguments[0]);
 	if (!path)
 	{

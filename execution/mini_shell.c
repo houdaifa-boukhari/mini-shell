@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/10 13:18:26 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:13:19 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int main(int argc, char **argv, char **envp)
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
+		run_allherdoc(cmd);
 		if (count_cmds(cmd) == 1)
 			execution(cmd, envp, fd);
 		else

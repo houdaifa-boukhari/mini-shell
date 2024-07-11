@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/10 18:16:49 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:47:34 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,10 @@ bool	managing_input(t_inp *input, t_fd *fd)
 	if (!input->inp)
 		return (false);
 	while (input[i].inp)
-	{
-		if (input[i].is_h)
-			managing_herdoc(input[i].inp, fd);
-		else
-		{
-			fd->fd_in = open(input[i].inp, O_RDONLY);
-			if (fd->fd_in < 0)
-				perror(input[i].inp);
-		}
 		i++;
-	}
+	fd->fd_in = open(input[i - 1].inp, O_RDONLY);
+	if (fd->fd_in < 0)
+		perror(input[i].inp);
 	return (true);
 }
 
@@ -80,6 +73,7 @@ bool	managing_output(t_out *output, t_fd *fd)
 		return (false);
 	while (output[i].out)
 	{
+		close(fd->fd_out);
 		if (output[i].is_a)
 			fd->fd_out = open(output[i].out, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
@@ -92,27 +86,28 @@ bool	managing_output(t_out *output, t_fd *fd)
 }
 
 
-void	managing_herdoc(char *delim, t_fd *fd)
+void	managing_herdoc(char **delim)
 {
 	char	*line;
+	char	*file;
 	int		tmp_fd;
 
-	delim = ft_strjoin(delim, "\n");
-	tmp_fd = open("/tmp/herdoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	*delim = ft_strjoin(*delim, "\n");
+	file = ft_strjoin("/tmp/", *delim);
+	tmp_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (tmp_fd < 0)
 		perror("open failed");
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(line, delim, ft_strlen(line)) == 0)
+		if (ft_strncmp(line, *delim, ft_strlen(line)) == 0)
 			break ;
 		write(tmp_fd, line, ft_strlen(line));
 		free(line);
 	}
 	free(line);
 	close(tmp_fd);
-	tmp_fd = open("/tmp/herdoc", O_RDONLY);
-	fd->fd_in = tmp_fd;
-	free(delim);
+	free(*delim);
+	*delim = file;
 }
