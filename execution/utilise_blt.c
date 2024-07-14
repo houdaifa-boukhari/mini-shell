@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/13 17:13:33 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/14 21:39:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,15 +162,20 @@ void change_directory(char **cmd)
 	}
 }
 
-void export_handling(char **cmd, t_envp *env)
+void export_handling(char **cmd, t_envp **env)
 {
-	int size_envp;
-	char *new_env;
+	int		i;
+	char	*new_env;
 
+	i = 1;
 	if (count_arrays(cmd) == 1)
 	{
-		print_export(env);
+		print_export(*env);
 		return;
 	}
-	adding_env(&env, cmd[1]);
+	while (cmd[i])
+	{
+		adding_env(env, cmd[i]);
+		i++;
+	} 
 }

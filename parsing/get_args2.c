@@ -235,7 +235,7 @@ char **get_args(char **str)
     int c =0;
     while (str[x])
     {
-        if(ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0)
+        if(str[x+1]&&(ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0))
         {
             x++;
         }
@@ -250,7 +250,7 @@ char **get_args(char **str)
     c =0;
     while (str[x])
     {
-        if(ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0)
+        if(str[x+1]&&(ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0))
         {
             x++;
         }
@@ -275,7 +275,7 @@ t_out *get_out(char **str)
     int c =0;
     while (str[x])
     {
-        if(!ft_strncmp(str[x],">",2)||!ft_strncmp(str[x],">>",3))
+        if((!ft_strncmp(str[x],">",2)||!ft_strncmp(str[x],">>",3))&& str[x+1])
             c++;
         x++;
     }
@@ -285,7 +285,7 @@ t_out *get_out(char **str)
     x =0;
     while (str[x])
     {
-        if(!ft_strncmp(str[x],">",2)||!ft_strncmp(str[x],">>",3))
+        if((!ft_strncmp(str[x],">",2)||!ft_strncmp(str[x],">>",3))&& str[x+1])
         {
             if(!ft_strncmp(str[x],">",2))
             {
@@ -320,7 +320,7 @@ t_inp *get_inp(char **str)
     int c =0;
     while (str[x])
     {
-        if(!ft_strncmp(str[x],"<",2)||!ft_strncmp(str[x],"<<",3))
+        if((!ft_strncmp(str[x],"<",2)||!ft_strncmp(str[x],"<<",3) )&& str[x+1])
             c++;
         x++;
     }
@@ -330,10 +330,11 @@ t_inp *get_inp(char **str)
     x =0;
     while (str[x])
     {
-        if(!ft_strncmp(str[x],"<",2)||!ft_strncmp(str[x],"<<",3))
+        if((!ft_strncmp(str[x],"<",2)||!ft_strncmp(str[x],"<<",3) )&& str[x+1])
         {
             if(!ft_strncmp(str[x],"<",2))
             {
+                
                 inp[c].inp=whithout_q(str[x+1]);
                 inp[c].is_h=false;
                 c++;

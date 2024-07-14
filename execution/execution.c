@@ -6,40 +6,45 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/13 12:59:24 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/14 21:47:39 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    execution(t_args_n *cmd, t_env *env, t_fd fd)
+void    execution(t_args_n **cmd, t_env *env, t_fd fd)
 {
     int     pid;
     char    *path;
 
-    pid = fork();
-    if (pid == 0)
-    {
-		if (managing_input(cmd->inp, &fd))
-			dup2(fd.fd_in, STDIN_FILENO);
-		if (managing_output(cmd->out, &fd))
-			dup2(fd.fd_out, STDOUT_FILENO);
-		if (is_builtin(cmd->arguments, env))
-			return ;
-        path = get_path(cmd->arguments[0]);
-        if (!path)
-        {
-            perror(cmd->arguments[0]);
-            exit(EXIT_FAILURE);
-        }
-        if (execve(path, cmd->arguments, env->envp) == -1)
-        {
-            perror("failed execution");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else
-        wait(NULL);
+	if (is_builtin((*cmd)->arguments, env))
+		;
+	else
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			if (managing_input((*cmd)->inp, &fd))
+				dup2(fd.fd_in, STDIN_FILENO);
+			if (managing_output((*cmd)->out, &fd))
+				dup2(fd.fd_out, STDOUT_FILENO);
+			path = get_path((*cmd)->arguments[0]);
+			if (!path)
+			{
+				perror((*cmd)->arguments[0]);
+				clear_list(cmd);
+				exit(EXIT_FAILURE);
+			}
+			if (execve(path, (*cmd)->arguments, env->envp) == -1)
+			{
+				perror("failed execution");
+				clear_list(cmd);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+			wait(NULL);
+	}
 }
 
 void	change_fd_ouput(int fd, int cfd)
@@ -70,7 +75,7 @@ void	wait_children(int *pids, int size)
 	free(pids);
 }
 
-void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
+void	execute_child(t_args_n *cmd, t_env *env, t_fd fd)
 {
 	char	*path;
 
@@ -90,6 +95,8 @@ void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
 	else
 		change_fd_ouput(fd.save_out, fd.fd_p[1]);
 	close(fd.fd_out);
+	if (is_builtin(cmd->arguments, env))
+		exit(EXIT_SUCCESS);
 	path = get_path(cmd->arguments[0]);
 	if (!path)
 	{
@@ -97,7 +104,7 @@ void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
 		write(2, " :command not found\n", 21);
 		exit(127);
 	}
-	if (execve(path, cmd->arguments, envp) == -1)
+	if (execve(path, cmd->arguments, env->envp) == -1)
 	{
 		perror("failed execution");
 		exit(EXIT_FAILURE);
@@ -118,7 +125,7 @@ void	execut_(t_args_n *cmds, t_env *env, t_fd fd)
 		pipe(fd.fd_p);
 		fd.pid = fork();
 		if (fd.pid == 0)
-			execute_child(cmds, env->envp, fd);
+			execute_child(cmds, env, fd);
 		else 
 		{
 			pids[i++] = fd.pid;

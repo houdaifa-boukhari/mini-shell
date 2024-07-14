@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/13 12:46:08 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/14 21:02:47 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,46 @@ t_envp	*search_env(t_envp *env, char *str)
 	char	*s1;
 	int		len_str;
 
-	len_str = ft_strlen(str);
+	s1 = ft_strdup(str);
+	s1[find_char(str, '=')] = '\0';
+	len_str = ft_strlen(s1);
 	while (env)
 	{
-		if (!ft_strncmp(env->env, str, len_str) && *(env->env + len_str) == '=')
+		if (!ft_strncmp(env->env, s1, len_str))
+		{
+			free(s1);
 			return (env);
+		}
 		env = env->next;
 	}
+	free(s1);
 	return (NULL);
 }
 
-void	unset_hadnling(t_envp *env, char *str)
+void	unset_hadnling(t_envp **env, char **cmd)
 {
+	int		i;
 	t_envp	*pos;
 	t_envp	*prev;
 	t_envp	*next;
 
-	pos = search_env(env, str);
-	if (!pos)
-		return ;
-	prev = pos->prev;
-	next = pos->next;
-	free(pos->env);
-	free(pos);
-	prev->next = next;
-	next->prev = prev;
+	i = 1;
+	while (cmd[i])
+	{
+		pos = search_env(*env, cmd[i]);
+		if (pos)
+		{
+			prev = pos->prev;
+			next = pos->next;
+			free(pos->env);
+			free(pos);
+			if (prev)
+				prev->next = next;
+			if (next)
+				next->prev = prev;
+		}
+		i++;
+	}
 	return ;
 }
 
@@ -72,12 +87,12 @@ void	adding_env(t_envp **env, char *str)
 	t_envp	*pos;
 
 	pos = search_env(*env, str);
-	if (!pos)
+	if (pos)
 	{
-		creat_list(env, str);
+		free(pos->env);
+		pos->env = ft_strdup(str);
 		return ;
 	}
-	free(pos->env);
-	pos->env = ft_strdup(str);
+	creat_list(env, str);
 	return ;
 }

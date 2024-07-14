@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/13 13:04:07 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/14 16:53:06 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ int main(int argc, char **argv, char **envp)
 		fd.fd_out = fd.save_out;
 		run_allherdoc(cmd);
 		if (count_cmds(cmd) == 1)
-			execution(cmd, &env, fd);
+			execution(&cmd, &env, fd);
 		else
 			execut_(cmd ,&env, fd);
+		clear_list(&cmd);
 	}
 	return (0);
 }

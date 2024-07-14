@@ -3,8 +3,7 @@ CFLAGS = #-Wall -Wextra -Werror
 RM = rm -f
 NAME = parsing.a
 SRC = get_args2.c set_list.c split_args.c split_pip.c \
-	clear_list.c get_env_realine.c print_list.c
-OBJ = $(SRC:.c=.o)
+	clear_list.c get_env_realine.c print_list.c change_var.c
 
 all: $(NAME)
 

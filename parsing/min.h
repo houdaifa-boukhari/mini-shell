@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   min.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-06-25 18:35:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-06-25 18:35:37 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/06/25 18:35:37 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/07/14 14:03:27 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_args_n
 
 
 char * get_str_redline();
-
+char *change_var(char * str);
 char	**ft_split_pip(char  *s, char c);
 char **split_part(char *s);
 char *set_speece( char *str) ;

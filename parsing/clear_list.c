@@ -1,3 +1,6 @@
+
+
+
 #include "min.h"
 
 
@@ -23,19 +26,20 @@ void	clear_list(t_args_n **lst)
 		i =0;
         while ((*lst)->inp[i].inp)
         {
-			free((*lst)->inp[i++].inp);
+			free((*lst)->inp[i].inp);
             i++;     
         }
 		free((*lst)->inp);
         i =0;
         while ((*lst)->out[i].out)
         {
-			free((*lst)->out[i++].out);
+			free((*lst)->out[i].out);
             i++;     
         }
 		free((*lst)->out);
 		free(*lst);
 		*lst = nexttte;
+
 	}
 	*lst = NULL;
 }
