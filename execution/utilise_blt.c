@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/27 16:55:06 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:13:33 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    ft_exit(char **cmd)
+void ft_exit(char **cmd)
 {
 	int flag;
 	int status;
@@ -31,7 +31,7 @@ void    ft_exit(char **cmd)
 		else if (count_arrays(cmd) > 2)
 		{
 			ft_putstr_fd("mini-shell: exit: too many arguments\n", 2);
-			return ;
+			return;
 		}
 		exit(status);
 	}
@@ -39,7 +39,7 @@ void    ft_exit(char **cmd)
 		exit(status);
 }
 
-void	print_env(t_envp *envp)
+void print_env(t_envp *envp)
 {
 	while (envp)
 	{
@@ -48,10 +48,10 @@ void	print_env(t_envp *envp)
 	}
 }
 
-void	print_export(t_envp *envp)
+void print_export(t_envp *envp)
 {
-	int		j;
-	bool	check;
+	int j;
+	bool check;
 
 	sorte_env(envp);
 	while (envp)
@@ -74,39 +74,87 @@ void	print_export(t_envp *envp)
 		envp = envp->next;
 	}
 }
-
-void    echo_handling(char **cmd, char **envp)
+bool skip_flag_echo(char **cmd, int *idx)
 {
-    if (count_arrays(cmd) == 2 && !ft_strcmp(cmd[1], "-n"))
-        printf("\n");
-    // else
-    //     execution(cmd, envp);
+	int 	i;
+	int 	j;
+	bool	check;
+
+	i = 1;
+	check = false;
+	while (cmd[i])
+	{
+		j = 1;
+		if (cmd[i][0] == '-')
+		{
+			while (cmd[i][j] == 'n')
+				j++;
+			if (cmd[i][j] == '\0')
+				check = true;
+			else
+				break ;
+		}
+		else
+			break ;
+		i++;
+	}
+	*idx = i;
+	return (check);
 }
 
-void    get_current_path(void)
+void echo_handling(char **cmd, char **envp)
 {
-    char    path[PATH_MAX];
+	int i;
+	bool flag;
 
-    if (getcwd(path, sizeof(path)))
-        printf("%s\n", path);
-    else
-        perror("getcwd");
+	i = 1;
+	if (count_arrays(cmd) == 1)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		return ;
+	}
+	flag = skip_flag_echo(cmd, &i);
+	while (cmd[i + 1])
+	{
+		ft_putstr_fd(cmd[i], STDOUT_FILENO);
+		ft_putchar_fd(' ', STDOUT_FILENO);
+		i++;
+	}
+	ft_putstr_fd(cmd[i], STDOUT_FILENO);
+	if (!flag)
+		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-void	change_directory(char **cmd)
+void get_current_path(void)
 {
-	int		status;
-	char	*path;
+	char path[PATH_MAX];
+
+	if (getcwd(path, PATH_MAX))
+		printf("%s\n", path);
+	else
+		perror("getcwd");
+}
+
+void change_directory(char **cmd)
+{
+	int status;
+	int n_args;
+	char *path;
 
 	status = 0;
+	n_args = count_arrays(cmd);
 	path = getenv("HOME");
-	if (count_arrays(cmd) > 1)
+	if (n_args == 1 || (n_args == 2 && !ft_strcmp("~", cmd[1])))
+	{
+		status = chdir(path);
+		if (!path)
+			ft_putendl_fd("mini-shell: cd: HOME not set", 2);
+	}
+	else if (n_args == 2)
 		status = chdir(cmd[1]);
 	else
-		status = chdir(path);
-	if (!path)
-		ft_putendl_fd("mini-shell: cd: HOME not set", 2);
-	if (status == -1 && count_arrays(cmd) > 1)
+		ft_putendl_fd("mini-shell: cd: too many arguments", 2);
+	if (status == -1)
 	{
 		ft_putstr_fd("mini-shell: cd: ", 2);
 		ft_putstr_fd(cmd[1], 2);
@@ -114,15 +162,15 @@ void	change_directory(char **cmd)
 	}
 }
 
-void	export_handling(char **cmd, t_envp *env)
+void export_handling(char **cmd, t_envp *env)
 {
-	int		size_envp;
-	char	*new_env;
+	int size_envp;
+	char *new_env;
 
 	if (count_arrays(cmd) == 1)
 	{
 		print_export(env);
-		return ;
+		return;
 	}
 	adding_env(&env, cmd[1]);
 }

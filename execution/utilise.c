@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/27 16:53:44 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:46:08 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ t_envp	*search_env(t_envp *env, char *str)
 	return (NULL);
 }
 
-void	unset_hadnling(t_envp **env, char *str)
+void	unset_hadnling(t_envp *env, char *str)
 {
 	t_envp	*pos;
 	t_envp	*prev;
 	t_envp	*next;
 
-	pos = search_env(*env, str);
+	pos = search_env(env, str);
 	if (!pos)
 		return ;
 	prev = pos->prev;

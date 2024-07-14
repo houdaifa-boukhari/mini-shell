@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/27 16:27:46 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:05:58 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,40 @@ char *get_path(char *cmd)
 	return (tmp);
 }
 
-bool	is_builtin(char *cmd)
+bool	is_builtin(char **cmd, t_env *env)
 {
 	int	i;
 
 	i = 0;
-	if (!cmd)
+	if (!cmd || !*cmd)
 		return (false);
 	while (i < 7)
 	{
-		if (!ft_strncmp(cmd, BLT_CMDS[i], ft_strlen(cmd)))
+		if (!ft_strncmp(cmd[0], BLT_CMDS[i], ft_strlen(cmd[0])))
+		{
+			handle_blt(cmd, env);
 			return (true);
+		}
 		i++;
 	}
 	return (false);
 }
+// "cd", "echo", "pwd", "export", "unset", "env", "exit"}
 
-void	handle_blt(char **cmd, t_envp **env, char **envp)
+void	handle_blt(char **cmd, t_env *env)
 {
 	if (!ft_strcmp(cmd[0], BLT_CMDS[0]))
 		change_directory(cmd);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[1]))
-		echo_handling(cmd, envp);
+		echo_handling(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[2]))
 		get_current_path();
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[3]))
-		export_handling(cmd, *env);
+		export_handling(cmd, env->env);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[4]))
-		unset_hadnling(env, cmd[1]);
+		unset_hadnling(env->env, cmd[1]);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[5]))
-		print_env(*env);
+		print_env(env->env);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[6]))
 		ft_exit(cmd);
-	
 }

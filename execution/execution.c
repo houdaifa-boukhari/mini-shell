@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/11 17:43:48 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:59:24 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    execution(t_args_n *cmd, char **envp, t_fd fd)
+void    execution(t_args_n *cmd, t_env *env, t_fd fd)
 {
     int     pid;
     char    *path;
@@ -24,13 +24,15 @@ void    execution(t_args_n *cmd, char **envp, t_fd fd)
 			dup2(fd.fd_in, STDIN_FILENO);
 		if (managing_output(cmd->out, &fd))
 			dup2(fd.fd_out, STDOUT_FILENO);
+		if (is_builtin(cmd->arguments, env))
+			return ;
         path = get_path(cmd->arguments[0]);
         if (!path)
         {
             perror(cmd->arguments[0]);
             exit(EXIT_FAILURE);
         }
-        if (execve(path, cmd->arguments, envp) == -1)
+        if (execve(path, cmd->arguments, env->envp) == -1)
         {
             perror("failed execution");
             exit(EXIT_FAILURE);
@@ -102,7 +104,7 @@ void	execute_child(t_args_n *cmd, char **envp, t_fd fd)
 	}
 }
 
-void	execut_(t_args_n *cmds, char **envp, t_fd fd)
+void	execut_(t_args_n *cmds, t_env *env, t_fd fd)
 {
 	int		*pids;
 	int		i;
@@ -116,7 +118,7 @@ void	execut_(t_args_n *cmds, char **envp, t_fd fd)
 		pipe(fd.fd_p);
 		fd.pid = fork();
 		if (fd.pid == 0)
-			execute_child(cmds, envp, fd);
+			execute_child(cmds, env->envp, fd);
 		else 
 		{
 			pids[i++] = fd.pid;

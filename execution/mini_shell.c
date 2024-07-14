@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/11 17:13:19 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/13 13:04:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,17 @@ int	count_cmds(t_args_n *lst)
 int main(int argc, char **argv, char **envp)
 {
 	t_args_n	*cmd;
-	t_envp		*env;
+	t_env		env;
 	t_fd		fd;
 	char		*line;
 
-	env = NULL;
+	env.envp = envp;
+	env.env = NULL;
 	cmd = NULL;
 	fd.fd_in = 0;
 	fd.save_in = dup(STDIN_FILENO);
 	fd.save_out = dup(STDOUT_FILENO);
-	parsing_env(&env, envp);
+	parsing_env(&(env.env), env.envp);
 	while (1)
 	{
 		line = readline("hel-bouk>$ ");
@@ -52,9 +53,9 @@ int main(int argc, char **argv, char **envp)
 		fd.fd_out = fd.save_out;
 		run_allherdoc(cmd);
 		if (count_cmds(cmd) == 1)
-			execution(cmd, envp, fd);
+			execution(cmd, &env, fd);
 		else
-			execut_(cmd ,envp, fd);
+			execut_(cmd ,&env, fd);
 	}
 	return (0);
 }

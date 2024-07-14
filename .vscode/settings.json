@@ -3,5 +3,6 @@
         "mini_shell.h": "c",
         "libft.h": "c",
         "ou": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
