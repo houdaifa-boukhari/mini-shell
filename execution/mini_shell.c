@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/14 16:53:06 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:02:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int main(int argc, char **argv, char **envp)
 	env.envp = envp;
 	env.env = NULL;
 	cmd = NULL;
-	fd.fd_in = 0;
 	fd.save_in = dup(STDIN_FILENO);
 	fd.save_out = dup(STDOUT_FILENO);
 	parsing_env(&(env.env), env.envp);

@@ -45,6 +45,7 @@ void	print_env(t_envp *envp);
 void    sorte_env(t_envp *head);
 int		count_cmds(t_args_n *lst);
 void	print_export(t_envp *envp);
+int		*allocation_array(int size);
 void	change_directory(char **cmd);
 bool	is_builtin(char **cmd, t_env *env);
 t_envp	*search_env(t_envp *env, char *str);

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/14 21:47:39 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:24:42 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void    execution(t_args_n **cmd, t_env *env, t_fd fd)
 {
-    int     pid;
-    char    *path;
+	int     pid;
+	char    *path;
 
 	if (is_builtin((*cmd)->arguments, env))
 		;
@@ -52,6 +52,7 @@ void	change_fd_ouput(int fd, int cfd)
 	if (dup2(fd, STDOUT_FILENO) < 0)
 		perror("dup2 failed");
 	close(cfd);
+	close(fd);
 }
 
 void	wait_children(int *pids, int size)
@@ -82,18 +83,19 @@ void	execute_child(t_args_n *cmd, t_env *env, t_fd fd)
 	path = NULL;
 	if (managing_input(cmd->inp, &fd))
 		dup2(fd.fd_in, STDIN_FILENO);
-    else if (fd.fd_in != 0)
+	else if (fd.fd_in != 0)
 	{
 		if (dup2(fd.fd_in, STDIN_FILENO) == -1)
 			perror("dup2 failed");
 	}
 	close(fd.fd_in);
 	if (managing_output(cmd->out, &fd))
-		dup2(fd.fd_out, STDOUT_FILENO);
+		change_fd_ouput(fd.fd_out, fd.fd_p[1]);
 	else if (cmd->next)
 		change_fd_ouput(fd.fd_p[1], fd.fd_p[0]);
 	else
 		change_fd_ouput(fd.save_out, fd.fd_p[1]);
+	close(fd.fd_p[0]);
 	close(fd.fd_out);
 	if (is_builtin(cmd->arguments, env))
 		exit(EXIT_SUCCESS);
@@ -114,12 +116,13 @@ void	execute_child(t_args_n *cmd, t_env *env, t_fd fd)
 void	execut_(t_args_n *cmds, t_env *env, t_fd fd)
 {
 	int		*pids;
+	int		*pipe_r;
 	int		i;
 
+	i = count_cmds(cmds);
+	pids = allocation_array(i);
+	pipe_r = allocation_array(i);
 	i = 0;
-	pids = (int *)malloc(sizeof(int) * count_cmds(cmds));
-	if (!pids)
-		return ;
 	while (cmds)
 	{
 		pipe(fd.fd_p);
@@ -129,6 +132,7 @@ void	execut_(t_args_n *cmds, t_env *env, t_fd fd)
 		else 
 		{
 			pids[i++] = fd.pid;
+			pipe_r[i - 1] = fd.fd_p[0];
 			close(fd.fd_p[1]);
 			if (!cmds->next)
 				break ;
@@ -137,5 +141,8 @@ void	execut_(t_args_n *cmds, t_env *env, t_fd fd)
 		}
 	}
 	close(fd.fd_in);
+	close(fd.fd_p[0]);
+	for (int j = 0; j < i; j++)
+		close(pipe_r[j]);
 	wait_children(pids, i);
 }
