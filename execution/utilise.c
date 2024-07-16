@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/14 21:02:47 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:55:51 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    sorte_env(t_envp *head)
+void	sorte_env(t_envp *head)
 {
 	t_envp	*next;
 	char	*tmp;

@@ -6,16 +6,16 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/11 17:47:34 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:06:51 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void    creat_list(t_envp **envp, char *line)
+void	creat_list(t_envp **envp, char *line)
 {
-	t_envp   *ptr;
-	t_envp   *new_env;
+	t_envp	*ptr;
+	t_envp	*new_env;
 
 	if (!envp)
 		return ;
@@ -34,7 +34,7 @@ void    creat_list(t_envp **envp, char *line)
 	while (ptr->next)
 		ptr = ptr->next;
 	ptr->next = new_env;
-	new_env->prev = ptr; 
+	new_env->prev = ptr;
 }
 
 void	parsing_env(t_envp **env, char **envp)
@@ -75,16 +75,17 @@ bool	managing_output(t_out *output, t_fd *fd)
 	{
 		close(fd->fd_out);
 		if (output[i].is_a)
-			fd->fd_out = open(output[i].out, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			fd->fd_out = open(output[i].out,
+					O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
-			fd->fd_out = open(output[i].out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd->fd_out = open(output[i].out,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd->fd_out < 0)
 			perror(output[i].out);
 		i++;
 	}
 	return (true);
 }
-
 
 void	managing_herdoc(char **delim)
 {

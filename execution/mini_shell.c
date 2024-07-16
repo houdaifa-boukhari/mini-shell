@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/15 13:02:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:10:01 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int main(int argc, char **argv, char **envp)
 		if (count_cmds(cmd) == 1)
 			execution(&cmd, &env, fd);
 		else
-			execut_(cmd ,&env, fd);
+			execut_(&cmd ,&env, fd);
 		clear_list(&cmd);
 	}
 	return (0);

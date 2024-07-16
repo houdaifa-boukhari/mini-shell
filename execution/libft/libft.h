@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:29:42 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/14 20:45:33 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:19:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_va
 
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_isalpha(int c);
-int	find_char(char *str, char c);
+int		find_char(char *str, char c);
 int		count_arrays(char **str);
 int		ft_isprint(int c);
 void	*ft_memmove(void *dest, const void *src, size_t n);

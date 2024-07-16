@@ -6,16 +6,16 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/14 21:39:07 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:02:15 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void ft_exit(char **cmd)
+void	ft_exit(char **cmd)
 {
-	int flag;
-	int status;
+	int	flag;
+	int	status;
 
 	flag = 0;
 	status = 0;
@@ -31,7 +31,7 @@ void ft_exit(char **cmd)
 		else if (count_arrays(cmd) > 2)
 		{
 			ft_putstr_fd("mini-shell: exit: too many arguments\n", 2);
-			return;
+			return ;
 		}
 		exit(status);
 	}
@@ -39,7 +39,7 @@ void ft_exit(char **cmd)
 		exit(status);
 }
 
-void print_env(t_envp *envp)
+void	print_env(t_envp *envp)
 {
 	while (envp)
 	{
@@ -48,10 +48,10 @@ void print_env(t_envp *envp)
 	}
 }
 
-void print_export(t_envp *envp)
+void	print_export(t_envp *envp)
 {
-	int j;
-	bool check;
+	int		j;
+	bool	check;
 
 	sorte_env(envp);
 	while (envp)
@@ -74,10 +74,11 @@ void print_export(t_envp *envp)
 		envp = envp->next;
 	}
 }
-bool skip_flag_echo(char **cmd, int *idx)
+
+bool	skip_flag_echo(char **cmd, int *idx)
 {
-	int 	i;
-	int 	j;
+	int		i;
+	int		j;
 	bool	check;
 
 	i = 1;
@@ -102,10 +103,10 @@ bool skip_flag_echo(char **cmd, int *idx)
 	return (check);
 }
 
-void echo_handling(char **cmd, char **envp)
+void	echo_handling(char **cmd, char **envp)
 {
-	int i;
-	bool flag;
+	int		i;
+	bool	flag;
 
 	i = 1;
 	if (count_arrays(cmd) == 1)
@@ -125,9 +126,9 @@ void echo_handling(char **cmd, char **envp)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-void get_current_path(void)
+void	get_current_path(void)
 {
-	char path[PATH_MAX];
+	char	path[PATH_MAX];
 
 	if (getcwd(path, PATH_MAX))
 		printf("%s\n", path);
@@ -135,11 +136,11 @@ void get_current_path(void)
 		perror("getcwd");
 }
 
-void change_directory(char **cmd)
+void	change_directory(char **cmd)
 {
-	int status;
-	int n_args;
-	char *path;
+	int		status;
+	int		n_args;
+	char	*path;
 
 	status = 0;
 	n_args = count_arrays(cmd);
@@ -162,7 +163,7 @@ void change_directory(char **cmd)
 	}
 }
 
-void export_handling(char **cmd, t_envp **env)
+void	export_handling(char **cmd, t_envp **env)
 {
 	int		i;
 	char	*new_env;
@@ -171,11 +172,11 @@ void export_handling(char **cmd, t_envp **env)
 	if (count_arrays(cmd) == 1)
 	{
 		print_export(*env);
-		return;
+		return ;
 	}
 	while (cmd[i])
 	{
 		adding_env(env, cmd[i]);
 		i++;
-	} 
+	}
 }

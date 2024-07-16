@@ -6,12 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 08:09:24 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/23 14:12:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:17:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
 
 int	ft_strcmp(char *s1, char *s2)
 {

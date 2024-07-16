@@ -6,16 +6,15 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:51:58 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/06/22 18:04:54 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:18:43 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-
-void   free_arrays(char **str)
+void	free_arrays(char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

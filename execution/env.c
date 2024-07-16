@@ -6,21 +6,22 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/14 17:50:21 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:53:47 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-char *get_path(char *cmd)
+char	*get_path(char *cmd)
 {
-	int     i;
+	int		i;
 	char	*tmp;
-	char    *path;
-	char    **full_path;
+	char	*path;
+	char	**full_path;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0 && (ft_strncmp(cmd, "/", 1) == 0 || ft_strncmp(cmd, "./", 2) == 0))
+	if (access(cmd, X_OK) == 0 && (ft_strncmp(cmd, "/", 1) == 0
+			|| ft_strncmp(cmd, "./", 2) == 0))
 		return (cmd);
 	path = ft_strjoin("/", cmd);
 	full_path = ft_split(getenv("PATH"), ':');
@@ -58,7 +59,6 @@ bool	is_builtin(char **cmd, t_env *env)
 	}
 	return (false);
 }
-// "cd", "echo", "pwd", "export", "unset", "env", "exit"}
 
 void	handle_blt(char **cmd, t_env *env)
 {
