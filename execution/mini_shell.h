@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/16 13:16:29 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/16 13:25:59 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_fd
 	int	fd_in;
 	int	fd_out;
 	int	save_in;
-	int	save_out;clea
+	int	save_out;
 	int	fd_p[2];
 	int	pid;
 }		t_fd;
