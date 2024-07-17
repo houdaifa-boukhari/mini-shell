@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/16 12:53:47 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:58:49 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,24 @@ bool	is_builtin(char **cmd, t_env *env)
 void	handle_blt(char **cmd, t_env *env)
 {
 	if (!ft_strcmp(cmd[0], BLT_CMDS[0]))
-		change_directory(cmd);
+		change_directory(cmd, env->env);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[1]))
 		echo_handling(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[2]))
 		get_current_path();
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[3]))
+	{
+		env->check = true;
 		export_handling(cmd, &(env->env));
+	}
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[4]))
+	{
+		env->check = true;
 		unset_hadnling(&(env->env), cmd);
+	}
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[5]))
 		print_env(env->env);
+
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[6]))
 		ft_exit(cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/16 12:10:01 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:50:46 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ int main(int argc, char **argv, char **envp)
 	t_fd		fd;
 	char		*line;
 
-	env.envp = envp;
+	env.envp = NULL;
 	env.env = NULL;
+	env.check = true;
 	cmd = NULL;
 	fd.save_in = dup(STDIN_FILENO);
 	fd.save_out = dup(STDOUT_FILENO);
-	parsing_env(&(env.env), env.envp);
+	parsing_env(&(env.env), envp);
 	while (1)
 	{
 		line = readline("hel-bouk>$ ");
@@ -51,11 +52,14 @@ int main(int argc, char **argv, char **envp)
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
 		run_allherdoc(cmd);
+		if (env.check)
+			built_array(&env);
 		if (count_cmds(cmd) == 1)
 			execution(&cmd, &env, fd);
 		else
 			execut_(&cmd ,&env, fd);
 		clear_list(&cmd);
 	}
+	rl_clear_history();
 	return (0);
 }

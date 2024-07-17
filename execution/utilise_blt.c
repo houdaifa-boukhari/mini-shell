@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/16 13:02:15 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/17 22:57:19 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	ft_exit(char **cmd)
 
 	flag = 0;
 	status = 0;
+	clear_list(cmd);
 	ft_putstr_fd("exit\n", 2);
 	if (count_arrays(cmd) >= 2)
 	{
@@ -136,15 +137,17 @@ void	get_current_path(void)
 		perror("getcwd");
 }
 
-void	change_directory(char **cmd)
+void	change_directory(char **cmd, t_envp *env)
 {
 	int		status;
 	int		n_args;
 	char	*path;
 
-	status = 0;
+	path = NULL;
 	n_args = count_arrays(cmd);
-	path = getenv("HOME");
+	env = search_env(env, "HOME");
+	if (env)
+		path = env->env;
 	if (n_args == 1 || (n_args == 2 && !ft_strcmp("~", cmd[1])))
 	{
 		status = chdir(path);
@@ -155,7 +158,7 @@ void	change_directory(char **cmd)
 		status = chdir(cmd[1]);
 	else
 		ft_putendl_fd("mini-shell: cd: too many arguments", 2);
-	if (status == -1)
+	if (status == -1 && n_args != 1)
 	{
 		ft_putstr_fd("mini-shell: cd: ", 2);
 		ft_putstr_fd(cmd[1], 2);

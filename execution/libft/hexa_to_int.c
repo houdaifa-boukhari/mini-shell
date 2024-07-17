@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:51:58 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/16 13:18:43 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:33:55 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_arrays(char **str)
 	int	i;
 
 	i = 0;
+	if (!str || !*str)
+		return ;
 	while (str[i])
 	{
 		free(str[i]);
