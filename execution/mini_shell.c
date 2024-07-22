@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 22:50:46 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:57:24 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,26 @@ int	count_cmds(t_args_n *lst)
 	return (count);
 }
 
+char	*get_line(void)
+{
+	char	*line;
+
+	if (isatty(STDIN_FILENO))
+		line = readline("hel-bouk>$ ");
+	else
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (check_line(line))
+			line[ft_strlen(line) - 1] = '\0';
+		if (!line)
+			return (NULL);
+	}
+	add_history(line);
+	if (!line || !*line)
+		return (NULL);
+	return (line);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_args_n	*cmd;
@@ -43,17 +63,17 @@ int main(int argc, char **argv, char **envp)
 	parsing_env(&(env.env), envp);
 	while (1)
 	{
-		line = readline("hel-bouk>$ ");
-		add_history(line);
-		if (!line || !*line)
+		line = get_line();
+		if (!isatty(STDIN_FILENO) && !line)
+			break ;
+		else if (!line)
 			continue ;
 		cmd = initialization_list(line);
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
 		run_allherdoc(cmd);
-		if (env.check)
-			built_array(&env);
+		built_array(&env);
 		if (count_cmds(cmd) == 1)
 			execution(&cmd, &env, fd);
 		else

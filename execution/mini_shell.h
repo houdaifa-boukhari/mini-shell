@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 22:40:00 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:48:27 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_fd
 }		t_fd;
 
 void	ft_exit(char **cmd);
-char	*get_path(char *cmd);
+int		check_line(char *str);
 void	get_current_path(void);
 char	*get_next_line(int fd);
 int		size_env(t_envp *lst);
@@ -63,6 +63,7 @@ void	print_export(t_envp *envp);
 int		*allocation_array(int size);
 void	run_allherdoc(t_args_n *cmd);
 void	managing_herdoc(char **delim);
+char	*get_path(char *cmd, t_env *envp);
 void	handle_blt(char **cmd, t_env *env);
 bool	is_builtin(char **cmd, t_env *env);
 t_envp	*search_env(t_envp *env, char *str);

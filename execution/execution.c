@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 23:00:00 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:50:28 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 				dup2(fd.fd_in, STDIN_FILENO);
 			if (managing_output((*cmd)->out, &fd))
 				dup2(fd.fd_out, STDOUT_FILENO);
-			path = get_path((*cmd)->arguments[0]);
+			path = get_path((*cmd)->arguments[0], env);
 			if (!path)
 			{
 				perror((*cmd)->arguments[0]);
@@ -109,7 +109,7 @@ void	execute_child(t_args_n **cmd, t_env *env, t_fd fd)
 	controle_fd(cmd, fd);
 	if (is_builtin((*cmd)->arguments, env))
 		exit(EXIT_SUCCESS);
-	path = get_path((*cmd)->arguments[0]);
+	path = get_path((*cmd)->arguments[0], env);
 	if (!path)
 	{
 		write(2, (*cmd)->arguments[0], ft_strlen((*cmd)->arguments[0]));

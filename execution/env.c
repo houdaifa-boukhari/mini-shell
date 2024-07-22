@@ -6,25 +6,29 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 22:58:49 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:51:13 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-char	*get_path(char *cmd)
+char	*get_path(char *cmd, t_env *envp)
 {
 	int		i;
+	t_envp	*env;	
 	char	*tmp;
 	char	*path;
 	char	**full_path;
 
 	i = 0;
+	env = NULL;
 	if (access(cmd, X_OK) == 0 && (ft_strncmp(cmd, "/", 1) == 0
 			|| ft_strncmp(cmd, "./", 2) == 0))
 		return (cmd);
 	path = ft_strjoin("/", cmd);
-	full_path = ft_split(getenv("PATH"), ':');
+	env = search_env(envp->env, "PATH");
+	if (env)
+		full_path = ft_split(env->env, ':');
 	if (!full_path)
 		return (NULL);
 	while (full_path[i])
