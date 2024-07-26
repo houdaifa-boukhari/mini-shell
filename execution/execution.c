@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/22 19:50:28 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/25 19:10:34 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 {
 	char	*path;
+	int		status;
+	int st;
 
 	if (is_builtin((*cmd)->arguments, env))
 		;
@@ -32,13 +34,16 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 			{
 				perror((*cmd)->arguments[0]);
 				clear_list(cmd);
-				exit(EXIT_FAILURE);
+				exit(127);
 			}
 			if (execve(path, (*cmd)->arguments, env->envp) == -1)
 				ft_error(cmd, "failed execution", EXIT_FAILURE);
 		}
 		else
-			wait(NULL);
+		{
+			waitpid(fd.pid, &status, 0);
+			exit_status = WEXITSTATUS(status);
+		}
 	}
 }
 
@@ -76,9 +81,7 @@ void	wait_children(int *fd, int *pids, int size)
 			perror("waitpid");
 			exit(EXIT_FAILURE);
 		}
-		status = WEXITSTATUS(status);
-		if (status == 127 && i == size - 1)
-			exit(status);
+		exit_status = WEXITSTATUS(status);
 		i++;
 	}
 	free(pids);
@@ -112,8 +115,9 @@ void	execute_child(t_args_n **cmd, t_env *env, t_fd fd)
 	path = get_path((*cmd)->arguments[0], env);
 	if (!path)
 	{
-		write(2, (*cmd)->arguments[0], ft_strlen((*cmd)->arguments[0]));
-		write(2, " :command not found\n", 21);
+		path = ft_strjoin((*cmd)->arguments[0], " :command not found\n");
+		ft_putstr_fd(path, 2);
+		free(path);
 		exit(127);
 	}
 	if (execve(path, (*cmd)->arguments, env->envp) == -1)

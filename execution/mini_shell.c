@@ -6,11 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/22 19:57:24 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:04:56 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
+
+int	exit_status = 0;
 
 int	count_cmds(t_args_n *lst)
 {
@@ -53,7 +55,9 @@ int main(int argc, char **argv, char **envp)
 	t_env		env;
 	t_fd		fd;
 	char		*line;
+	int			status;
 
+	status = 0;
 	env.envp = NULL;
 	env.env = NULL;
 	env.check = true;
@@ -68,7 +72,7 @@ int main(int argc, char **argv, char **envp)
 			break ;
 		else if (!line)
 			continue ;
-		cmd = initialization_list(line);
+		cmd = initialization_list(line, env.env);
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
@@ -78,6 +82,7 @@ int main(int argc, char **argv, char **envp)
 			execution(&cmd, &env, fd);
 		else
 			execut_(&cmd ,&env, fd);
+			dprintf(2, "status is %d\n", exit_status);
 		clear_list(&cmd);
 	}
 	rl_clear_history();

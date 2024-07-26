@@ -1,368 +1,113 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_args2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024-07-24 16:50:38 by zbakkas           #+#    #+#             */
+/*   Updated: 2024-07-24 16:50:38 by zbakkas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "min.h"
 
-
-/// cat "t't""y"'b'
-char *whithout_q(char *str)
+static int	whithout_q_count(char *str, int x)
 {
-    char *re;
-    if(!str)
-        return NULL;
-    int x =0;
-    int q =0;
-    char qq;
-    int c =0;
-    while (str[x])
-    {
-        
-        if(str[x]== '"'||str[x]== '\'')
-        {
-            if(str[x]=='"' && q==0)
-            {
-                qq= '"';
-                q++;
-                // x++;
-            
-            }
-            else if (str[x]=='\'' && q==0)
-            {
-                qq= '\'';
-                q++;
-                // x++;
-            }
-            else if(q !=0 && str[x]==qq)
-            {
+	int		c;
+	int		l;
+	t_quote	q;
 
-                q =0;
-                // x++;
-
-            }
-            else
-                c++;
-
-            
-        }
-        else
-            c++;
-        
-            x++; 
-        
-    }
-
-    re =malloc(c+1);
-    // printf("%d\n",c);
-    x =0;
-    q=0;
-    qq='\0';
-    c =0;
-
-    while (str[x])
-    {
-        // printf("d\n");
-        if(str[x]== '"'||str[x]== '\'')
-        {
-            if(str[x]=='"' && q==0)
-            {
-                qq= '"';
-                q++;
-                // x++;
-            
-            }
-            else if (str[x]=='\'' && q==0)
-            {
-                qq= '\'';
-                q++;
-                // x++;
-            }
-            else if(q !=0 && str[x]==qq)
-            {
-
-                q =0;
-                // x++;
-
-            }
-            else
-                re[c++]=str[x];
-
-            
-        }
-        else
-            re[c++]=str[x];
-        
-        x++;
-       
-        
-        
-    }
-    re[c]='\0';
-    
-
-    return re;
+	q.inDoubleQuote = 0;
+	q.inSingleQuote = 0;
+	c = 0;
+	while (str[x])
+	{
+		l = chacke_q(str[x], &q);
+		if ((str[x] == '"' || str[x] == '\''))
+		{
+			if ((l == 1 && str[x] == '"') || (l == 2 && str[x] == '\''))
+				c++;
+		}
+		else
+			c++;
+		x++;
+	}
+	return (c);
 }
 
-// char *get_cmd2(char **str)
-// {
-//     char *re;
-//     int x =0;
-//     if(!str||!str[0])
-//         return NULL;
-//     if(ft_strncmp(str[0],"<",2)==0||ft_strncmp(str[0],">",2)==0||ft_strncmp(str[0],"<<",3)==0||ft_strncmp(str[0],">>",3)==0)
-//     {
-//         while (str[x])
-//         {
-//             // printf("s=%s\n",str[x]);
-//             if((ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0))
-//                 x++;
-//             else 
-//                 break;
-//             x++;
-//         }
-        
-
-//         if(str[x] )
-//             re =whithout_q(str[x]);
-//         else
-//             return NULL;
-//     }
-//     else
-//         re = whithout_q(str[0]);
-
-
-//     return re;
-// }
-
-
-
-
-// char **get_flags2(char **str)
-// {
-//     char **re;
-//     int i =3;
-//     int c =0;
-//     if(!str||!str[0])
-//         return NULL;
-
-//     if(ft_strncmp(str[0],"<",2)==0||ft_strncmp(str[0],">",2)==0||ft_strncmp(str[0],"<<",3)==0||ft_strncmp(str[0],">>",3)==0)
-//     {
-//         i=3;
-//         // printf("%s\n",str[i] ? str[i]:"(null)");
-//         if( ft_tostrlen(str)<=i)
-//             return NULL;
-//         while (str[i])
-//         {
-//         // printf("ff\n");
-//             if(str[i][1]&& str[i][1]=='-'&&(str[i][0]=='"' ||str[i][0]=='\''))
-//                 c++;
-//             else if(str[i][0]=='-')
-//                 c++;
-//             i++;
-//         }
-            
-//     }
-//     else
-//     {
-//         i = 1;
-//         while (str[i])
-//         {
-//             if(str[i][1]&& str[i][1]=='-'&&(str[i][0]=='"' ||str[i][0]=='\''))
-//                 c++;
-//             else if(str[i][0]=='-')
-//                 c++;
-//             i++;
-//         }
-
-//     }
-//     // printf("%d\n",c);
-
-
-//     re = (char **)malloc((1 + c) * sizeof(char *));
-//     i =0;
-//     c =0;
-
-//     // while (x<c)
-//     // {
-//     //     printf("%s\n",str[0]);
-//     if(ft_strncmp(str[0],"<",2)==0||ft_strncmp(str[0],">",2)==0||ft_strncmp(str[0],"<<",3)==0||ft_strncmp(str[0],">>",3)==0)
-//     {
-//         i=3;
-//         while (str[i])
-//         {
-//             if(str[i][1]&& str[i][1]=='-'&&(str[i][0]=='"' ||str[i][0]=='\''))
-//                 re[c++]=whithout_q(str[i]);
-//             else if(str[i][0]=='-')
-//                 re[c++]=whithout_q(str[i]);
-//             i++;
-//         }
-            
-//     }
-//     else
-//     {
-//         i = 1;
-//         while (str[i])
-//         {
-//             // printf("i==%d\n",i);
-//             //  printf("%s\n",str[i]);
-//             if(str[i][1]&& str[i][1]=='-'&&(str[i][0]=='"' ||str[i][0]=='\''))
-//             {
-//                 re[c++]=whithout_q(str[i]);
-//             }
-//             else if(str[i][0]=='-')
-//             {
-                
-//                 re[c++]=whithout_q(str[i]);
-//             }
-//             i++;
-//         }
-
-//     }
-       
-//     // }
-    
-
-//     re[c]=NULL;
-    
-    
-
-
-//     return re;
-// }
-
-
-
-char **get_args(char **str)
+char	*whithout_q(char *str)
 {
-    char **re;
-    int x =0; 
-    int c =0;
-    while (str[x])
-    {
-        if(str[x+1]&&(ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0))
-        {
-            x++;
-        }
-        else
-            c++;
-        x++;
-        // c++;
-    }
-    re = (char **)malloc((c +1)*sizeof(char *));
-    // printf("%d\n",c);
-    x =0;
-    c =0;
-    while (str[x])
-    {
-        if(str[x+1]&&(ft_strncmp(str[x],"<",2)==0||ft_strncmp(str[x],">",2)==0||ft_strncmp(str[x],"<<",3)==0||ft_strncmp(str[x],">>",3)==0))
-        {
-            x++;
-        }
-        else
-            re[c++]=whithout_q( str[x]);
-        x++;
-        // c++;
-    }
-    re[c]=NULL;
+	char	*re;
+	int		x;
+	int		c;
+	int		l;
+	t_quote	q;
 
-
-
-    return re;
+	q.inDoubleQuote = 0;
+	q.inSingleQuote = 0;
+	x = 0;
+	c = 0;
+	if (!str)
+		return (NULL);
+	re = malloc(whithout_q_count(str, x) + 1);
+	while (str[x])
+	{
+		l = chacke_q(str[x], &q);
+		if ((l == 1 && str[x] == '"') || (l == 2 && str[x] == '\''))
+			re[c++] = str[x];
+		else if (str[x] != '"' && str[x] != '\'')
+			re[c++] = str[x];
+		x++;
+	}
+	re[c] = '\0';
+	return (re);
 }
 
-
-
-t_out *get_out(char **str)
+static int	get_args_count(char **str)
 {
-    t_out *out;
-    int x =0;
-    int c =0;
-    while (str[x])
-    {
-        if((!ft_strncmp(str[x],">",2)||!ft_strncmp(str[x],">>",3))&& str[x+1])
-            c++;
-        x++;
-    }
-    // printf("%d\n",c);
-    out = malloc((c+1)*sizeof(t_out));
-    c=0;
-    x =0;
-    while (str[x])
-    {
-        if((!ft_strncmp(str[x],">",2)||!ft_strncmp(str[x],">>",3))&& str[x+1])
-        {
-            if(!ft_strncmp(str[x],">",2))
-            {
-                out[c].out= whithout_q( str[x+1]);
-                out[c].is_a=false;
-                c++;
-                // printf("ss %s\n",str[x+1]);
+	int	x;
+	int	c;
 
-            }
-            else
-            {
-                out[c].out= whithout_q(str[x+1]);
-                out[c++].is_a=true; 
-                // printf("ss %s\n",str[x+1]);               
-            }
-        }
-        x++;
-    }
-    out[c].out= NULL;
-    out[c++].is_a=false; 
-    
-
-
-    return out;
-
+	x = 0;
+	c = 0;
+	while (str[x])
+	{
+		if (str[x + 1] && (ft_strncmp(str[x], "<", 2) == 0
+				|| ft_strncmp(str[x], ">", 2) == 0
+				|| ft_strncmp(str[x], "<<", 3) == 0
+				|| ft_strncmp(str[x], ">>", 3) == 0))
+			x++;
+		else
+			c++;
+		x++;
+	}
+	return (c);
 }
 
-t_inp *get_inp(char **str)
+char	**get_args(char **str)
 {
-    t_inp *inp;
-    int x =0;
-    int c =0;
-    while (str[x])
-    {
-        if((!ft_strncmp(str[x],"<",2)||!ft_strncmp(str[x],"<<",3) )&& str[x+1])
-            c++;
-        x++;
-    }
-    // printf("%d\n",c);
-    inp = malloc((c+1)*sizeof(t_inp));
-    c=0;
-    x =0;
-    while (str[x])
-    {
-        if((!ft_strncmp(str[x],"<",2)||!ft_strncmp(str[x],"<<",3) )&& str[x+1])
-        {
-            if(!ft_strncmp(str[x],"<",2))
-            {
-                
-                inp[c].inp=whithout_q(str[x+1]);
-                inp[c].is_h=false;
-                c++;
-                // printf("ss %s\n",str[x+1]);
+	char	**re;
+	int		x;
+	int		c;
 
-            }
-            else
-            {
-                inp[c].inp=whithout_q(str[x+1]);
-
-                inp[c++].is_h=true; 
-                // printf("ss %s\n",str[x+1]);               
-            }
-        }
-        x++;
-    }
-    inp[c].inp=NULL;
-    inp[c].is_h=false;
-    
-
-
-    return inp;
-
+	x = 0;
+	c = 0;
+	re = (char **)malloc((get_args_count(str) + 1) * sizeof(char *));
+	while (str[x])
+	{
+		if (str[x + 1] && (ft_strncmp(str[x], "<", 2) == 0
+				|| ft_strncmp(str[x], ">", 2) == 0
+				|| ft_strncmp(str[x], "<<", 3) == 0
+				|| ft_strncmp(str[x], ">>", 3) == 0))
+			x++;
+		else
+			re[c++] = whithout_q(str[x]);
+		x++;
+	}
+	re[c] = NULL;
+	return (re);
 }
-
-
-
-
 
 // int main()
 // {
@@ -370,7 +115,6 @@ t_inp *get_inp(char **str)
 //     char *str1 ="l\"s\"> \"hello  <'worde\"  \"-l -a\" \"\">\"\" 'out'";
 //     char *str2 ="l\"s\"< 'hello  \">> worde'  \"-l -a\">> out >f";
 //     char *str3 ="<'cat'\"<\" \" min '2\" \"-e\"";
-
 //     char *str4 = "'ca't file >out >>out1<< stop out2 > out3 \"-e\" -l";
 //     char *str5 ="ls";
 //     printf("%s\n",str5);
@@ -393,16 +137,12 @@ t_inp *get_inp(char **str)
 // // //     x++;
 // // // }
 // // x =0;
-
 // // char **args =get_args(str); 
 // // while (args[x])
 // // {
 // //     printf("arg[%d]=%s\n",x,args[x]);
 // //    x++;
 // // }
-
-
-
 // // // get_args(str);
 // // // printf("%s\n" , whithout_q("    cat ffr"));
 // // x =0;
@@ -421,8 +161,4 @@ t_inp *get_inp(char **str)
 //     printf("is Heredoc [%d]:%d\n",x,inp[x].is_h);
 //     x++;
 // }
-
-
-
-
 // }

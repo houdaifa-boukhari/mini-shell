@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/22 19:55:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/24 15:54:15 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	built_array(t_env *envirement)
 	t_envp	*envp;
 
 	i = 0;
-	if (envirement->check)
+	if (!envirement->check)
 		return ;
 	envirement->check = false;
 	env = envirement;

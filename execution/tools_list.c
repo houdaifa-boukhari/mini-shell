@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 20:50:12 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:55:38 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,16 @@ bool	managing_input(t_inp *input, t_fd *fd)
 	if (!input->inp)
 		return (false);
 	while (input[i].inp)
+	{
+		close(fd->fd_in);
+		fd->fd_in = open(input[i].inp, O_RDONLY);
+		if (fd->fd_in < 0)
+		{
+			perror(input[i].inp);
+			exit(EXIT_FAILURE);
+		}
 		i++;
-	fd->fd_in = open(input[i - 1].inp, O_RDONLY);
-	if (fd->fd_in < 0)
-		perror(input[i].inp);
+	}
 	return (true);
 }
 

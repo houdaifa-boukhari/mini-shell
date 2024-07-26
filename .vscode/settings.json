@@ -2,7 +2,8 @@
     "files.associations": {
         "mini_shell.h": "c",
         "libft.h": "c",
-        "ou": "c"
+        "ou": "c",
+        "stdbool.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

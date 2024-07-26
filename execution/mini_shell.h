@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/22 19:48:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:08:45 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,24 @@
 
 #define BLT_CMDS (char *[]){"cd", "echo", "pwd", "export", "unset", "env", "exit"}
 
+// #ifndef EXIT_STATUS_DEFINED
+// #define EXIT_STATUS_DEFINED
+
+extern int	exit_status;
+
+// #endif
+
+#ifndef S_ENVP_DEFINED
+#define S_ENVP_DEFINED
+
 typedef struct s_envp
 {
 	char			*env;
-	struct s_envp	*prev;
-	struct s_envp	*next;
-}					t_envp;
+	struct  s_envp	*prev;
+	struct  s_envp	*next;
+}                   t_envp;
+
+#endif // S_ENVP_DEFINED
 
 typedef struct s_env
 {

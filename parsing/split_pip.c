@@ -1,52 +1,37 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_pip.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024-07-24 15:40:48 by zbakkas           #+#    #+#             */
+/*   Updated: 2024-07-24 15:40:48 by zbakkas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "min.h"
-
-
-static char get_q(char *str)
-{
-    char q = '\0';
-    int x =0;
-    while (str[x])
-    {
-        if(str[x]=='\'')
-            q = '\'';
-        if(str[x]=='"')
-            q='"';
-        if(str[x]=='\''||str[x]=='"')
-            return q;  
-        x++;
-    }
-    return q;
-}
 
 static	int	c_word( char *s, char c)
 {
 	size_t	x;
 	int		re;
-    bool in_quotes = false;
+	t_quote	q;
 
+	q.inDoubleQuote = 0;
+	q.inSingleQuote = 0;
 	x = 0;
 	re = 0;
 	if (!s[x])
 		return (0);
 	if (s[x] && c == '\0')
 		return (1);
-	// while (s[x] == c)
-    // {
-    //     if (s[x] == '"' ) 
-    //         in_quotes = !in_quotes;
-	// 	x++;
-    // }
-
-    x =0;
+	x = 0;
 	if (s[x] == '\0')
 		return (0);
 	while (s[x])
 	{
-        if (s[x] == get_q(s) ) 
-            in_quotes = !in_quotes;
-		if (c == s[x]&& !in_quotes && c != s[x + 1] && x < ft_strlen(s) - 1)
+		if (!chacke_q(s[x], &q) && c == s[x] && c != s[x + 1])
 			re++;
 		x++;
 	}
@@ -67,39 +52,24 @@ static	char	**is_free(char **d)
 	return (NULL);
 }
 
-static	char	*word(char  *s, char c, int *x)
+static char	*word(char *s, char c, int *x)
 {
 	int		i;
 	char	*re;
 	int		j;
-    bool in_quotes = false;
+	t_quote	q;
 
+	q.inDoubleQuote = 0;
+	q.inSingleQuote = 0;
 	i = 0;
-        // char q;
-
-    // printf("str==%s=\n",s+*x);
-    // while (s[(*x)+i])
-    // {
-    //     if(s[(*x)+i]=='\'')
-    //         q = '\'';
-    //     if(s[(*x)+i]=='"')
-    //         q='"';
-    //     if(s[(*x)+i]=='\''||s[(*x)+i]=='"')
-    //         break;  
-    //     i++;
-    // }
-    // i =0;
-	while (s[*x] == c )
+	while (s[*x] == c)
 		(*x)++;
 	while (s[(*x) + i])
-    {
-        if (s[(*x) + i] == c && (!in_quotes || !get_q(s+*x)))
-            break;
-        if (s[(*x)+i] == get_q(s+*x) ) 
-            in_quotes = !in_quotes;
+	{
+		if (!chacke_q(s[(*x) + i], &q) && s[(*x) + i] == c)
+			break ;
 		i++;
-    }
-    // printf("i==%d\n",i);
+	}
 	re = malloc (i + 1);
 	if (!re)
 		return (NULL);
@@ -110,7 +80,7 @@ static	char	*word(char  *s, char c, int *x)
 	return (re);
 }
 
-char	**ft_split_pip(char  *s, char c)
+char	**ft_split_pip(char *s, char c)
 {
 	char	**re;
 	int		x;
@@ -122,14 +92,12 @@ char	**ft_split_pip(char  *s, char c)
 	if (!s)
 		return (NULL);
 	t = c_word(s, c);
-    // printf("%d\n",t);
 	re = (char **)malloc((1 + t) * sizeof(char *));
 	if (!re)
 		return (NULL);
 	while (j < t)
 	{
 		re[j] = word(s, c, &x);
-        // printf("%s\n",s);
 		if (!re[j])
 			return (is_free(re));
 		j++;
@@ -138,33 +106,21 @@ char	**ft_split_pip(char  *s, char c)
 	return (re);
 }
 
-
 // char **get_parts_by_pip(char *str)
 // {
 //     char **re;
-
 //     re = ft_split(str,'|');
-
-    
-
-
-
 //     return re;
 // }
 // int main ()
 // {
-
-
 //     int x =0;
 // 	char *str ="> out cat -e out1 | wc -c" ;
 // 	printf("cmd = %s\n",str);
-
 //     while (ft_split_pip(str,'|')[x])
 //     {
-
 //     	printf("%s\n",ft_split_pip(str ,'|')[x]);
 //         x++;
 //     }
-    
 // }
 
