@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 22:42:15 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/27 15:42:00 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,29 @@ void	unset_hadnling(t_envp **env, char **cmd)
 	return ;
 }
 
-void	adding_env(t_envp **env, char *str)
+bool	adding_env(t_envp **env, char *str)
 {
 	t_envp	*pos;
+	bool	status;
 
-	pos = search_env(*env, str);
-	if (pos)
+	status = true;
+	if (!valid_export(str))
 	{
-		free(pos->env);
-		pos->env = ft_strdup(str);
-		return ;
+		ft_putstr_fd("minishell: export: '", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		status = false;
 	}
-	creat_list(env, str);
-	return ;
+	else
+	{
+		pos = search_env(*env, str);
+		if (pos)
+		{
+			free(pos->env);
+			pos->env = ft_strdup(str);
+			return (status);
+		}
+		creat_list(env, str);
+	}
+	return (status);
 }

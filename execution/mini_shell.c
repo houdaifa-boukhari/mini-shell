@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/26 14:04:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/27 13:59:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int main(int argc, char **argv, char **envp)
 			execution(&cmd, &env, fd);
 		else
 			execut_(&cmd ,&env, fd);
-			dprintf(2, "status is %d\n", exit_status);
 		clear_list(&cmd);
 	}
 	rl_clear_history();

@@ -1,18 +1,19 @@
-
-
-
 #include "min.h"
 
+
+void	remove_file(t_inp *inp);
 
 void	clear_list(t_args_n **lst)
 {
 	t_args_n	*nexttte;
     int i =0;
+
 	if (!lst)
 		return ;
 	while (*lst)
 	{
         i =0;
+        remove_file((*lst)->inp);
 		nexttte = (*lst)->next;
         // free((*lst)->cmd);
         // free((*lst)->arguments);
@@ -22,12 +23,11 @@ void	clear_list(t_args_n **lst)
         }
         free((*lst)->arguments);
 
-
 		i =0;
         while ((*lst)->inp[i].inp)
         {
 			free((*lst)->inp[i].inp);
-            i++;     
+            i++;
         }
 		free((*lst)->inp);
         i =0;

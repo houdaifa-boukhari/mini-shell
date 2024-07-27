@@ -6,20 +6,19 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/18 13:36:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/27 16:09:03 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void	ft_exit(char **cmd)
+void	ft_exit(t_args_n **args, char **cmd)
 {
 	int	flag;
 	int	status;
 
 	flag = 0;
 	status = 0;
-	// clear_list(cmd);
 	ft_putstr_fd("exit\n", 2);
 	if (count_arrays(cmd) >= 2)
 	{
@@ -27,26 +26,26 @@ void	ft_exit(char **cmd)
 		if (flag == 1)
 		{
 			printf("mini-shell: exit: %s: numeric argument required\n", cmd[1]);
-			exit(255);
+			exit(2);
 		}
 		else if (count_arrays(cmd) > 2)
 		{
 			ft_putstr_fd("mini-shell: exit: too many arguments\n", 2);
 			return ;
 		}
-		exit(status);
 	}
-	else
-		exit(status);
+	clear_list(args);
+	exit(status);
 }
 
-void	print_env(t_envp *envp)
+int	print_env(t_envp *envp)
 {
 	while (envp)
 	{
 		printf("%s\n", envp->env);
 		envp = envp->next;
 	}
+	return (0);
 }
 
 void	print_export(t_envp *envp)
@@ -139,7 +138,7 @@ void	get_current_path(void)
 		perror("getcwd");
 }
 
-void	change_directory(char **cmd, t_envp *env)
+int	change_directory(char **cmd, t_envp *env)
 {
 	int		status;
 	int		n_args;
@@ -154,34 +153,43 @@ void	change_directory(char **cmd, t_envp *env)
 	{
 		status = chdir(path);
 		if (!path)
-			ft_putendl_fd("mini-shell: cd: HOME not set", 2);
+			ft_putendl_fd("minishell: cd: HOME not set", 2);
 	}
 	else if (n_args == 2)
 		status = chdir(cmd[1]);
 	else
-		ft_putendl_fd("mini-shell: cd: too many arguments", 2);
+		ft_putendl_fd("minishell: cd: too many arguments", 2);
 	if (status == -1 && n_args != 1)
 	{
-		ft_putstr_fd("mini-shell: cd: ", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
 		ft_putstr_fd(cmd[1], 2);
 		ft_putendl_fd(": No such file or directory", 2);
 	}
+	if (status == -1)
+		return (1);
+	return (0);
 }
 
-void	export_handling(char **cmd, t_envp **env)
+bool	export_handling(char **cmd, t_envp **env)
 {
 	int		i;
 	char	*new_env;
+	bool	status;
 
 	i = 1;
+	status = true;
 	if (count_arrays(cmd) == 1)
 	{
 		print_export(*env);
-		return ;
+		return (0);
 	}
 	while (cmd[i])
 	{
-		adding_env(env, cmd[i]);
+		if (status)
+			status = adding_env(env, cmd[i]);
+		else
+			adding_env(env, cmd[i]);
 		i++;
 	}
+	return (status);
 }
