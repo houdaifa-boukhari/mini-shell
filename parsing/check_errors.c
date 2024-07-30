@@ -1,66 +1,59 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_errors.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024-07-26 21:08:16 by zbakkas           #+#    #+#             */
+/*   Updated: 2024-07-26 21:08:16 by zbakkas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "min.h"
 
-
-// ls >>    <|
-int check_errors(char *str,int err)
+int	check_errors_p(char *str, int l, int *x)
 {
 
-    int x =0;
-    int l;
-    t_quote q = {0, 0};
+	if (!l && !str[(*x) + 1] && str[(*x)] == '|')
+		return (printf("%s `%c'\n", TOKENS_ERROR, str[(*x)++]), 1);
+	else if (!l && (str[(*x)] == '<' || str[(*x)] == '>'))
+	{
+		(*x)++;
+		if (str[(*x)] == str[(*x) - 1])
+			(*x)++;
+		while (str[(*x)] && str[(*x)] == ' ')
+			(*x)++;
+		if (!str[(*x)])
+			return (printf("%s\n", NEW_LINE_ERROR), 1);
+		else if (str[(*x)] == '|' || str[(*x)] == '<' || str[(*x)] == '>')
+			return (printf("%s `%c'\n", TOKENS_ERROR, str[(*x)++]), 1);
+	}
+	else
+		(*x)++;
+	return (0);
+}
 
-    while (str[x])
-    {
-        l=chacke_q(str[x],&q);
-        // printf("l=%d\n",l);
-        if(!l && !str[x+1] && str[x] == '|')
-        {
-            printf("%s `%c'\n",TOKENS_ERROR,str[x++]);
-            return 1;
-        }
-        else if(!l&&(str[x] == '<' || str[x] == '>'))
-        {
-            x++;
-            if(str[x]==str[x-1])
-                x++;
-            // else   
-            //     printf("%s '%c'\n",TOKENS_ERROR,str[x]);
-            while (str[x]&& str[x]==' ')
-                x++;
-            if(!str[x])
-            {
-                printf("%s\n",NEW_LINE_ERROR);
-                return 1;
-            }
-            else if(str[x]=='|' || str[x]=='<' || str[x]=='>' )
-            {
-                printf("%s `%c'\n",TOKENS_ERROR,str[x++]);
-                return 1;
-            }
-        }
-        else    
-            x++;
-        // if(chacke_q(str[x],&q))
+int	check_errors(char *str, int err)
+{
+	int		x;
+	int		l;
+	t_quote	q;
 
-    }
-    if(l==2)
-    {
-        printf("%s `%c'\n",QUOTES_ERROR,'"');
-        return 1;
-    }
-    else if(l==1)
-    {
-        printf("%s `%c'\n",QUOTES_ERROR,'\'');
-        return 1;
-    }
-    if(err)
-    {
-        printf("%s\n",AMBIGUOUS_ERROR);
-        return 1;
-    }
-    return 0;
-
+	q.inDoubleQuote = 0;
+	q.inSingleQuote = 0;
+	x = 0;
+	while (str[x])
+	{
+		l = chacke_q(str[x], &q);
+		if (check_errors_p(str, l, &x))
+			return (1);
+	}
+	if (l == 2)
+		return (printf("%s `%c'\n", QUOTES_ERROR, '"'), 1);
+	else if (l == 1)
+		return (printf("%s `%c'\n", QUOTES_ERROR, '\''), 1);
+	if (err)
+		return (printf("%s\n", AMBIGUOUS_ERROR), 1);
+	return (0);
 }

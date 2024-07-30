@@ -95,7 +95,7 @@ char	**split_part(char *s)
 	x = 0;
 	j = 0;
 	if (!s)
-		return (NULL);
+		return (free(s), NULL);
 	t = c_word(s, ' ');
 	re = (char **)malloc((1 + t) * sizeof(char *));
 	if (!re)

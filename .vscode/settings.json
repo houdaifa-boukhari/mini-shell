@@ -3,7 +3,8 @@
         "mini_shell.h": "c",
         "libft.h": "c",
         "ou": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "readline.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

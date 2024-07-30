@@ -1,8 +1,31 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_list.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024-07-26 20:59:58 by zbakkas           #+#    #+#             */
+/*   Updated: 2024-07-26 20:59:58 by zbakkas          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "min.h"
 
+static void	free_double_str(char **str)
+{
+	int	x;
 
+	x = 0;
+	if (!str)
+		return ;
+	while (str[x])
+	{
+		free(str[x++]);
+	}
+	free(str);
+	str = (NULL);
+}
 
 t_args_n	*ft_lstnew_one(char **str)
 {
@@ -11,13 +34,9 @@ t_args_n	*ft_lstnew_one(char **str)
 	new_node = malloc(sizeof(t_args_n));
 	if (!new_node)
 		return (NULL);
-	// new_node->cmd = get_cmd(str);
-    // new_node->flags = get_flages(str);
 	new_node->arguments = get_args(str);
 	new_node->inp = get_inp(str);
 	new_node->out = get_out(str);
-	// new_node->dependes = args.dependes[i];
-	// new_node->out = out;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -42,48 +61,31 @@ void	ft_lstadd_backk(t_args_n **lst, t_args_n *new)
 	lst = &re;
 }
 
-
-t_args_n *initialization_list(char *line,t_envp *env)
+t_args_n	*initialization_list(char *line, char **envp)
 {
-	t_args_n *list =NULL;
-	int err=0;
-	char * change_var_str = change_var(line,&err);
-	// printf("%s\n",change_var_str);
-	if(check_errors(line,err))
-		return NULL;
-	char **split_p = ft_split_pip(change_var_str,'|');
+	t_args_n	*list;
+	int			x;
+	char		*change_var_str;
+	char		**split_p;
+	char		**str;
 
+	list = NULL;
+	x = 0;
+	if (!line || !line[0])
+		return (NULL);
+	change_var_str = change_var(line, envp, &x);
+	if (check_errors(line, x))
+		return (free(change_var_str), NULL);
+	split_p = ft_split_pip(change_var_str, '|');
 	free(change_var_str);
-	// int  j =0;
-	// while (split_p[j])
-	// {
-	// 	printf("spl=%s\n",split_p[j++]);
-	// }
-	
-	// char **str =split_part(set_speece(str3));
-	int x= 0;
+	x = 0;
 	while (split_p[x])
 	{
-		
-		char **str =split_part(set_speece(split_p[x]));
-		// int k =0;
-		// while (str[k])
-		// {
-		// 	printf("%s\n",str[k++]);
-		// }
-		// printf("----\n");
-		
-		ft_lstadd_backk(&list,ft_lstnew_one(str));
-		free_arrays(str);
+		str = split_part(set_speece(split_p[x]));
+		ft_lstadd_backk(&list, ft_lstnew_one(str));
+		free_double_str(str);
 		x++;
 	}
-	free_arrays(split_p);
-	x=0;
-	// while ()
-	// {
-	// 	/* code */
-	// }
-	
-	return list;
-	
+	free_double_str(split_p);
+	return (list);
 }
