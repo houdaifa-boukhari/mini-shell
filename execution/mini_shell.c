@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/27 13:59:25 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:08:50 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-int	exit_status = 0;
+int	exit_status;
 
 int	count_cmds(t_args_n *lst)
 {
@@ -44,8 +44,11 @@ char	*get_line(void)
 			return (NULL);
 	}
 	add_history(line);
-	if (!line || !*line)
-		return (NULL);
+	if (!*line || !line)
+	{
+		free(line);
+		line = NULL;
+	}
 	return (line);
 }
 
@@ -78,9 +81,9 @@ int main(int argc, char **argv, char **envp)
 		fd.fd_out = fd.save_out;
 		run_allherdoc(cmd);
 		built_array(&env);
-		if (count_cmds(cmd) == 1)
+		if (cmd && count_cmds(cmd) == 1)
 			execution(&cmd, &env, fd);
-		else
+		else if (cmd)
 			execut_(&cmd ,&env, fd);
 		clear_list(&cmd);
 	}

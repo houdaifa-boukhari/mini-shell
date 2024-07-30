@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/27 16:09:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:01:02 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ bool	skip_flag_echo(char **cmd, int *idx)
 	return (check);
 }
 
-void	echo_handling(char **cmd, char **envp)
+int	echo_handling(char **cmd, char **envp)
 {
 	int		i;
 	bool	flag;
@@ -114,7 +114,7 @@ void	echo_handling(char **cmd, char **envp)
 	if (count_arrays(cmd) == 1)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		return ;
+		return (0);
 	}
 	flag = skip_flag_echo(cmd, &i);
 	while (cmd[i + 1])
@@ -126,16 +126,21 @@ void	echo_handling(char **cmd, char **envp)
 	ft_putstr_fd(cmd[i], STDOUT_FILENO);
 	if (!flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	return (0);
 }
 
-void	get_current_path(void)
+int	get_current_path(void)
 {
 	char	path[PATH_MAX];
 
 	if (getcwd(path, PATH_MAX))
+	{
 		printf("%s\n", path);
+		return (0);
+	}
 	else
 		perror("getcwd");
+	return (1);
 }
 
 int	change_directory(char **cmd, t_envp *env)

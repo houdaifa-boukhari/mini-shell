@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/27 14:30:53 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:54:31 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	run_allherdoc(t_args_n *cmd)
 {
 	int	i;
 
+	if (!cmd)
+		return ;
 	while (cmd)
 	{
 		i = 0;

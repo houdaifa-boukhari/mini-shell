@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/27 15:55:54 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:12:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 			{
 				perror((*cmd)->arguments[0]);
 				clear_list(cmd);
+				free_env(&(env->env));
 				exit(127);
 			}
 			if (execve(path, (*cmd)->arguments, env->envp) == -1)
@@ -85,6 +86,7 @@ void	wait_children(int *fd, int *pids, int size)
 		i++;
 	}
 	free(pids);
+	free(fd);
 }
 
 void	controle_fd(t_args_n *cmd, t_args_n **cmds, t_fd fd)
@@ -120,6 +122,7 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds,t_env *env, t_fd fd)
 		free(path);
 		clear_history();
 		clear_list(cmds);
+		free_env(&(env->env));
 		exit(127);
 	}
 	if (execve(path, cmd->arguments, env->envp) == -1)

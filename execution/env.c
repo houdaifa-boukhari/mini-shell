@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/27 16:11:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:59:08 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 	if (!ft_strcmp(cmd[0], BLT_CMDS[0]))
 		exit_status = change_directory(cmd, env->env);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[1]))
-		echo_handling(cmd, env->envp);
+		exit_status = echo_handling(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[2]))
-		get_current_path();
+		exit_status = get_current_path();
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[3]))
 	{
 		env->check = true;
@@ -80,7 +80,7 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[4]))
 	{
 		env->check = true;
-		unset_hadnling(&(env->env), cmd);
+		exit_status = unset_hadnling(&(env->env), cmd);
 	}
 	else if (!ft_strcmp(cmd[0], BLT_CMDS[5]))
 		exit_status = print_env(env->env);
