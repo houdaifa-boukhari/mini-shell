@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 14:12:36 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:53:49 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 				dup2(fd.fd_in, STDIN_FILENO);
 			if (managing_output((*cmd)->out, &fd))
 				dup2(fd.fd_out, STDOUT_FILENO);
-			path = get_path((*cmd)->arguments[0], env);
+			// dprintf(2, "path = %s\n", env->envp[0]);
+			path = get_path((*cmd)->arguments[0], env->envp);
 			if (!path)
 			{
 				perror((*cmd)->arguments[0]);
@@ -114,7 +115,7 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds,t_env *env, t_fd fd)
 	controle_fd(cmd, cmds, fd);
 	if (is_builtin(cmds, cmd->arguments, env))
 		exit(EXIT_SUCCESS);
-	path = get_path(cmd->arguments[0], env);
+	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
 		path = ft_strjoin(cmd->arguments[0], " :command not found\n");

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 13:22:42 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:37:13 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_error(t_args_n **cmd, char *msg, int status)
 	ft_putstr_fd(msg, STDERR_FILENO);
 	clear_list(cmd);
 	clear_history();
-	// close();
-	// close();
 	exit(status);
 }
 
@@ -30,9 +28,8 @@ void	remove_file(t_inp *inp)
 	while (inp[i].inp)
 	{
 		unlink(inp[i].inp);
-		i++;	
+		i++;
 	}
-	
 }
 
 int	*allocation_array(int size)
@@ -47,8 +44,8 @@ int	*allocation_array(int size)
 
 void	built_array(t_env *envirement)
 {
-	int	i;
-	int	size;
+	int		i;
+	int		size;
 	t_env	*env;
 	t_envp	*envp;
 
@@ -66,7 +63,7 @@ void	built_array(t_env *envirement)
 	while (i < size)
 	{
 		env->envp[i] = ft_strdup(envp->env);
-		envp= envp->next; 
+		envp = envp->next;
 		i++;
 	}
 	env->envp[i] = NULL;

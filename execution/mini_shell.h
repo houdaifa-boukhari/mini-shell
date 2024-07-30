@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 14:09:00 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 17:49:55 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,7 @@
 # include <readline/history.h>
 # include "../parsing/min.h"
 
-#define BLT_CMDS (char *[]){"cd", "echo", "pwd", "export", "unset", "env", "exit"}
-
-// #ifndef EXIT_STATUS_DEFINED
-// #define EXIT_STATUS_DEFINED
-
 extern int	exit_status;
-
-// #endif
-
-#ifndef S_ENVP_DEFINED
-#define S_ENVP_DEFINED
-
-typedef struct s_envp
-{
-	char			*env;
-	struct  s_envp	*prev;
-	struct  s_envp	*next;
-}                   t_envp;
-
-#endif // S_ENVP_DEFINED
 
 typedef struct s_env
 {
@@ -77,17 +58,18 @@ void	print_export(t_envp *envp);
 int		*allocation_array(int size);
 void	run_allherdoc(t_args_n *cmd);
 void	managing_herdoc(char **delim);
-char	*get_path(char *cmd, t_env *envp);
+char	*get_path(char *cmd, char **envp);
 t_envp	*search_env(t_envp *env, char *str);
 bool	adding_env(t_envp **env, char *str);
 void	ft_exit(t_args_n **args, char **cmd);
 void	creat_list(t_envp **envp, char *line);
+char	*search_in_env(char **envp, char *str);
 void	parsing_env(t_envp **env, char **envp);
 int		echo_handling(char **cmd, char **envp);
 bool	managing_input(t_inp *input, t_fd *fd);
 int		unset_hadnling(t_envp **env, char **cmd);
 bool	managing_output(t_out *output, t_fd *fd);
-int		change_directory(char **cmd, t_envp *env);
+int		change_directory(char **cmd, char **env);
 bool	export_handling(char **cmd, t_envp **envp);
 void	execut_(t_args_n **cmds, t_env *env, t_fd fd);
 void	execution(t_args_n **cmd, t_env *env, t_fd fd);

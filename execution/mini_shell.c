@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 13:08:50 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/30 16:31:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int main(int argc, char **argv, char **envp)
 			break ;
 		else if (!line)
 			continue ;
-		cmd = initialization_list(line, env.env);
+		cmd = initialization_list(line, env.envp);
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
