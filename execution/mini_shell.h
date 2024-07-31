@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 17:49:55 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:54:20 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int		*allocation_array(int size);
 void	run_allherdoc(t_args_n *cmd);
 void	managing_herdoc(char **delim);
 char	*get_path(char *cmd, char **envp);
+void	change_fd_ouput(int fd, int cfd);
+void	change_fd_in(int fd, t_args_n **cmd);
 t_envp	*search_env(t_envp *env, char *str);
 bool	adding_env(t_envp **env, char *str);
 void	ft_exit(t_args_n **args, char **cmd);

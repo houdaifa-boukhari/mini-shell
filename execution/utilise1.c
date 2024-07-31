@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 16:37:13 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:34:00 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	ft_error(t_args_n **cmd, char *msg, int status)
 {
-	ft_putstr_fd(msg, STDERR_FILENO);
+	if ((*cmd)->arguments && *((*cmd)->arguments))
+		ft_putstr_fd(msg, STDERR_FILENO);
+	else
+		status = exit_status;
 	clear_list(cmd);
 	clear_history();
 	exit(status);

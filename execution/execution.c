@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 17:53:49 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:36:52 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,55 +16,28 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 {
 	char	*path;
 	int		status;
-	int st;
 
 	if (is_builtin(cmd, (*cmd)->arguments, env))
-		;
-	else
+		return ;
+	fd.pid = fork();
+	if (fd.pid == 0)
 	{
-		fd.pid = fork();
-		if (fd.pid == 0)
+		if (managing_input((*cmd)->inp, &fd))
+			dup2(fd.fd_in, STDIN_FILENO);
+		if (managing_output((*cmd)->out, &fd))
+			dup2(fd.fd_out, STDOUT_FILENO);
+		path = get_path((*cmd)->arguments[0], env->envp);
+		if (!path)
 		{
-			if (managing_input((*cmd)->inp, &fd))
-				dup2(fd.fd_in, STDIN_FILENO);
-			if (managing_output((*cmd)->out, &fd))
-				dup2(fd.fd_out, STDOUT_FILENO);
-			// dprintf(2, "path = %s\n", env->envp[0]);
-			path = get_path((*cmd)->arguments[0], env->envp);
-			if (!path)
-			{
-				perror((*cmd)->arguments[0]);
-				clear_list(cmd);
-				free_env(&(env->env));
-				exit(127);
-			}
-			if (execve(path, (*cmd)->arguments, env->envp) == -1)
-				ft_error(cmd, "failed execution", EXIT_FAILURE);
+			free_env(&(env->env));
+			ft_putstr_fd((*cmd)->arguments[0], STDERR_FILENO);
+			ft_error(cmd, ": command not found\n", 127);
 		}
-		else
-		{
-			waitpid(fd.pid, &status, 0);
-			exit_status = WEXITSTATUS(status);
-		}
+		if (execve(path, (*cmd)->arguments, env->envp) == -1)
+			ft_error(cmd, "failed execution", EXIT_FAILURE);
 	}
-}
-
-void	change_fd_ouput(int fd, int cfd)
-{
-	if (dup2(fd, STDOUT_FILENO) < 0)
-		perror("dup2 failed");
-	close(cfd);
-	close(fd);
-}
-
-void	change_fd_in(int fd, t_args_n **cmd)
-{
-	if (dup2(fd, STDIN_FILENO) < 0)
-	{
-		close(fd);
-		ft_error(cmd, "dup2 failed", EXIT_FAILURE);
-	}
-	close(fd);
+	waitpid(fd.pid, &status, 0);
+	exit_status = WEXITSTATUS(status);
 }
 
 void	wait_children(int *fd, int *pids, int size)
@@ -81,6 +54,8 @@ void	wait_children(int *fd, int *pids, int size)
 		if (waitpid(pids[i], &status, 0) == -1)
 		{
 			perror("waitpid");
+			free(pids);
+			free(fd);
 			exit(EXIT_FAILURE);
 		}
 		exit_status = WEXITSTATUS(status);
@@ -107,14 +82,14 @@ void	controle_fd(t_args_n *cmd, t_args_n **cmds, t_fd fd)
 	close(fd.fd_out);
 }
 
-void	execute_child(t_args_n *cmd, t_args_n **cmds,t_env *env, t_fd fd)
+void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 {
 	char		*path;
 
 	path = NULL;
 	controle_fd(cmd, cmds, fd);
 	if (is_builtin(cmds, cmd->arguments, env))
-		exit(EXIT_SUCCESS);
+		exit(exit_status);
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
@@ -148,16 +123,13 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 		fd.pid = fork();
 		if (fd.pid == 0)
 			execute_child(cmd, cmds, env, fd);
-		else
-		{
-			pids[i++] = fd.pid;
-			pipe_r[i - 1] = fd.fd_p[0];
-			close(fd.fd_p[1]);
-			if (!(cmd)->next)
-				break ;
-			fd.fd_in = fd.fd_p[0];
-			cmd = (cmd)->next;
-		}
+		pids[i++] = fd.pid;
+		pipe_r[i - 1] = fd.fd_p[0];
+		close(fd.fd_p[1]);
+		if (!(cmd)->next)
+			break ;
+		fd.fd_in = fd.fd_p[0];
+		cmd = (cmd)->next;
 	}
 	wait_children(pipe_r, pids, i);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 17:04:34 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:53:53 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,22 @@ void	managing_herdoc(char **delim)
 	close(tmp_fd);
 	free(*delim);
 	*delim = file;
+}
+
+void	change_fd_ouput(int fd, int cfd)
+{
+	if (dup2(fd, STDOUT_FILENO) < 0)
+		perror("dup2 failed");
+	close(cfd);
+	close(fd);
+}
+
+void	change_fd_in(int fd, t_args_n **cmd)
+{
+	if (dup2(fd, STDIN_FILENO) < 0)
+	{
+		close(fd);
+		ft_error(cmd, "dup2 failed", EXIT_FAILURE);
+	}
+	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 16:31:07 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:27:12 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,17 @@ char	*get_line(void)
 	return (line);
 }
 
-int main(int argc, char **argv, char **envp)
+void	initilze_struct(t_env *env, char **envp, t_fd *fd)
+{
+	env->envp = NULL;
+	env->env = NULL;
+	env->check = true;
+	fd->save_in = dup(STDIN_FILENO);
+	fd->save_out = dup(STDOUT_FILENO);
+	parsing_env(&(env->env), envp);
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_args_n	*cmd;
 	t_env		env;
@@ -61,13 +71,8 @@ int main(int argc, char **argv, char **envp)
 	int			status;
 
 	status = 0;
-	env.envp = NULL;
-	env.env = NULL;
-	env.check = true;
 	cmd = NULL;
-	fd.save_in = dup(STDIN_FILENO);
-	fd.save_out = dup(STDOUT_FILENO);
-	parsing_env(&(env.env), envp);
+	initilze_struct(&env, envp, &fd);
 	while (1)
 	{
 		line = get_line();
@@ -84,7 +89,7 @@ int main(int argc, char **argv, char **envp)
 		if (cmd && count_cmds(cmd) == 1)
 			execution(&cmd, &env, fd);
 		else if (cmd)
-			execut_(&cmd ,&env, fd);
+			execut_(&cmd ,&env , fd);
 		clear_list(&cmd);
 	}
 	rl_clear_history();
