@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 14:27:12 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-int	exit_status;
+int	g_exit_status;
 
 int	count_cmds(t_args_n *lst)
 {

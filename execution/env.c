@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 13:43:21 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,23 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env)
 void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
-		exit_status = change_directory(cmd, env->envp);
+		g_exit_status = change_directory(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], "echo"))
-		exit_status = echo_handling(cmd, env->envp);
+		g_exit_status = echo_handling(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], "pwd"))
-		exit_status = get_current_path();
+		g_exit_status = get_current_path();
 	else if (!ft_strcmp(cmd[0], "export"))
 	{
 		env->check = true;
-		exit_status = export_handling(cmd, &(env->env));
+		g_exit_status = export_handling(cmd, &(env->env));
 	}
 	else if (!ft_strcmp(cmd[0], "unset"))
 	{
 		env->check = true;
-		exit_status = unset_hadnling(&(env->env), cmd);
+		g_exit_status = unset_hadnling(&(env->env), cmd);
 	}
 	else if (!ft_strcmp(cmd[0], "env"))
-		exit_status = print_env(env->env);
+		g_exit_status = print_env(env->env);
 	else if (!ft_strcmp(cmd[0], "exit"))
 		ft_exit(args, cmd);
 }

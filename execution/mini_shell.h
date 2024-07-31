@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 13:54:20 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:47:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <readline/history.h>
 # include "../parsing/min.h"
 
-extern int	exit_status;
+extern int	g_exit_status;
 
 typedef struct s_env
 {

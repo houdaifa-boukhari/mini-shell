@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_one.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-29 20:27:17 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "min.h"
 
-// $? exit_status
+// $? g_exit_status
 static int	change_var_count_one(int *x)
 {
 	char	*str;
 	int		i;
 
-	str = ft_itoa(exit_status);
+	str = ft_itoa(g_exit_status);
 	i = ft_strlen(str);
 	(*x)++;
 	free(str);

@@ -42,13 +42,13 @@ static int	check_erroe_var(char *var, int j, int l, char *str)
 	return (0);
 }
 
-//$? exit_status
+//$? g_exit_status
 static void	change_var_one(int *x, char *re, int *i)
 {
 	char	*str;
 	int		a;
 
-	str = ft_itoa(exit_status);
+	str = ft_itoa(g_exit_status);
 	a = 0;
 	while (str[a])
 	{

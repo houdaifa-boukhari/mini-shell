@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:35:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/07/30 17:08:38 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "../execution/libft/libft.h"
 #include <stdbool.h>
 
-extern int	exit_status;
+extern int	g_exit_status;
 
 # define TOKENS_ERROR ": syntax error near unexpected token"
 # define NEW_LINE_ERROR ": syntax error near unexpected token `newline'"

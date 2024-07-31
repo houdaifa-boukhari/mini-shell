@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 14:36:52 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 			ft_error(cmd, "failed execution", EXIT_FAILURE);
 	}
 	waitpid(fd.pid, &status, 0);
-	exit_status = WEXITSTATUS(status);
+	g_exit_status = WEXITSTATUS(status);
 }
 
 void	wait_children(int *fd, int *pids, int size)
@@ -58,7 +58,7 @@ void	wait_children(int *fd, int *pids, int size)
 			free(fd);
 			exit(EXIT_FAILURE);
 		}
-		exit_status = WEXITSTATUS(status);
+		g_exit_status = WEXITSTATUS(status);
 		i++;
 	}
 	free(pids);
@@ -89,7 +89,7 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 	path = NULL;
 	controle_fd(cmd, cmds, fd);
 	if (is_builtin(cmds, cmd->arguments, env))
-		exit(exit_status);
+		exit(g_exit_status);
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
