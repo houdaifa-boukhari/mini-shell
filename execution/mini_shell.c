@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/03 11:55:55 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,27 @@ int	count_cmds(t_args_n *lst)
 	return (count);
 }
 
-char	*get_line(void)
+char	*get_line(bool *ctl_d)
 {
 	char	*line;
 
 	if (isatty(STDIN_FILENO))
+	{
 		line = readline("hel-bouk>$ ");
+		if (!line)
+		{
+			*ctl_d = true;
+			printf("exit\n");
+		}
+	}
 	else
 	{
 		line = get_next_line(STDIN_FILENO);
 		if (check_line(line))
 			line[ft_strlen(line) - 1] = '\0';
-		if (!line)
-			return (NULL);
 	}
 	add_history(line);
-	if (!*line || !line)
+	if (!line || !*line)
 	{
 		free(line);
 		line = NULL;
@@ -62,21 +67,35 @@ void	initilze_struct(t_env *env, char **envp, t_fd *fd)
 	parsing_env(&(env->env), envp);
 }
 
+void signal_handler(int signal)
+{
+    if (signal == SIGINT) {
+        printf("\n");
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_args_n	*cmd;
 	t_env		env;
 	t_fd		fd;
 	char		*line;
+	bool		ctl_d;
 	int			status;
 
 	status = 0;
 	cmd = NULL;
+	ctl_d = false;
+	signal(SIGINT, signal_handler);
+    signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);
 	while (1)
 	{
-		line = get_line();
-		if (!isatty(STDIN_FILENO) && !line)
+		line = get_line(&ctl_d);
+		if ((!isatty(STDIN_FILENO) && !line) || ctl_d)
 			break ;
 		else if (!line)
 			continue ;
@@ -92,6 +111,8 @@ int	main(int argc, char **argv, char **envp)
 			execut_(&cmd ,&env , fd);
 		clear_list(&cmd);
 	}
+	free_arrays(env.envp);
+	free_env(&(env.env));
 	rl_clear_history();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/03 12:05:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 			ft_error(cmd, ": command not found\n", 127);
 		}
 		if (execve(path, (*cmd)->arguments, env->envp) == -1)
-			ft_error(cmd, "failed execution", EXIT_FAILURE);
+			ft_error(cmd, "failed execution\n", EXIT_FAILURE);
 	}
 	waitpid(fd.pid, &status, 0);
 	g_exit_status = WEXITSTATUS(status);

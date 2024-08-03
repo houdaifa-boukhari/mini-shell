@@ -1,4 +1,4 @@
-NAME = mini-shell
+NAME = minishell
 HEADER = mini-shell.h
 SRC =  mini_shell.c env.c execution.c tools_list.c utilise_blt.c utilise.c utilise1.c \
 	 ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c herdoc.c \
