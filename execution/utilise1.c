@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 14:45:25 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:10:56 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ bool	valid_export(char *str)
 	i = 1;
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (false);
-	while (str[i])
+	while (str[i] != '=')
 	{
-		if (!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '=')
+		if (!ft_isalpha(str[i]) && !ft_isdigit(str[i]))
 			return (false);
 		i++;
 	}

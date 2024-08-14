@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/03 12:05:07 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/05 13:24:55 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,10 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
-		path = ft_strjoin(cmd->arguments[0], " :command not found\n");
+		if (*cmd->arguments[0])
+			path = ft_strjoin(cmd->arguments[0], " :command not found\n");
+		else
+			path = ft_strjoin(cmd->arguments[0], ":command not found\n");
 		ft_putstr_fd(path, 2);
 		free(path);
 		clear_history();

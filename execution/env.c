@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/03 12:04:25 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/11 12:04:11 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,27 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env)
 	return (false);
 }
 
+void	update_oldPWD(t_env *env)
+{
+	char	path[PATH_MAX];
+	char	*line;
+
+	if (getcwd(path, PATH_MAX))
+	{
+		line = ft_strjoin("OLDPWD=", path);
+		env->check = true;
+		adding_env(&(env->env), line);
+		free(line);
+	}
+}
+
 void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
+	{
+		update_oldPWD(env);
 		g_exit_status = change_directory(cmd, env->envp);
+	}
 	else if (!ft_strcmp(cmd[0], "echo"))
 		g_exit_status = echo_handling(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], "pwd"))

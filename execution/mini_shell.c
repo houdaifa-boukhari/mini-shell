@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/03 11:55:55 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/11 12:56:39 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	initilze_struct(t_env *env, char **envp, t_fd *fd)
 	parsing_env(&(env->env), envp);
 }
 
-void signal_handler(int signal)
+void	signal_handler(int signal)
 {
     if (signal == SIGINT) {
         printf("\n");
@@ -75,6 +75,35 @@ void signal_handler(int signal)
         rl_replace_line("", 0);
         rl_redisplay();
     }
+}
+
+void	read_line(t_fd fd, t_envp *env)
+{
+	char		*line;
+	bool		ctl_d;
+	t_args_n	*cmd;
+	
+	cmd = NULL;
+	while (1)
+	{
+		line = get_line(&ctl_d);
+		if ((!isatty(STDIN_FILENO) && !line) || ctl_d)
+			break ;
+		else if (!line)
+			continue ;
+		cmd = initialization_list(line, env.envp);
+		free(line);
+		fd.fd_in = fd.save_in;
+		fd.fd_out = fd.save_out;
+		run_allherdoc(cmd);
+		built_array(&env);
+		if (cmd && count_cmds(cmd) == 1)
+			execution(&cmd, &env, fd);
+		else if (cmd)
+			execut_(&cmd ,&env , fd);
+		clear_list(&cmd);
+	}
+	
 }
 
 int	main(int argc, char **argv, char **envp)
