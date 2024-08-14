@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/31 14:47:07 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:51:41 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ typedef struct s_fd
 int		check_line(char *str);
 int		size_env(t_envp *lst);
 void	free_env(t_envp **env);
-int		get_current_path(void);
+int		get_current_path(t_fd fd);
 char	*get_next_line(int fd);
 bool	valid_export(char *str);
-int		print_env(t_envp *envp);
+int		print_env(t_envp *envp, t_fd fd);
 void	sorte_env(t_envp *head);
 void	remove_file(t_inp *inp);
 void	built_array(t_env *env);
@@ -67,7 +67,7 @@ void	ft_exit(t_args_n **args, char **cmd);
 void	creat_list(t_envp **envp, char *line);
 char	*search_in_env(char **envp, char *str);
 void	parsing_env(t_envp **env, char **envp);
-int		echo_handling(char **cmd, char **envp);
+int		echo_handling(char **cmd, char **envp, t_fd fd);
 bool	managing_input(t_inp *input, t_fd *fd);
 int		unset_hadnling(t_envp **env, char **cmd);
 bool	managing_output(t_out *output, t_fd *fd);
@@ -76,7 +76,7 @@ bool	export_handling(char **cmd, t_envp **envp);
 void	execut_(t_args_n **cmds, t_env *env, t_fd fd);
 void	execution(t_args_n **cmd, t_env *env, t_fd fd);
 void	ft_error(t_args_n **cmd, char *msg, int status);
-void	handle_blt(t_args_n **args, char **cmd, t_env *env);
-bool	is_builtin(t_args_n **args, char **cmd, t_env *env);
+void	handle_blt(t_args_n **args, char **cmd, t_env *env, t_fd fd);
+bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd);
 
 #endif

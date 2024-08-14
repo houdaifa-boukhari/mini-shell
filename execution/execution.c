@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/05 13:24:55 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:44:19 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 	char	*path;
 	int		status;
 
-	if (is_builtin(cmd, (*cmd)->arguments, env))
+	if (is_builtin(cmd, (*cmd)->arguments, env, fd))
 		return ;
 	fd.pid = fork();
 	if (fd.pid == 0)
@@ -88,7 +88,7 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 
 	path = NULL;
 	controle_fd(cmd, cmds, fd);
-	if (is_builtin(cmds, cmd->arguments, env))
+	if (is_builtin(cmds, cmd->arguments, env, fd))
 		exit(g_exit_status);
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)

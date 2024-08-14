@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/14 12:59:36 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:17:17 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	signal_handler(int signal)
     if (signal == SIGINT) {
         printf("\n");
         rl_on_new_line();
-        rl_replace_line("", 0);
+        // rl_replace_line("", 0);
         rl_redisplay();
     }
 }
@@ -142,6 +142,6 @@ int	main(int argc, char **argv, char **envp)
 	// }
 	free_arrays(env.envp);
 	free_env(&(env.env));
-	rl_clear_history();
+	// rl_clear_history();
 	return (0);
 }

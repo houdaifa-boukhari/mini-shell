@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 17:03:40 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:42:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	skip_flag_echo(char **cmd, int *idx)
 	return (check);
 }
 
-int	echo_handling(char **cmd, char **envp)
+int	echo_handling(char **cmd, char **envp, t_fd fd)
 {
 	int		i;
 	bool	flag;
@@ -48,29 +48,29 @@ int	echo_handling(char **cmd, char **envp)
 	i = 1;
 	if (count_arrays(cmd) == 1)
 	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', fd.fd_out);
 		return (0);
 	}
 	flag = skip_flag_echo(cmd, &i);
 	while (cmd[i + 1])
 	{
-		ft_putstr_fd(cmd[i], STDOUT_FILENO);
-		ft_putchar_fd(' ', STDOUT_FILENO);
+		ft_putstr_fd(cmd[i], fd.fd_out);
+		ft_putchar_fd(' ', fd.fd_out);
 		i++;
 	}
-	ft_putstr_fd(cmd[i], STDOUT_FILENO);
+	ft_putstr_fd(cmd[i], fd.fd_out);
 	if (!flag)
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', fd.fd_out);
 	return (0);
 }
 
-int	get_current_path(void)
+int	get_current_path(t_fd fd)
 {
 	char	path[PATH_MAX];
 
 	if (getcwd(path, PATH_MAX))
 	{
-		printf("%s\n", path);
+		ft_putendl_fd(path, fd.fd_out);
 		return (0);
 	}
 	else

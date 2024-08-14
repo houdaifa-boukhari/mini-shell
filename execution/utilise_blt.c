@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/14 13:03:54 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 21:52:23 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ void	ft_exit(t_args_n **args, char **cmd)
 	exit(status);
 }
 
-int	print_env(t_envp *envp)
+int	print_env(t_envp *envp, t_fd fd)
 {
 	while (envp)
 	{
-		printf("%s\n", envp->env);
+		ft_putendl_fd(envp->env, fd.fd_out);
 		envp = envp->next;
 	}
 	return (0);
