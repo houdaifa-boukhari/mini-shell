@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/11 12:56:39 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:59:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	signal_handler(int signal)
     }
 }
 
-void	read_line(t_fd fd, t_envp *env)
+void	read_line(t_fd fd, t_env *env)
 {
 	char		*line;
 	bool		ctl_d;
@@ -91,19 +91,18 @@ void	read_line(t_fd fd, t_envp *env)
 			break ;
 		else if (!line)
 			continue ;
-		cmd = initialization_list(line, env.envp);
+		built_array(env);
+		cmd = initialization_list(line, env->envp);
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
 		run_allherdoc(cmd);
-		built_array(&env);
 		if (cmd && count_cmds(cmd) == 1)
-			execution(&cmd, &env, fd);
+			execution(&cmd, env, fd);
 		else if (cmd)
-			execut_(&cmd ,&env , fd);
+			execut_(&cmd ,env , fd);
 		clear_list(&cmd);
 	}
-	
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -121,25 +120,26 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, signal_handler);
     signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);
-	while (1)
-	{
-		line = get_line(&ctl_d);
-		if ((!isatty(STDIN_FILENO) && !line) || ctl_d)
-			break ;
-		else if (!line)
-			continue ;
-		cmd = initialization_list(line, env.envp);
-		free(line);
-		fd.fd_in = fd.save_in;
-		fd.fd_out = fd.save_out;
-		run_allherdoc(cmd);
-		built_array(&env);
-		if (cmd && count_cmds(cmd) == 1)
-			execution(&cmd, &env, fd);
-		else if (cmd)
-			execut_(&cmd ,&env , fd);
-		clear_list(&cmd);
-	}
+	read_line(fd, &env);
+	// while (1)
+	// {
+	// 	line = get_line(&ctl_d);
+	// 	if ((!isatty(STDIN_FILENO) && !line) || ctl_d)
+	// 		break ;
+	// 	else if (!line)
+	// 		continue ;
+	// 	cmd = initialization_list(line, env.envp);
+	// 	free(line);
+	// 	fd.fd_in = fd.save_in;
+	// 	fd.fd_out = fd.save_out;
+	// 	run_allherdoc(cmd);
+	// 	built_array(&env);
+	// 	if (cmd && count_cmds(cmd) == 1)
+	// 		execution(&cmd, &env, fd);
+	// 	else if (cmd)
+	// 		execut_(&cmd ,&env , fd);
+	// 	clear_list(&cmd);
+	// }
 	free_arrays(env.envp);
 	free_env(&(env.env));
 	rl_clear_history();

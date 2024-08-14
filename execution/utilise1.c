@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/04 16:10:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:56:25 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	remove_file(t_inp *inp)
 	i = 0;
 	while (inp[i].inp)
 	{
-		unlink(inp[i].inp);
+		if (inp[i].is_h)
+			unlink(inp[i].inp);
 		i++;
 	}
 }

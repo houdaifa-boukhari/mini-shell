@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/11 12:04:11 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:36:21 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*get_path(char *cmd, char **env)
 	char	**full_path;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0 && (!ft_strncmp(cmd, "/", 1) == 0
-			|| !ft_strncmp(cmd, "./", 2) == 0))
+	if (access(cmd, X_OK) == 0 && (ft_strncmp(cmd, "/", 1) == 0
+			|| ft_strncmp(cmd, "./", 2) == 0))
 		return (cmd);
 	path = ft_strjoin("/", cmd);
 	full_path = ft_split(search_in_env(env, "PATH"), ':');

@@ -19,7 +19,7 @@ parsing:
 	make all -C ../parsing
 
 $(NAME) : $(SRC)
-	$(CC)  $(LDFLAGS) $(LIBS) $(SRC) -lreadline  -o $(NAME)
+	$(CC)  $(LDFLAGS) $(LIBS) $(SRC) -lreadline -lreadline -L/goinfre/hel-bouk/homebrew/opt/readline/lib -I/goinfre/hel-bouk/homebrew/opt/readline/include -o $(NAME)
 
 # %.o : %.c $(HEADER)
 # 	$(CC) $(CFLAGS) -c $< -o $@
