@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/14 21:51:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:20:09 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ char	*get_path(char *cmd, char **env)
 	char	**full_path;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0 && (ft_strchr(cmd, '/')))
-		return (cmd);
-	path = ft_strjoin("/", cmd);
 	full_path = ft_split(search_in_env(env, "PATH"), ':');
+	if (access(cmd, X_OK) == 0 && ((!full_path) || (ft_strchr(cmd, '/'))))
+		return (free_arrays(full_path), cmd);
+	path = ft_strjoin("/", cmd);
 	if (!full_path || ft_strcmp(path, "/") == 0)
 		return (free(path), free_arrays(full_path), NULL);
 	while (full_path[i])
@@ -49,8 +49,16 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 		|| !ft_strcmp(cmd[0], "unset") || !ft_strcmp(cmd[0], "env")
 		|| !ft_strcmp(cmd[0], "exit"))
 	{
-		managing_output((*args)->out, &fd);
-		handle_blt(args, cmd, env, fd);
+		if (count_arrays((*args)->arguments) == 1)
+		{
+			if (managing_output((*args)->out, &fd))
+				dup2(fd. fd_out, STDOUT_FILENO);
+			close(fd.fd_out);
+			handle_blt(args, cmd, env);
+			dup2(fd.save_out, STDOUT_FILENO);
+		}
+		else
+			handle_blt(args, cmd, env);
 		return (true);
 	}
 	return (false);
@@ -70,7 +78,7 @@ void	update_oldPWD(t_env *env)
 	}
 }
 
-void	handle_blt(t_args_n **args, char **cmd, t_env *env, t_fd fd)
+void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 	{
@@ -79,9 +87,9 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 		g_exit_status = change_directory(cmd, env->envp);
 	}
 	else if (!ft_strcmp(cmd[0], "echo"))
-		g_exit_status = echo_handling(cmd, env->envp, fd);
+		g_exit_status = echo_handling(cmd, env->envp);
 	else if (!ft_strcmp(cmd[0], "pwd"))
-		g_exit_status = get_current_path(fd);
+		g_exit_status = get_current_path();
 	else if (!ft_strcmp(cmd[0], "export"))
 	{
 		env->check = true;
@@ -93,7 +101,7 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 		g_exit_status = unset_hadnling(&(env->env), cmd);
 	}
 	else if (!ft_strcmp(cmd[0], "env"))
-		g_exit_status = print_env(env->env, fd);
+		g_exit_status = print_env(env->env);
 	else if (!ft_strcmp(cmd[0], "exit"))
 		ft_exit(args, cmd);
 }

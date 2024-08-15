@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/14 21:44:19 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/15 13:20:18 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		if (execve(path, (*cmd)->arguments, env->envp) == -1)
 			ft_error(cmd, "failed execution\n", EXIT_FAILURE);
 	}
+	else if (fd.pid < 0)
+		perror("fork");
 	waitpid(fd.pid, &status, 0);
 	g_exit_status = WEXITSTATUS(status);
 }
@@ -54,9 +56,7 @@ void	wait_children(int *fd, int *pids, int size)
 		if (waitpid(pids[i], &status, 0) == -1)
 		{
 			perror("waitpid");
-			free(pids);
-			free(fd);
-			exit(EXIT_FAILURE);
+			break ;
 		}
 		g_exit_status = WEXITSTATUS(status);
 		i++;
@@ -124,6 +124,8 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 	{
 		pipe(fd.fd_p);
 		fd.pid = fork();
+		if (fd.pid < 0)
+			perror("fork");
 		if (fd.pid == 0)
 			execute_child(cmd, cmds, env, fd);
 		pids[i++] = fd.pid;

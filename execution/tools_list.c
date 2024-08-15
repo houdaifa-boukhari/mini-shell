@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/30 17:04:51 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/15 12:18:04 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ bool	managing_output(t_out *output, t_fd *fd)
 		return (false);
 	while (output[i].out)
 	{
-		close(fd->fd_out);
+		if (fd->fd_out != fd->save_out)
+			close(fd->fd_out);
 		if (output[i].is_a)
 			fd->fd_out = open(output[i].out,
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
