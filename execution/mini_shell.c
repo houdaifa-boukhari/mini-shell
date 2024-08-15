@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/15 12:24:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/15 21:36:31 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	read_line(t_fd fd, t_env *env)
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
-		run_allherdoc(cmd);
+		run_allherdoc(cmd, env);
 		if (cmd && count_cmds(cmd) == 1)
 			execution(&cmd, env, fd);
 		else if (cmd)

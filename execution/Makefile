@@ -4,7 +4,7 @@ SRC =  mini_shell.c env.c execution.c tools_list.c utilise_blt.c utilise.c utili
 	 ../get_next_line/get_next_line.c ../get_next_line/get_next_line_utils.c herdoc.c \
 	 utilise_blt1.c
 CFLAGS =
-LDFLAGS =
+LDFLAGS = -g -fsanitize=address
 LIBS =  ./libft/*.c ../parsing/*.c
 RM = rm -f
 CC = gcc

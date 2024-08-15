@@ -4,7 +4,8 @@
         "libft.h": "c",
         "ou": "c",
         "stdbool.h": "c",
-        "readline.h": "c"
+        "readline.h": "c",
+        "_types.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

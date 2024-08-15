@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 00:34:40 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/03/16 12:16:42 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:30:33 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ char	*strjoin(char *str, char *str1)
 			new_str[i] = str[i];
 			i++;
 		}
+		free(str);
+		str = NULL;
 	}
 	while (*str1)
 		new_str[i++] = *str1++;
 	new_str[i] = '\0';
-	free(str);
-	str = NULL;
 	return (new_str);
 }
 

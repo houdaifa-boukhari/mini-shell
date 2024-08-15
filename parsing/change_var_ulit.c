@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/07/31 13:42:42 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/15 16:48:37 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	get_name_var_count(char *str)
 	{
 		if (is_v)
 		{
-			if (str[x] == ' ' || str[x] == '\'' || str[x] == '"')
+			if (str[x] == ' ' || str[x] == '\n' ||str[x] == '\'' || str[x] == '"')
 				break ;
 			i++;
 		}
@@ -72,7 +72,7 @@ char	*get_name_var(char *str, int *j)
 	{
 		if (is_v)
 		{
-			if (str[x] == ' ' || str[x] == '\'' || str[x] == '"')
+			if (str[x] == '\n' || str[x] == ' ' || str[x] == '\'' || str[x] == '"')
 				break ;
 			re[i++] = str[x];
 			(*j)++;

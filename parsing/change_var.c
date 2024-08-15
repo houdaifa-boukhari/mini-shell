@@ -30,6 +30,7 @@ static int	check_erroe_var(char *var, int j, int l, char *str)
 		while (ll >= 0)
 		{
 			ll--;
+			printf("str is %s, and idx is:%d\n", str, ll);
 			if ((str[ll] == '>' || str[ll] == '<' ))
 			{
 				if ((!var || k))
