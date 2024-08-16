@@ -6,29 +6,34 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/15 21:28:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/16 11:19:31 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-void	run_allherdoc(t_args_n *cmd, t_env *env)
+bool	run_allherdoc(t_args_n *cmd, t_env *env)
 {
-	int	i;
+	int		i;
+	bool	check;
 
+	check = true;
 	if (!cmd)
-		return ;
+		return (false);
 	while (cmd)
 	{
 		i = 0;
 		while (cmd->inp[i].inp)
 		{
 			if (cmd->inp[i].is_h)
-				managing_herdoc(&(cmd->inp[i].inp), env);
+				check = managing_herdoc(&(cmd->inp[i].inp), env);
+			if (!check)
+				break ;
 			i++;
 		}
 		cmd = cmd->next;
 	}
+	return (check);
 }
 
 char	*catch_env(char *line, t_env *env)
@@ -59,32 +64,69 @@ char	*catch_env(char *line, t_env *env)
 	return (free(line), line = NULL, re);
 }
 
-void	managing_herdoc(char **delim, t_env *env)
+void	signal_herdoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		ft_putendl_fd("", STDOUT_FILENO);
+		exit(1);
+	}
+}
+
+void	read_herdoc(char *delim, int tmp_fd, t_env *env)
 {
 	char	*line;
-	char	*file;
-	int		tmp_fd;
 	char	*line_tmp;
-
-	*delim = ft_strjoin(*delim, "\n");
-	file = ft_strjoin("/tmp/", *delim);
-	tmp_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (tmp_fd < 0)
-		perror("open failed");
+	
+	signal(SIGINT, signal_herdoc);
 	while (1)
 	{
 		write(STDOUT_FILENO, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		if (ft_strcmp(line, *delim) == 0)
+		if (ft_strcmp(line, delim) == 0)
 			break ;
-		line_tmp = catch_env(line, env);
-		write(tmp_fd, line_tmp, ft_strlen(line_tmp));
-		free(line_tmp);
+		if (line)
+		{
+			line_tmp = catch_env(line, env);
+			write(tmp_fd, line_tmp, ft_strlen(line_tmp));
+			free(line_tmp);
+		}
+		else
+			break ;
 	}
 	free(line);
 	close(tmp_fd);
-	free(*delim);
-	*delim = file;
+	free(delim);
+	exit(0);
+}
+
+bool	managing_herdoc(char **delim, t_env *env)
+{
+	char	*file;
+	int		tmp_fd;
+	int		pid;
+	int		status;
+
+	*delim = strjoin(*delim, "\n");
+	file = ft_strjoin("/tmp/", *delim);
+	tmp_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (tmp_fd < 0)
+		perror("open failed");
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid == 0)
+		read_herdoc(*delim, tmp_fd, env);
+	else	
+	{
+		waitpid(0, &status, 0);
+		status = WEXITSTATUS(status);
+		signal(SIGINT, signal_handler);
+		free(*delim);
+		*delim = file;
+	}
+	if (status == 1)
+		return (false);
+	return (true);
 }
 
 void	change_fd_ouput(int fd, int cfd)
