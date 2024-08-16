@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/15 13:20:18 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/16 12:23:05 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 	else if (fd.pid < 0)
 		perror("fork");
 	waitpid(fd.pid, &status, 0);
-	g_exit_status = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_exit_status = WTERMSIG(status) + 128;
 }
 
 void	wait_children(int *fd, int *pids, int size)
@@ -58,7 +61,10 @@ void	wait_children(int *fd, int *pids, int size)
 			perror("waitpid");
 			break ;
 		}
-		g_exit_status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_exit_status = WTERMSIG(status) + 128;
 		i++;
 	}
 	free(pids);

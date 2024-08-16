@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/16 11:19:31 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/16 12:21:35 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ bool	run_allherdoc(t_args_n *cmd, t_env *env)
 			if (cmd->inp[i].is_h)
 				check = managing_herdoc(&(cmd->inp[i].inp), env);
 			if (!check)
+			{
+				g_exit_status = EXIT_FAILURE;
 				break ;
+			}
 			i++;
 		}
 		cmd = cmd->next;
