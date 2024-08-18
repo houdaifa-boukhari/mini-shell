@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   set_speace_line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-26 21:40:50 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-26 21:40:50 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/26 21:40:50 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/16 12:04:05 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "min.h"
+
+int	is_sp(char c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
+}
 
 //re+=2 >> add after and befor
 int	set_speece_count(char *str)

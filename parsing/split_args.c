@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-24 15:52:14 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-24 15:52:14 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/24 15:52:14 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/16 12:05:36 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	chacke_q(char c, t_quote *q)
 		return (3);
 }
 
-static	int	c_word(char *s, char c)
+static	int	c_word(char *s)
 {
 	size_t	x;
 	int		re;
@@ -41,15 +41,13 @@ static	int	c_word(char *s, char c)
 	re = 0;
 	if (!s[x])
 		return (0);
-	if (s[x] && c == '\0')
-		return (1);
-	while (s[x] == c)
+	while (is_sp(s[x]))
 		x++;
 	if (s[x] == '\0')
 		return (0);
 	while (s[x])
 	{
-		if (!chacke_q(s[x], &q) && c == s[x] && c != s[x + 1]
+		if (!chacke_q(s[x], &q) &&  is_sp(s[x]) && !is_sp(s[x + 1])
 			&& x < ft_strlen(s) - 1)
 			re++;
 		x++;
@@ -57,7 +55,7 @@ static	int	c_word(char *s, char c)
 	return (re + 1);
 }
 
-static char	*word(char *s, char c, int *x)
+static char	*word(char *s, int *x)
 {
 	int		i;
 	char	*re;
@@ -67,11 +65,11 @@ static char	*word(char *s, char c, int *x)
 	q.inDoubleQuote = 0;
 	q.inSingleQuote = 0;
 	i = 0;
-	while (s[*x] == c)
+	while (is_sp(s[*x]))
 		(*x)++;
 	while (s[(*x) + i])
 	{
-		if (!chacke_q(s[*x + i], &q) && s[(*x) + i] == c)
+		if (!chacke_q(s[*x + i], &q) && is_sp(s[(*x) + i]))
 			break ;
 		i++;
 	}
@@ -96,13 +94,13 @@ char	**split_part(char *s)
 	j = 0;
 	if (!s)
 		return (free(s), NULL);
-	t = c_word(s, ' ');
+	t = c_word(s);
 	re = (char **)malloc((1 + t) * sizeof(char *));
 	if (!re)
 		return (NULL);
 	while (j < t)
 	{
-		re[j] = word(s, ' ', &x);
+		re[j] = word(s, &x);
 		j++;
 	}
 	re[j] = NULL;

@@ -1,18 +1,16 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   change_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-28 15:45:21 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/16 18:53:02 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "min.h"
-
 
 static int	check_erroe_var(char *var, int j, int l, char *str)
 {
@@ -22,27 +20,27 @@ static int	check_erroe_var(char *var, int j, int l, char *str)
 	ll = -1;
 	k = 0;
 	while (var && var[++ll] && !k)
-		if (var[ll] == ' ')
+		if (is_sp(var[ll]))
 			k = 1;
 	ll = j;
 	if (l != 2 && str[j])
 	{
-		while (ll >= 0)
+		while (ll > 0)
 		{
 			ll--;
 			if ((str[ll] == '>' || str[ll] == '<' ))
 			{
-				if ((!var || k))
+				if ((!var || !var[0] || k))
 					return (1);
 			}
-			if (str[ll] != ' ')
+			if (!is_sp(str[ll]))
 				break ;
 		}
 	}
 	return (0);
 }
 
-//$? g_exit_status
+//$? exit_status
 static void	change_var_one(int *x, char *re, int *i)
 {
 	char	*str;
@@ -74,17 +72,39 @@ static void change_var_tow(t_args_var *args,char *str,int *err,char **envp)
 		args->re[args->i++] = '"';
 	while (var && var[j])
 	{
-		if (j - 1 >= 0 && args->l != 2 && var[j - 1] == ' ' && var[j] != ' ')
+		if (j - 1 >= 0 && args->l != 2 && is_sp(var[j - 1]) && !is_sp(var[j]))
 			args->re[args->i++] = '"';
 		args->re[args->i++] = var[j];
-		if (args->l != 2 && var[j] != ' ' && (var[j + 1] == ' '
+		if (args->l != 2 && !is_sp(var[j]) && (is_sp(var[j + 1])
 				|| var[j + 1] == '\0'))
 			args->re[args->i++] = '"';
 		j++;
 	}
 }
 
-char *change_var(char *str, char **envp, int *err)
+// cat << $USER 
+static int	check_and_her_var(char *str, int x, t_args_var args)
+{
+	int	l;
+
+	l = 0;
+	while (x >= 0)
+	{
+		while (x >= 0 && (is_sp(str[x])))
+		{
+			x--;
+		}
+		if (str[x] == '<' && x - 1 >= 0 && str[x - 1] == '<')
+			l = 1;
+		x--;
+	}
+	if (!l && str[args.x] == '$' && args.l != 1 && str[args.x + 1]
+		&& !is_sp(str[args.x + 1]) && str[args.x + 1] != '$')
+		return (1);
+	return (0);
+}
+
+char	*change_var(char *str, char **envp, int *err)
 {
 	t_args_var	args;
 	t_quote		q;
@@ -97,12 +117,11 @@ char *change_var(char *str, char **envp, int *err)
 	while (str[++args.x])
 	{
 		args.l = chacke_q(str[args.x], &q);
-		if (str[args.x] == '$' && args.l != 1 && str[args.x + 1]
-			&& str[args.x + 1] != ' ' && str[args.x + 1] != '$')
+		if (check_and_her_var(str, args.x, args))
 		{
 			if (str[args.x + 1] == '?')
 				change_var_one(&args.x, args.re, &args.i);
-			else if (!(str[args.x + 1] == ' ' || str[args.x + 1] == '\''
+			else if (!(is_sp(str[args.x + 1]) || str[args.x + 1] == '\''
 					|| str[args.x + 1] == '"'))
 				change_var_tow(&args, str, err, envp);
 		}
@@ -112,5 +131,3 @@ char *change_var(char *str, char **envp, int *err)
 	args.re[args.i] = '\0';
 	return (args.re);
 }
-
-

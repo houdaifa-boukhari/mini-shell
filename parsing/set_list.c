@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-26 20:59:58 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-26 20:59:58 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/26 20:59:58 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/16 18:44:54 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ t_args_n	*initialization_list(char *line, char **envp)
 	if (!line || !line[0])
 		return (NULL);
 	change_var_str = change_var(line, envp, &x);
+	// printf("|%s|\n",change_var_str);
 	if (check_errors(line, x))
 		return (free(change_var_str), NULL);
 	split_p = ft_split_pip(change_var_str, '|');

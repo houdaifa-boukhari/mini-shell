@@ -24,7 +24,7 @@ void	clear_list(t_args_n **lst)
 	while (*lst)
 	{
 		i = 0;
-		remove_file((*lst)->inp);
+		// remove_file((*lst)->inp);
 		nexttte = (*lst)->next;
 		while ((*lst)->arguments[i])
 			free((*lst)->arguments[i++]);
