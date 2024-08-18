@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/15 12:18:04 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/16 13:15:53 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ bool	managing_output(t_out *output, t_fd *fd)
 			fd->fd_out = open(output[i].out,
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd->fd_out < 0)
+		{
 			perror(output[i].out);
+			exit(EXIT_FAILURE);
+		}
 		i++;
 	}
 	return (true);
