@@ -6,28 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/17 10:43:09 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:14:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mini_shell.h"
 
-int	g_exit_status;
-
-int	count_cmds(t_args_n *lst)
-{
-	int	count;
-
-	count = 0;
-	if (!lst)
-		return (count);
-	while (lst)
-	{
-		count++;
-		lst = lst->next;
-	}
-	return (count);
-}
+int		g_exit_status;
 
 char	*get_line(bool *ctl_d)
 {
@@ -67,24 +52,12 @@ void	initilze_struct(t_env *env, char **envp, t_fd *fd)
 	parsing_env(&(env->env), envp);
 }
 
-void	signal_handler(int signal)
-{
-	if (signal == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		g_exit_status = EXIT_FAILURE;
-	}
-}
-
 void	read_line(t_fd fd, t_env *env)
 {
 	char		*line;
 	bool		ctl_d;
 	t_args_n	*cmd;
-	
+
 	cmd = NULL;
 	while (1)
 	{
@@ -99,25 +72,26 @@ void	read_line(t_fd fd, t_env *env)
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
-		if (!run_allherdoc(cmd, env))
+		if (cmd && !run_allherdoc(cmd, env))
 			continue ;
 		if (cmd && count_cmds(cmd) == 1)
 			execution(&cmd, env, fd);
 		else if (cmd)
-			execut_(&cmd ,env , fd);
+			execut_(&cmd, env, fd);
 	}
 }
 
-// void	ll()
-// {
-// 	system("leaks -q minishell");
-// }
+void	ll(void)
+{
+	system("leaks -q minishell");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env		env;
-	t_fd		fd;
-	// atexit(ll);
+	t_env	env;
+	t_fd	fd;
+
+	atexit(ll);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);

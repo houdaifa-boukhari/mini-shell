@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/16 21:24:10 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:12:20 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 	if (is_builtin(cmd, (*cmd)->arguments, env, fd))
 		return ;
 	fd.pid = fork();
+	if (fd.pid < 0)
+		perror("fork");
 	if (fd.pid == 0)
 	{
 		if (managing_input((*cmd)->inp, &fd))
@@ -36,13 +38,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		if (execve(path, (*cmd)->arguments, env->envp) == -1)
 			ft_error(cmd, "failed execution\n", EXIT_FAILURE);
 	}
-	else if (fd.pid < 0)
-		perror("fork");
-	waitpid(fd.pid, &status, 0);
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		g_exit_status = WTERMSIG(status) + 128;
+	wait_child(fd);
 }
 
 void	wait_children(int *fd, int *pids, int size)
@@ -137,8 +133,6 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 		pids[i++] = fd.pid;
 		pipe_r[i - 1] = fd.fd_p[0];
 		close(fd.fd_p[1]);
-		if (!(cmd)->next)
-			break ;
 		fd.fd_in = fd.fd_p[0];
 		cmd = (cmd)->next;
 	}

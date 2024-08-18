@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/16 16:47:43 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:12:34 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ bool	managing_herdoc(char **delim, t_env *env);
 char	*get_path(char *cmd, char **envp);
 void	change_fd_ouput(int fd, int cfd);
 void	signal_handler(int signal);
+void	wait_child(t_fd fd);
 char	*strjoin(char *str, char *str1);;
 void	change_fd_in(int fd, t_args_n **cmd);
 t_envp	*search_env(t_envp *env, char *str);
