@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/20 10:39:13 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 11:29:54 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,17 @@ bool	controle_fd_blt(t_args_n *cmds, t_fd *fd)
 	flag = true;
 	count = count_cmds(cmds);
 	check = managing_output(cmds->out, fd, count, &flag);
-	if (check)
+	if (check && flag)
 		dup2(fd->fd_out, STDOUT_FILENO);
-	close(fd->fd_out);
-	if (flag == false)
-	{
-		dup2(fd->save_out, STDOUT_FILENO);
+	else
 		return (false);
-	}
+	close(fd->fd_out);
 	check = managing_input(cmds->inp, fd, count, &flag);
 	if (flag == false)
 	{
 		dup2(fd->save_out, STDOUT_FILENO);
 		return (false);
 	}
-	dup2(fd->save_out, STDOUT_FILENO);
 	return (true);
 }
 
@@ -82,7 +78,10 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 		if (count == 1)
 		{
 			if (controle_fd_blt(*args, &fd))
+			{
 				handle_blt(args, cmd, env);
+				dup2(fd.save_out, STDOUT_FILENO);
+			}
 		}
 		else
 			handle_blt(args, cmd, env);

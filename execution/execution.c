@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/20 10:22:43 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 11:12:02 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		if (!path)
 		{
 			free_env(&(env->env));
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd((*cmd)->arguments[0], STDERR_FILENO);
 			ft_error(cmd, ": command not found\n", 127);
 		}
@@ -83,7 +84,8 @@ void	controle_fd(t_args_n *cmd, t_args_n **cmds, t_fd fd)
 
 void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 {
-	char		*path;
+	char	*path;
+	char	*tmp;
 
 	path = NULL;
 	controle_fd(cmd, cmds, fd);
@@ -92,12 +94,14 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
+		tmp = ft_strjoin("minishell: ",cmd->arguments[0]);
 		if (*cmd->arguments[0])
-			path = ft_strjoin(cmd->arguments[0], " :command not found\n");
+			path = ft_strjoin(tmp, " :command not found\n");
 		else
-			path = ft_strjoin(cmd->arguments[0], ":command not found\n");
+			path = ft_strjoin(tmp, ":command not found\n");
 		ft_putstr_fd(path, 2);
 		free(path);
+		free(tmp);
 		clear_history();
 		clear_list(cmds);
 		free_env(&(env->env));
