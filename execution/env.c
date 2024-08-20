@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/18 13:00:33 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:39:13 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,38 @@ char	*get_path(char *cmd, char **env)
 	return (tmp);
 }
 
+bool	controle_fd_blt(t_args_n *cmds, t_fd *fd)
+{
+	int		count;
+	bool	flag;
+	bool	check;
+
+	flag = true;
+	count = count_cmds(cmds);
+	check = managing_output(cmds->out, fd, count, &flag);
+	if (check)
+		dup2(fd->fd_out, STDOUT_FILENO);
+	close(fd->fd_out);
+	if (flag == false)
+	{
+		dup2(fd->save_out, STDOUT_FILENO);
+		return (false);
+	}
+	check = managing_input(cmds->inp, fd, count, &flag);
+	if (flag == false)
+	{
+		dup2(fd->save_out, STDOUT_FILENO);
+		return (false);
+	}
+	dup2(fd->save_out, STDOUT_FILENO);
+	return (true);
+}
+
 bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 {
+	int	count;
+
+	count = count_cmds((*args));
 	if (!cmd || !*cmd)
 		return (false);
 	if (!ft_strcmp(cmd[0], "cd") || !ft_strcmp(cmd[0], "echo")
@@ -49,13 +79,10 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 		|| !ft_strcmp(cmd[0], "unset") || !ft_strcmp(cmd[0], "env")
 		|| !ft_strcmp(cmd[0], "exit"))
 	{
-		if (count_cmds((*args)) == 1)
+		if (count == 1)
 		{
-			if (managing_output((*args)->out, &fd))
-				dup2(fd. fd_out, STDOUT_FILENO);
-			close(fd.fd_out);
-			handle_blt(args, cmd, env);
-			dup2(fd.save_out, STDOUT_FILENO);
+			if (controle_fd_blt(*args, &fd))
+				handle_blt(args, cmd, env);
 		}
 		else
 			handle_blt(args, cmd, env);

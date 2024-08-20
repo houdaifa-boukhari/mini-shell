@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/18 16:14:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:12:20 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char **argv, char **envp)
 	t_env	env;
 	t_fd	fd;
 
-	atexit(ll);
+	// atexit(ll);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);
@@ -99,5 +99,5 @@ int	main(int argc, char **argv, char **envp)
 	free_arrays(env.envp);
 	free_env(&(env.env));
 	rl_clear_history();
-	return (0);
+	return (g_exit_status);
 }

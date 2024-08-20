@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/18 16:12:20 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:22:43 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		perror("fork");
 	if (fd.pid == 0)
 	{
-		if (managing_input((*cmd)->inp, &fd))
+		if (managing_input((*cmd)->inp, &fd, 2, NULL))
 			dup2(fd.fd_in, STDIN_FILENO);
-		if (managing_output((*cmd)->out, &fd))
+		if (managing_output((*cmd)->out, &fd, 2, NULL))
 			dup2(fd.fd_out, STDOUT_FILENO);
 		path = get_path((*cmd)->arguments[0], env->envp);
 		if (!path)
@@ -53,10 +53,7 @@ void	wait_children(int *fd, int *pids, int size)
 	while (i < size)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
-		{
-			perror("waitpid");
 			break ;
-		}
 		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
@@ -69,12 +66,12 @@ void	wait_children(int *fd, int *pids, int size)
 
 void	controle_fd(t_args_n *cmd, t_args_n **cmds, t_fd fd)
 {
-	if (managing_input(cmd->inp, &fd))
+	if (managing_input(cmd->inp, &fd, 2, NULL))
 		change_fd_in(fd.fd_in, cmds);
 	else if (fd.fd_in != 0)
 		change_fd_in(fd.fd_in, cmds);
 	close(fd.fd_in);
-	if (managing_output(cmd->out, &fd))
+	if (managing_output(cmd->out, &fd, 2, NULL))
 		change_fd_ouput(fd.fd_out, fd.fd_p[1]);
 	else if (cmd->next)
 		change_fd_ouput(fd.fd_p[1], fd.fd_p[0]);

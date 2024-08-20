@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/16 13:15:53 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:44:37 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	parsing_env(t_envp **env, char **envp)
 	}
 }
 
-bool	managing_input(t_inp *input, t_fd *fd)
+bool	managing_input(t_inp *input, t_fd *fd, int count, bool *flag)
 {
 	int	i;
 
@@ -63,21 +63,25 @@ bool	managing_input(t_inp *input, t_fd *fd)
 		if (fd->fd_in < 0)
 		{
 			perror(input[i].inp);
-			exit(EXIT_FAILURE);
+			if (count > 1)
+				exit(EXIT_FAILURE);
+			else
+				*flag = false;
+			return (false);
 		}
 		i++;
 	}
 	return (true);
 }
 
-bool	managing_output(t_out *output, t_fd *fd)
+bool	managing_output(t_out *output, t_fd *fd, int count, bool *flag)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (!output->out)
 		return (false);
-	while (output[i].out)
+	while (output[++i].out)
 	{
 		if (fd->fd_out != fd->save_out)
 			close(fd->fd_out);
@@ -90,24 +94,11 @@ bool	managing_output(t_out *output, t_fd *fd)
 		if (fd->fd_out < 0)
 		{
 			perror(output[i].out);
-			exit(EXIT_FAILURE);
+			if (count > 1)
+				exit(EXIT_FAILURE);
+			else
+				*flag = false;
 		}
-		i++;
 	}
 	return (true);
-}
-
-int	size_env(t_envp *lst)
-{
-	int	count;
-
-	count = 0;
-	if (!lst)
-		return (count);
-	while (lst)
-	{
-		count++;
-		lst = lst->next;
-	}
-	return (count);
 }

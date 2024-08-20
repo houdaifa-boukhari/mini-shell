@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/16 18:53:02 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:29:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_erroe_var(char *var, int j, int l, char *str)
 			ll--;
 			if ((str[ll] == '>' || str[ll] == '<' ))
 			{
-				if ((!var || !var[0] || k))
+				if ((!var || !var[0] || k) )
 					return (1);
 			}
 			if (!is_sp(str[ll]))
@@ -40,7 +40,7 @@ static int	check_erroe_var(char *var, int j, int l, char *str)
 	return (0);
 }
 
-//$? exit_status
+//$? g_exit_status
 static void	change_var_one(int *x, char *re, int *i)
 {
 	char	*str;
@@ -82,7 +82,7 @@ static void change_var_tow(t_args_var *args,char *str,int *err,char **envp)
 	}
 }
 
-// cat << $USER 
+// cat << $USER stoop in $USER not value of $USER
 static int	check_and_her_var(char *str, int x, t_args_var args)
 {
 	int	l;
@@ -94,7 +94,7 @@ static int	check_and_her_var(char *str, int x, t_args_var args)
 		{
 			x--;
 		}
-		if (str[x] == '<' && x - 1 >= 0 && str[x - 1] == '<')
+		if (x >= 0 && str[x] == '<' && x - 1 >= 0 && str[x - 1] == '<')
 			l = 1;
 		x--;
 	}

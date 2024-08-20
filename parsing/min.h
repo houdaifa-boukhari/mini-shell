@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:35:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/16 18:51:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:19:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
 extern int	g_exit_status;
 
 # define TOKENS_ERROR "minishell: syntax error near unexpected token"
-# define NEW_LINE_ERROR "minishell: syntax error near unexpected token `newline'"
+# define NEW_LINE_ERROR "minishell: syntax error near unexpected token `newline'\n"
 // # define HEREDOC_ERROR "minishell: syntax error near unexpected token `<<'"
 // # define APPEND_ERROR "minishell: syntax error near unexpected token `>>'"
 // # define IN_ERROR "minishell: syntax error near unexpected token `<'"
 // # define OUT_ERROR "minishell: syntax error near unexpected token `>'"
 
 # define QUOTES_ERROR "minishell: unexpected EOF while looking for matching"
-# define AMBIGUOUS_ERROR "minishell: ambiguous redirect"
+# define AMBIGUOUS_ERROR "minishell: ambiguous redirect\n"
 // # define SPACE_REDIRECTION_ERROR ": No such file or directory"
 
 

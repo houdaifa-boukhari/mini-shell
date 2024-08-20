@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/18 16:12:34 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/20 10:21:41 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	creat_list(t_envp **envp, char *line);
 char	*search_in_env(char **envp, char *str);
 void	parsing_env(t_envp **env, char **envp);
 int		echo_handling(char **cmd, char **envp);
-bool	managing_input(t_inp *input, t_fd *fd);
 int		unset_hadnling(t_envp **env, char **cmd);
-bool	managing_output(t_out *output, t_fd *fd);
+bool	managing_input(t_inp *input, t_fd *fd, int count, bool *flag);
+bool	managing_output(t_out *output, t_fd *fd, int count, bool *flag);
 int		change_directory(char **cmd, char **env);
 bool	export_handling(char **cmd, t_envp **envp);
 void	execut_(t_args_n **cmds, t_env *env, t_fd fd);
