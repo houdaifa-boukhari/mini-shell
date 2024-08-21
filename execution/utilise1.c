@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/16 19:11:23 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:37:52 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	ft_error(t_args_n **cmd, char *msg, int status)
 {
-	if ((*cmd)->arguments && *((*cmd)->arguments))
+	if ((*cmd)->arguments && (*cmd)->arguments && *((*cmd)->arguments))
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd((*cmd)->arguments[0], STDERR_FILENO);
 		ft_putstr_fd(msg, STDERR_FILENO);
+	}
 	else
 		status = g_exit_status;
 	clear_list(cmd);

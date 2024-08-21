@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 19:17:14 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:11:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,6 @@ void	initilze_struct(t_env *env, char **envp, t_fd *fd)
 	parsing_env(&(env->env), envp);
 }
 
-void print_(t_args_n *cmd)
-{
-	if (cmd->arguments)
-		printf("%s", cmd->arguments[0]);
-	if (!cmd->inp)
-		printf("NULL input\n");
-	if (cmd->out)
-		printf("NULL out\n");
-	
-}
-
 void	read_line(t_fd fd, t_env *env)
 {
 	char		*line;
@@ -80,7 +69,6 @@ void	read_line(t_fd fd, t_env *env)
 			continue ;
 		built_array(env);
 		cmd = initialization_list(line, env->envp);
-		// print_(cmd);
 		free(line);
 		fd.fd_in = fd.save_in;
 		fd.fd_out = fd.save_out;
@@ -93,17 +81,11 @@ void	read_line(t_fd fd, t_env *env)
 	}
 }
 
-void	ll(void)
-{
-	system("leaks -q minishell");
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_env	env;
 	t_fd	fd;
 
-	// atexit(ll);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);

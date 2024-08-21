@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 19:29:18 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:30:49 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ char	*get_path(char *cmd, char **env)
 		tmp = NULL;
 		i++;
 	}
-	free(path);
-	free_arrays(full_path);
-	return (tmp);
+	return (free(path), free_arrays(full_path), tmp);
 }
 
 bool	controle_fd_blt(t_args_n *cmds, t_fd *fd)
@@ -80,7 +78,7 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 		if (count == 1)
 		{
 			if (controle_fd_blt(*args, &fd))
-			{    
+			{
 				handle_blt(args, cmd, env);
 				dup2(fd.save_out, STDOUT_FILENO);
 			}

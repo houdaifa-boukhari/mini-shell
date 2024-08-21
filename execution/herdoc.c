@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 19:01:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:01:46 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ bool	run_allherdoc(t_args_n *cmd, t_env *env)
 
 char	*catch_env(char *line, t_env *env)
 {
-	char	*ss;
-	char	*var;
 	char	*re;
 	char	c[2];
-	char	*st;
 	int		x;
+	char	*st;
 
 	x = -1;
 	c[1] = '\0';
@@ -53,20 +51,15 @@ char	*catch_env(char *line, t_env *env)
 	{
 		c[0] = line[x];
 		if (line[x] == '$' && line[x + 1] && line[x + 1] != '$'
-			&& line[x + 1] != ' ')
-		{
-			ss = get_name_var(line + x, &x);
-			var = search_in_env(env->envp, ss);
-			if (var)
-				re = strjoin(re, var);
-			free(ss);
-		}
+			&& line[x + 1] != ' ' && line[x + 1] != '?')
+			re = handle_var(re, line, &x, env);
 		else if (line[x] == '$' && line[x + 1] && line[x + 1] == '?')
-        {
-            st = ft_itoa(g_exit_status);
-            re = strjoin(re, st);
-            free(st);
-        }
+		{
+			st = ft_itoa(g_exit_status);
+			re = strjoin(re, st);
+			free(st);
+			x++;
+		}
 		else
 			re = strjoin(re, c);
 	}

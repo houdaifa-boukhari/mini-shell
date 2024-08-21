@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/20 10:21:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:08:35 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	*get_path(char *cmd, char **envp);
 void	change_fd_ouput(int fd, int cfd);
 void	signal_handler(int signal);
 void	wait_child(t_fd fd);
-char	*strjoin(char *str, char *str1);;
+void	error_files(char *file);
+char	*strjoin(char *str, char *str1);
 void	change_fd_in(int fd, t_args_n **cmd);
 t_envp	*search_env(t_envp *env, char *str);
 bool	adding_env(t_envp **env, char *str);
@@ -72,6 +73,7 @@ char	*search_in_env(char **envp, char *str);
 void	parsing_env(t_envp **env, char **envp);
 int		echo_handling(char **cmd, char **envp);
 int		unset_hadnling(t_envp **env, char **cmd);
+char	*handle_var(char *re, char *line, int *x, t_env *env);
 bool	managing_input(t_inp *input, t_fd *fd, int count, bool *flag);
 bool	managing_output(t_out *output, t_fd *fd, int count, bool *flag);
 int		change_directory(char **cmd, char **env);

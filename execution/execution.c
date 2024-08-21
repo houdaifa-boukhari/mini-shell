@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 19:44:49 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:36:51 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,10 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		if (!path)
 		{
 			free_env(&(env->env));
-			if ((*cmd)->arguments && *(*cmd)->arguments)
-			{
-				ft_putstr_fd("minishell: ", STDERR_FILENO);
-				ft_putstr_fd((*cmd)->arguments[0], STDERR_FILENO);
-			}
 			ft_error(cmd, ": command not found\n", 127);
 		}
-		if (execve(path, (*cmd)->arguments, env->envp) == -1)
-			ft_error(cmd, "failed execution\n", EXIT_FAILURE);
+		execve(path, (*cmd)->arguments, env->envp);
+		exit(EXIT_FAILURE);
 	}
 	wait_child(fd);
 }
