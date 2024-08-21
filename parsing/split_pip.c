@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pip.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-24 15:40:48 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-24 15:40:48 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/24 15:40:48 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/21 20:36:56 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static	int	c_word( char *s, char c)
 	int		re;
 	t_quote	q;
 
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	x = 0;
 	re = 0;
 	if (!s[x])
@@ -59,8 +59,8 @@ static char	*word(char *s, char c, int *x)
 	int		j;
 	t_quote	q;
 
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	i = 0;
 	while (s[*x] == c)
 		(*x)++;
@@ -123,4 +123,3 @@ char	**ft_split_pip(char *s, char c)
 //         x++;
 //     }
 // }
-

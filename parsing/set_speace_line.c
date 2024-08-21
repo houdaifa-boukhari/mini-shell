@@ -6,7 +6,7 @@
 /*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:40:50 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/16 12:04:05 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/21 20:36:56 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	set_speece_count(char *str)
 	int		re;
 
 	x = 0;
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	re = ft_strlen(str);
 	while (str[x])
 	{
@@ -51,8 +51,8 @@ char	*set_speece(char *str)
 	int		i;
 	t_quote	q;
 
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	re = malloc(set_speece_count(str) + 1);
 	x = 0;
 	i = 0;
@@ -71,4 +71,3 @@ char	*set_speece(char *str)
 	re[i] = '\0';
 	return (re);
 }
-

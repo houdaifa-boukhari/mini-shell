@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 21:01:26 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:38:29 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ void	ft_exit(t_args_n **args, char **cmd)
 			g_exit_status = EXIT_FAILURE;
 			return ;
 		}
+		exit(status);
 	}
 	clear_list(args);
-	exit(status);
+	exit(g_exit_status);
 }
 
 int	print_env(t_envp *envp)

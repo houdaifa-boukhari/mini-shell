@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_args2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-24 16:50:38 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-24 16:50:38 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/24 16:50:38 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/21 20:36:56 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static int	whithout_q_count(char *str, int x)
 	int		l;
 	t_quote	q;
 
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	c = 0;
 	while (str[x])
 	{
@@ -44,8 +44,8 @@ char	*whithout_q(char *str)
 	int		l;
 	t_quote	q;
 
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	x = 0;
 	c = 0;
 	if (!str)

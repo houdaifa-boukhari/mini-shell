@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_one.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 16:20:00 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 20:38:52 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	change_var_count_one(int *x)
 	return (i);
 }
 
-static int	change_var_count_tow(char **envp,int l, int *x, char *str)
+static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 {
 	int		j;
 	char	*var;
@@ -35,8 +35,6 @@ static int	change_var_count_tow(char **envp,int l, int *x, char *str)
 	ss = get_name_var(str + *x, x);
 	var = search_in_env(envp, ss);
 	i = 0;
-	
-	// i += ft_strlen(var);
 	free(ss);
 	j = 0;
 	if (var && var[j] && l != 2)
@@ -55,7 +53,7 @@ static int	change_var_count_tow(char **envp,int l, int *x, char *str)
 }
 
 // cat << $USER stoop in $USER not value of $USER
-static int	  count_check_and_her_var(char *str, int x, int j,int l )
+static int	count_check_and_her_var(char *str, int x, int j, int l )
 {
 	int	ll;
 
@@ -75,6 +73,7 @@ static int	  count_check_and_her_var(char *str, int x, int j,int l )
 		return (1);
 	return (0);
 }
+
 int	change_var_count(char *str, char **envp)
 {
 	int		x;
@@ -82,20 +81,20 @@ int	change_var_count(char *str, char **envp)
 	int		l;
 	t_quote	q;
 
-	q.inDoubleQuote = 0;
-	q.inSingleQuote = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
 	x = -1;
 	i = 0;
 	while (str[++x])
 	{
 		l = chacke_q(str[x], &q);
-		if (count_check_and_her_var(str,x,x,l))
+		if (count_check_and_her_var(str, x, x, l))
 		{
 			if (str[x + 1] == '?')
 				i = i + change_var_count_one(&x);
 			else if (!(is_sp(str[x + 1]) || str[x + 1] == '\''
 					|| str[x + 1] == '"'))
-				i = i + (change_var_count_tow(envp, l, &x, str) );
+				i = i + (change_var_count_tow(envp, l, &x, str));
 		}
 		else
 			i++;

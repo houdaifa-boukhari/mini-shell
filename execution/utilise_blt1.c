@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/20 10:40:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 21:35:18 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,18 @@ bool	skip_flag_echo(char **cmd, int *idx)
 int	echo_handling(char **cmd, char **envp)
 {
 	int		i;
+	int		count;
 	bool	flag;
 
 	i = 1;
-	if (count_arrays(cmd) == 1)
+	count = count_arrays(cmd);
+	if (count == 1)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		return (0);
 	}
 	flag = skip_flag_echo(cmd, &i);
-	while (cmd[i + 1])
+	while (i < count - 1)
 	{
 		ft_putstr_fd(cmd[i], STDOUT_FILENO);
 		ft_putchar_fd(' ', STDOUT_FILENO);
