@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:52:14 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/16 12:05:36 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/21 16:42:24 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,19 +108,30 @@ char	**split_part(char *s)
 	return (re);
 }
 
-// int main()
-// {
-//     char *str0 ="ls \"\" -a \"\" -l";
-//     char *str1 ="l\"s\"> \"hello  <'worde\"  \"-l -a\" \"\">\"\" 'out'";
-//     char *str2 ="l\"s\"< 'hello  \">> worde'  \"-l -a\">> out >f";
-//     char *str3 ="'cat'\"<\" \" min '2\" -e";
-//     printf("%s\n",str3);
-//    printf("%s\n", set_speece(str3));
-// char ** str =split_part(set_speece(str3));
-// int x =0;
-// while (str[x])
-// {
-//     printf("%s\n",str[x]);
-//     x++;
-// }
-// }
+char*strjoin_parsing(char *start, char *buff)
+{
+char*re;
+int xx;
+int x;
+
+x = 0;
+xx = 0;
+if (!start)
+{
+start = malloc(1);
+start[0] = '\0';
+}
+if (!start || !buff)
+return (0);
+re = malloc(ft_strlen(start) + ft_strlen(buff) + 1);
+if (!re)
+return (NULL);
+while (start[x])
+re[xx++] = start[x++];
+x = 0;
+while (buff[x])
+re[xx++] = buff[x++];
+re[xx] = '\0';
+free(start);
+return (re);
+}

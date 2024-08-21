@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_ulit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/18 13:28:01 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 14:48:54 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*search_in_env(char **envp, char *str)
 
 static int	get_name_var_count(char *str)
 {
-	char	*re;
 	int		x;
 	int		is_v;
 	int		i;
@@ -47,7 +46,7 @@ static int	get_name_var_count(char *str)
 			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) && str[x] != '_' && str[x - 1] != '$')
 				break ;
 			i++;
-			if (!ft_isalpha(str[x]) && str[x - 1] == '$')
+			if (!ft_isalpha(str[x]) && str[x - 1] == '$'&& str[x] != '_')
 				break ;
 		}
 		if (str[x] == '$')
@@ -76,7 +75,7 @@ char	*get_name_var(char *str, int *j)
 				break ;
 			re[i++] = str[x];
 			(*j)++;
-			if (!ft_isalpha(str[x]) && str[x - 1] == '$')
+			if (!ft_isalpha(str[x]) && str[x - 1] == '$' && str[x] != '_')
 				break ;
 		}
 		if (str[x] == '$')

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 12:36:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 15:31:35 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_exit(t_args_n **args, char **cmd)
 
 	flag = 0;
 	status = 0;
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	// ft_putstr_fd("exit\n", STDOUT_FILENO);
 	if (count_arrays(cmd) >= 2)
 	{
 		status = atoi_(cmd[1], &flag);

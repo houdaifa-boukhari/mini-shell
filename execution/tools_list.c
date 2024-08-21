@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/20 11:04:12 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:29:16 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ bool	managing_input(t_inp *input, t_fd *fd, int count, bool *flag)
 		fd->fd_in = open(input[i].inp, O_RDONLY);
 		if (fd->fd_in < 0)
 		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			perror(input[i].inp);
 			if (count > 1)
 				exit(EXIT_FAILURE);
@@ -93,6 +94,7 @@ bool	managing_output(t_out *output, t_fd *fd, int count, bool *flag)
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd->fd_out < 0)
 		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			perror(output[i].out);
 			if (count > 1)
 				exit(EXIT_FAILURE);

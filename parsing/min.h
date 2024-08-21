@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 18:35:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/18 16:19:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 16:43:46 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 
 extern int	g_exit_status;
 
+// #endif
+
+
 # define TOKENS_ERROR "minishell: syntax error near unexpected token"
 # define NEW_LINE_ERROR "minishell: syntax error near unexpected token `newline'\n"
 // # define HEREDOC_ERROR "minishell: syntax error near unexpected token `<<'"
@@ -35,7 +38,6 @@ extern int	g_exit_status;
 
 
 /////////////////////////////////////////////////
-
 typedef struct s_envp
 {
 	char			*env;
@@ -58,12 +60,15 @@ typedef struct s_inp
 	char *inp;
 	bool is_h;
 
+	
+
 } t_inp;
 
 typedef struct s_out
 {
 	char *out;
 	bool is_a;
+
 
 } t_out;
 ///////change_var////
@@ -73,6 +78,7 @@ typedef struct s_args_var
 	int		l;
 	char	*re;
 	int		i;
+	int c_var;
 }	t_args_var;
 /////////////////////
 
@@ -97,7 +103,7 @@ char *set_speece( char *str) ;
 // char **get_flages(char *str);
 // char *get_cmd(char *str);
 char *change_var(char * str, char **envp, int *err);
-int	change_var_count(char *str, char **envp, int *err);
+int	change_var_count(char *str, char **envp);
 char	*get_name_var(char *str, int *j);
 char	*search_in_env(char **envp, char *str);
 
@@ -113,8 +119,12 @@ void	ft_lstiterr(t_args_n *lst);
 void	clear_list(t_args_n **lst);
 
 char	*whithout_q(char *str);
-int	is_sp(char c);
+
 int check_errors(char *str,int err);
 int chacke_q(char c,t_quote *q);
+int	is_sp(char c);
+
+char*strjoin_parsing(char *start, char *buff);
+
 
 #endif
