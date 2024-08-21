@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/20 11:12:02 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 11:08:01 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	wait_children(int *fd, int *pids, int size)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
 			break ;
-		if (WIFEXITED(status))
+		if (WIFEXITED(status)) 
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			g_exit_status = WTERMSIG(status) + 128;
