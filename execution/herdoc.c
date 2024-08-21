@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 11:13:09 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:01:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*catch_env(char *line, t_env *env)
 	char	*var;
 	char	*re;
 	char	c[2];
+	char	*st;
 	int		x;
 
 	x = -1;
@@ -60,6 +61,12 @@ char	*catch_env(char *line, t_env *env)
 				re = strjoin(re, var);
 			free(ss);
 		}
+		else if (line[x] == '$' && line[x + 1] && line[x + 1] == '?')
+        {
+            st = ft_itoa(g_exit_status);
+            re = strjoin(re, st);
+            free(st);
+        }
 		else
 			re = strjoin(re, c);
 	}

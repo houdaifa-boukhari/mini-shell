@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 11:08:01 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:44:49 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		if (!path)
 		{
 			free_env(&(env->env));
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd((*cmd)->arguments[0], STDERR_FILENO);
+			if ((*cmd)->arguments && *(*cmd)->arguments)
+			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
+				ft_putstr_fd((*cmd)->arguments[0], STDERR_FILENO);
+			}
 			ft_error(cmd, ": command not found\n", 127);
 		}
 		if (execve(path, (*cmd)->arguments, env->envp) == -1)
@@ -94,8 +97,8 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
-		tmp = ft_strjoin("minishell: ",cmd->arguments[0]);
-		if (*cmd->arguments[0])
+		tmp = ft_strjoin("minishell: ", cmd->arguments[0]);
+		if (cmd->arguments && cmd->arguments[0] && *cmd->arguments[0])
 			path = ft_strjoin(tmp, " :command not found\n");
 		else
 			path = ft_strjoin(tmp, ":command not found\n");

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 12:24:18 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:29:18 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*get_path(char *cmd, char **env)
 	char	**full_path;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	full_path = ft_split(search_in_env(env, "PATH"), ':');
 	if (access(cmd, X_OK) == 0 && ((!full_path) || (ft_strchr(cmd, '/'))))
 		return (free_arrays(full_path), cmd);
