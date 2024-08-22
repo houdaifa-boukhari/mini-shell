@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 11:02:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:57:15 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ bool	controle_fd_blt(t_args_n *cmds, t_fd *fd)
 		dup2(fd->fd_out, STDOUT_FILENO);
 	if (!flag)
 		return (false);
-	close(fd->fd_out);
 	return (true);
 }
 
@@ -87,28 +86,10 @@ bool	is_builtin(t_args_n **args, char **cmd, t_env *env, t_fd fd)
 	return (false);
 }
 
-void	update_oldpwd(t_env *env)
-{
-	char	path[PATH_MAX];
-	char	*line;
-
-	if (getcwd(path, PATH_MAX))
-	{
-		line = ft_strjoin("OLDPWD=", path);
-		env->check = true;
-		adding_env(&(env->env), line);
-		free(line);
-	}
-}
-
 void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
-	{
-		if (count_arrays(cmd) != 1 || ft_strcmp("~", cmd[1]) != 0)
-			update_oldpwd(env);
 		g_exit_status = change_directory(cmd, env->envp);
-	}
 	else if (!ft_strcmp(cmd[0], "echo"))
 		g_exit_status = echo_handling(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
@@ -126,5 +107,9 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 	else if (!ft_strcmp(cmd[0], "env"))
 		g_exit_status = print_env(env->env);
 	else if (!ft_strcmp(cmd[0], "exit"))
+	{
+		close(3);
+		close(4);
 		ft_exit(args, cmd);
+	}
 }

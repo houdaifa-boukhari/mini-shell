@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 16:14:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:00:01 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,7 @@ int	main(int ac, char **av, char **envp)
 	free_arrays(env.envp);
 	free_env(&(env.env));
 	rl_clear_history();
+	close(3);
+	close(4);
 	return (g_exit_status);
 }

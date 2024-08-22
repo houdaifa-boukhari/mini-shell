@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 10:25:18 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 18:02:21 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ bool	managing_herdoc(char **delim, t_env *env)
 		*delim = file;
 	}
 	if (status == 1)
-		return (false);
-	return (true);
+		return (close(tmp_fd), false);
+	return (close(tmp_fd), true);
 }

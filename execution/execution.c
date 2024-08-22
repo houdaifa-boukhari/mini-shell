@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 16:13:17 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:51:52 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 	{
 		pipe(fd.fd_p);
 		fd.pid = fork();
-		if (fd.pid < 0)
-			perror("fork");
+		if (error_fork(fd))
+			break ;
 		if (fd.pid == 0)
 			execute_child(cmd, cmds, env, fd);
 		pids[i++] = fd.pid;

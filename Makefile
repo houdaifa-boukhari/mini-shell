@@ -25,7 +25,7 @@ libft:
 	@make bonus -C ./libft
 
 $(NAME) : $(OBJS)
-	@$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(Debugs) $(OBJS) -o $(NAME)
+	@$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(OBJS) -o $(NAME)
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) $(OREAD) -c $< -o $@
 

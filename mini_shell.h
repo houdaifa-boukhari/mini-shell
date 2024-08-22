@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 16:01:57 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:51:41 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ typedef struct s_fd
 	int				fd_p[2];
 	int				pid;
 }					t_fd;
-
+bool				error_fork(t_fd fd);
+void				error_files(char *file);
+void				give_error(t_args_n *cmd);
 int					check_line(char *str);
 int					size_env(t_envp *lst);
 void				free_env(t_envp **env);
