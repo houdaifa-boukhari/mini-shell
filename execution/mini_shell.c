@@ -6,11 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 21:11:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 int		g_exit_status;
 
@@ -81,11 +81,13 @@ void	read_line(t_fd fd, t_env *env)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_env	env;
 	t_fd	fd;
 
+	(void)ac;
+	(void)av;
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);

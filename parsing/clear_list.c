@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clear_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:37:16 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 20:29:36 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 10:20:58 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 void	remove_file(t_inp *inp);
 
@@ -24,7 +24,7 @@ void	clear_list(t_args_n **lst)
 	while (*lst)
 	{
 		i = 0;
-		// remove_file((*lst)->inp);
+		remove_file((*lst)->inp);
 		nexttte = (*lst)->next;
 		while ((*lst)->arguments[i])
 			free((*lst)->arguments[i++]);

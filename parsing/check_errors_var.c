@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors_var.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:21:41 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 20:36:56 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 09:53:29 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 typedef struct s_args_var_err
 {

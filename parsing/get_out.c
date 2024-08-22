@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_out.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-25 20:50:44 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-25 20:50:44 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/25 20:50:44 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/22 09:53:37 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 static int	get_out_count(char **str)
 {

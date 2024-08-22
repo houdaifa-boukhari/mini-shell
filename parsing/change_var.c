@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   change_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 20:36:56 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 10:21:37 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 static int	is_her(char *str, int x)
 {
@@ -37,7 +37,7 @@ static void	change_var_one(int *x, char *re, int *i)
 	(*x)++;
 }
 
-static void	change_var_tow(t_args_var *args, char *str, int *err, char **envp)
+static void	change_var_tow(t_args_var *args, char *str, char **envp)
 {
 	int		j;
 	char	*ss;
@@ -105,7 +105,7 @@ char	*change_var(char *str, char **envp, int *err)
 				change_var_one(&args.x, args.re, &args.i);
 			else if (!(is_sp(str[args.x + 1]) || str[args.x + 1] == '\''
 					|| str[args.x + 1] == '"'))
-				change_var_tow(&args, str, err, envp);
+				change_var_tow(&args, str, envp);
 		}
 		else
 			args.re[args.i++] = str[args.x];

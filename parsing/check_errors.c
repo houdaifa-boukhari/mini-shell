@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:08:16 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 20:39:08 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 09:53:31 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 static void	print_err(char *str, char c)
 {

@@ -6,11 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 21:01:46 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 10:25:18 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 bool	run_allherdoc(t_args_n *cmd, t_env *env)
 {
@@ -25,6 +25,7 @@ bool	run_allherdoc(t_args_n *cmd, t_env *env)
 		{
 			if (cmd->inp[i].is_h)
 				check = managing_herdoc(&(cmd->inp[i].inp), env);
+			signal(SIGINT, signal_handler);
 			if (!check)
 			{
 				g_exit_status = EXIT_FAILURE;
@@ -109,6 +110,7 @@ bool	managing_herdoc(char **delim, t_env *env)
 	int		pid;
 	int		status;
 
+	status = 0;
 	*delim = strjoin(*delim, "\n");
 	file = ft_strjoin("/tmp/", *delim);
 	tmp_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
@@ -122,7 +124,6 @@ bool	managing_herdoc(char **delim, t_env *env)
 	{
 		waitpid(0, &status, 0);
 		status = WEXITSTATUS(status);
-		signal(SIGINT, signal_handler);
 		free(*delim);
 		*delim = file;
 	}

@@ -6,11 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 21:35:18 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 bool	skip_flag_echo(char **cmd, int *idx)
 {
@@ -40,7 +40,7 @@ bool	skip_flag_echo(char **cmd, int *idx)
 	return (check);
 }
 
-int	echo_handling(char **cmd, char **envp)
+int	echo_handling(char **cmd)
 {
 	int		i;
 	int		count;
@@ -86,6 +86,7 @@ int	change_directory(char **cmd, char **env)
 	int		n_args;
 	char	*path;
 
+	status = 0;
 	n_args = count_arrays(cmd);
 	path = search_in_env(env, "HOME");
 	if (n_args == 1 || (n_args == 2 && !ft_strcmp("~", cmd[1])))
@@ -110,7 +111,6 @@ int	change_directory(char **cmd, char **env)
 bool	export_handling(char **cmd, t_envp **env)
 {
 	int		i;
-	char	*new_env;
 	bool	status;
 
 	i = 1;

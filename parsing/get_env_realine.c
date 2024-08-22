@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_rnv_realine.c                                  :+:      :+:    :+:   */
+/*   get_env_realine.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-06-25 18:32:57 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-06-25 18:32:57 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/06/25 18:32:57 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/22 09:53:34 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 char	*get_str_redline(void)
 {

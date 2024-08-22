@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_ulit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 18:42:17 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 09:53:26 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 char	*search_in_env(char **envp, char *str)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_one.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 20:38:52 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 10:19:15 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 // $? g_exit_status
 static int	change_var_count_one(int *x)

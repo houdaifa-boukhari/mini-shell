@@ -6,16 +6,15 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 20:36:51 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 {
 	char	*path;
-	int		status;
 
 	if (is_builtin(cmd, (*cmd)->arguments, env, fd))
 		return ;

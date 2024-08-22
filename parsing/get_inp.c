@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_inp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           #+#  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-25 20:49:05 by zbakkas           #+#    #+#             */
-/*   Updated: 2024-07-25 20:49:05 by zbakkas          ###   ########.fr       */
+/*   Created: 2024/07/25 20:49:05 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/22 09:53:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 static int	get_inp_count(char **str)
 {

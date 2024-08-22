@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_args2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:50:38 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/21 20:36:56 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/08/22 09:53:33 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "min.h"
+#include "../mini_shell.h"
 
 static int	whithout_q_count(char *str, int x)
 {

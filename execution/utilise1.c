@@ -6,11 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 20:37:52 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 void	ft_error(t_args_n **cmd, char *msg, int status)
 {

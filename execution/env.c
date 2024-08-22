@@ -6,11 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/21 20:30:49 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 char	*get_path(char *cmd, char **env)
 {
@@ -113,7 +113,7 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 		g_exit_status = change_directory(cmd, env->envp);
 	}
 	else if (!ft_strcmp(cmd[0], "echo"))
-		g_exit_status = echo_handling(cmd, env->envp);
+		g_exit_status = echo_handling(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		g_exit_status = get_current_path();
 	else if (!ft_strcmp(cmd[0], "export"))
