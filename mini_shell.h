@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 10:30:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:01:57 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ extern int			g_exit_status;
 # define AMBIGUOUS_ERROR "minishell: ambiguous redirect\n"
 # define TOKENS_ERROR "minishell: syntax error near unexpected token"
 # define QUOTES_ERROR "minishell: unexpected EOF while looking for matching"
-# define NEW_LINE_ERROR "minishell: syntax error near unexpected token \
+# define NEW_LINE_ERROR \
+	"minishell: syntax error near unexpected token \
 `newline'\n"
 
 typedef struct s_envp
@@ -110,6 +111,7 @@ char				*get_path(char *cmd, char **envp);
 void				change_fd_ouput(int fd, int cfd);
 void				signal_handler(int signal);
 void				wait_child(t_fd fd);
+void				ctl_error(char *msg, bool *check);
 void				error_files(char *file);
 char				*strjoin(char *str, char *str1);
 void				change_fd_in(int fd, t_args_n **cmd);

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 11:02:56 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ bool	controle_fd_blt(t_args_n *cmds, t_fd *fd)
 	count = count_cmds(cmds);
 	check = managing_input(cmds->inp, fd, count, &flag);
 	if (flag == false)
-	{
-		dup2(fd->save_out, STDOUT_FILENO);
 		return (false);
-	}
 	check = managing_output(cmds->out, fd, count, &flag);
 	if (check && flag)
 		dup2(fd->fd_out, STDOUT_FILENO);

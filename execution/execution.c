@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:13:17 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,33 +33,37 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 			free_env(&(env->env));
 			ft_error(cmd, ": command not found\n", 127);
 		}
+		signal(SIGQUIT, SIG_DFL);
 		execve(path, (*cmd)->arguments, env->envp);
 		exit(EXIT_FAILURE);
 	}
 	wait_child(fd);
 }
 
-void	wait_children(int *fd, int *pids, int size)
+void	wait_children(int *fd, int *pids, int size, int i)
 {
-	int	status;
-	int	i;
+	int		status;
+	bool	check;
 
 	i = 0;
+	check = true;
 	while (i < size)
 		close(fd[i++]);
-	i = 0;
-	while (i < size)
+	i = -1;
+	while (++i < size)
 	{
 		if (waitpid(pids[i], &status, 0) == -1)
 			break ;
-		if (WIFEXITED(status)) 
+		if (WIFEXITED(status))
 			g_exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
 			g_exit_status = WTERMSIG(status) + 128;
-		i++;
+			if (g_exit_status == 131 && check)
+				ctl_error("Quit: 3\n", &check);
+		}
 	}
-	free(pids);
-	free(fd);
+	return (free(pids), free(fd));
 }
 
 void	controle_fd(t_args_n *cmd, t_args_n **cmds, t_fd fd)
@@ -82,7 +86,6 @@ void	controle_fd(t_args_n *cmd, t_args_n **cmds, t_fd fd)
 void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 {
 	char	*path;
-	char	*tmp;
 
 	path = NULL;
 	controle_fd(cmd, cmds, fd);
@@ -91,21 +94,15 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 	path = get_path(cmd->arguments[0], env->envp);
 	if (!path)
 	{
-		tmp = ft_strjoin("minishell: ", cmd->arguments[0]);
-		if (cmd->arguments && cmd->arguments[0] && *cmd->arguments[0])
-			path = ft_strjoin(tmp, " :command not found\n");
-		else
-			path = ft_strjoin(tmp, ":command not found\n");
-		ft_putstr_fd(path, 2);
-		free(path);
-		free(tmp);
+		give_error(cmd);
 		clear_history();
 		clear_list(cmds);
 		free_env(&(env->env));
 		exit(127);
 	}
-	if (execve(path, cmd->arguments, env->envp) == -1)
-		ft_error(cmds, "failed execution", EXIT_FAILURE);
+	signal(SIGQUIT, SIG_DFL);
+	execve(path, cmd->arguments, env->envp);
+	exit(EXIT_FAILURE);
 }
 
 void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
@@ -134,5 +131,5 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 		fd.fd_in = fd.fd_p[0];
 		cmd = (cmd)->next;
 	}
-	wait_children(pipe_r, pids, i);
+	wait_children(pipe_r, pids, i, i);
 }

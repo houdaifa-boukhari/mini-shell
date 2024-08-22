@@ -11,10 +11,12 @@ SRC = ./execution/env.c ./execution/execution.c ./execution/tools_list.c \
 
 OBJS = $(SRC:.c=.o)
 READLINE = -lreadline -L/goinfre/hel-bouk/homebrew/opt/readline/lib
-CFLAGS = -Wall -Wextra -Werror -I/goinfre/hel-bouk/homebrew/opt/readline/include
+CFLAGS = -Wall -Wextra -Werror
+OREAD =  -I/goinfre/hel-bouk/homebrew/opt/readline/include
 LIBS =  -L./libft -lft
 RM = rm -f
 CC = cc
+Debugs = -fsanitize=address -g
 
 all: libft $(NAME)
 
@@ -23,9 +25,9 @@ libft:
 	@make bonus -C ./libft
 
 $(NAME) : $(OBJS)
-	$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(OBJS) -o $(NAME)
+	@$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(Debugs) $(OBJS) -o $(NAME)
 %.o : %.c $(HEADER)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(OREAD) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJS)
