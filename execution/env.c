@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 12:55:46 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 21:24:38 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,5 @@ void	handle_blt(t_args_n **args, char **cmd, t_env *env)
 	else if (!ft_strcmp(cmd[0], "env"))
 		g_exit_status = print_env(env->env);
 	else if (!ft_strcmp(cmd[0], "exit"))
-	{
-		close(3);
-		close(4);
 		ft_exit(args, cmd);
-	}
 }

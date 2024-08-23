@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 21:28:06 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_exit(t_args_n **args, char **cmd)
 		if (flag == 1)
 		{
 			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
-			exit(255);
+			return (close(3), close(4), exit(255));
 		}
 		else if (count_arrays(cmd) > 2)
 		{
@@ -37,7 +37,7 @@ void	ft_exit(t_args_n **args, char **cmd)
 		exit(status);
 	}
 	clear_list(args);
-	exit(g_exit_status);
+	return (close(3), close(4), exit(g_exit_status));
 }
 
 int	print_env(t_envp *envp)

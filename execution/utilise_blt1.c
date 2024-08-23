@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 17:56:43 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 21:33:57 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ bool	skip_flag_echo(char **cmd, int *idx)
 		j = 1;
 		if (cmd[i][0] == '-')
 		{
+			if (cmd[i][j] == '\0')
+				break ;
 			while (cmd[i][j] == 'n')
 				j++;
 			if (cmd[i][j] == '\0')
@@ -36,8 +38,7 @@ bool	skip_flag_echo(char **cmd, int *idx)
 			break ;
 		i++;
 	}
-	*idx = i;
-	return (check);
+	return (*idx = i, check);
 }
 
 int	echo_handling(char **cmd)
