@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:29:42 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/07/17 20:49:51 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:05:04 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -30,6 +31,7 @@ typedef struct s_va
 	int	nb_words;
 }		t_va;
 
+bool	is_space(char c);
 void	*ft_memset(void *s, int c, size_t n);
 int		ft_isalpha(int c);
 int		find_char(char *str, char c);
@@ -59,7 +61,8 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_calloc(size_t count, size_t n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strtrim(char const *s1, char const *set);
+// char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim(char const *s1, char const *set, int l);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));

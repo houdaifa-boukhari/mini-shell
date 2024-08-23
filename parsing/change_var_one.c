@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/22 10:19:15 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:57:44 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 	char	*var;
 	int		i;
 	char	*ss;
+	char	*tmp;
 
 	ss = get_name_var(str + *x, x);
-	var = search_in_env(envp, ss);
+	tmp = ft_strdup(search_in_env(envp, ss));
+	var = ft_strtrim(tmp, "\t ", l);
 	i = 0;
 	free(ss);
 	j = 0;
@@ -49,7 +51,7 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 			i++;
 		j++;
 	}
-	return (i);
+	return (free(var), free(tmp), i);
 }
 
 // cat << $USER stoop in $USER not value of $USER

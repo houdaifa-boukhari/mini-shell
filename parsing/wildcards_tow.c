@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   wildcards_tow.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/04 12:21:04 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 09:42:19 by hel-bouk         ###   ########.fr       */
+/*   Created: 2024/08/23 16:05:06 by zbakkas           #+#    #+#             */
+/*   Updated: 2024/08/23 17:57:44 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../mini_shell.h"
 
-int	ft_isdigit(int c)
+int	last_wildcards(char *str, int x)
 {
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
+	t_quote	q;
+	int		l;
+
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
+	while (str[x])
+	{
+		l = chacke_q(str[x], &q);
+		if (!l && str[x] == '*')
+			return (0);
+		x++;
+	}
+	return (1);
 }
 
-bool	is_space(char c)
+int	ft_strlen_doubl(char **str)
 {
-	if (c == ' ' || c == '\t')
-		return (true);
-	return (false);
+	int	x;
+
+	x = 0;
+	if (!str)
+		return (0);
+	while (str[x])
+	{
+		x++;
+	}
+	return (x);
 }

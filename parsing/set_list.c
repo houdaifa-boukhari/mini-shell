@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:59:58 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/22 09:53:54 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:57:44 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
-static void	free_double_str(char **str)
+void	free_double_str(char **str)
 {
 	int	x;
 

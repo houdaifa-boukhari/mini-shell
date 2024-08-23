@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:50:44 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/22 09:53:37 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:57:44 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ t_out	*get_out(char **str)
 				|| !ft_strncmp(str[x], ">>", 3)) && str[x + 1])
 		{
 			if (!ft_strncmp(str[x], ">", 2))
-				get_out_v(out, &c, false, whithout_q(str[x + 1]));
+				get_out_v(out, &c, false, whithout_q(str[x + 1], 0));
 			else
-				get_out_v(out, &c, true, whithout_q(str[x + 1]));
+				get_out_v(out, &c, true, whithout_q(str[x + 1], 0));
 		}
 		x++;
 	}

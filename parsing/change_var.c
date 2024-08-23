@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/22 10:21:37 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:07:10 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ static void	change_var_one(int *x, char *re, int *i)
 	(*x)++;
 }
 
-static void	change_var_tow(t_args_var *args, char *str, char **envp)
+static void	change_var_tow(t_args_var *args, char *str, int *err, char **envp)
 {
 	int		j;
 	char	*ss;
 	char	*var;
+	char	*tmp;
 
+	(void)err;
 	j = args->x;
 	ss = get_name_var(str + args->x, &(*args).x);
-	var = search_in_env(envp, ss);
+	tmp = ft_strdup(search_in_env(envp, ss));
+	var = ft_strtrim(tmp, "\t ", args->l);
 	free(ss);
 	j = 0;
 	if (var && var[j] && args->l != 2)
@@ -60,6 +63,7 @@ static void	change_var_tow(t_args_var *args, char *str, char **envp)
 			args->re[args->i++] = '"';
 		j++;
 	}
+	return (free(tmp), free(var));
 }
 
 // cat << $USER stoop in $USER not value of $USER
@@ -105,7 +109,7 @@ char	*change_var(char *str, char **envp, int *err)
 				change_var_one(&args.x, args.re, &args.i);
 			else if (!(is_sp(str[args.x + 1]) || str[args.x + 1] == '\''
 					|| str[args.x + 1] == '"'))
-				change_var_tow(&args, str, envp);
+				change_var_tow(&args, str, err, envp);
 		}
 		else
 			args.re[args.i++] = str[args.x];

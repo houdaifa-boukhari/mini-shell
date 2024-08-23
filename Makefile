@@ -8,6 +8,7 @@ SRC = ./execution/env.c ./execution/execution.c ./execution/tools_list.c \
 	./parsing/change_var.c ./parsing/check_errors.c ./parsing/get_args2.c ./parsing/get_out.c \
 	./parsing/change_var_one.c ./parsing/clear_list.c ./parsing/get_env_realine.c ./parsing/set_list.c \
 	./parsing/split_pip.c ./parsing/check_errors_var.c ./parsing/split_args.c ./execution/mini_shell.c \
+	./parsing/wildcards.c ./parsing/wildcards_one.c ./parsing/wildcards_tow.c ./parsing/quote.c
 
 OBJS = $(SRC:.c=.o)
 READLINE = -lreadline -L/goinfre/hel-bouk/homebrew/opt/readline/lib
@@ -26,7 +27,7 @@ libft:
 
 $(NAME) : $(OBJS)
 	@$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(OBJS) -o $(NAME)
-%.o : %.c $(HEADER)
+%.o : %.c $(HEADER) 
 	$(CC) $(CFLAGS) $(OREAD) -c $< -o $@
 
 clean:

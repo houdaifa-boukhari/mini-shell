@@ -6,83 +6,65 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:50:38 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/22 09:53:33 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:10:35 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
-static int	whithout_q_count(char *str, int x)
+static int	get_args_count_if(char **str, int x)
 {
-	int		c;
-	int		l;
-	t_quote	q;
-
-	q.in_double_quote = 0;
-	q.in_single_quote = 0;
-	c = 0;
-	while (str[x])
-	{
-		l = chacke_q(str[x], &q);
-		if ((str[x] == '"' || str[x] == '\''))
-		{
-			if ((l == 1 && str[x] == '"') || (l == 2 && str[x] == '\''))
-				c++;
-		}
-		else
-			c++;
-		x++;
-	}
-	return (c);
-}
-
-char	*whithout_q(char *str)
-{
-	char	*re;
-	int		x;
-	int		c;
-	int		l;
-	t_quote	q;
-
-	q.in_double_quote = 0;
-	q.in_single_quote = 0;
-	x = 0;
-	c = 0;
-	if (!str)
-		return (NULL);
-	re = malloc(whithout_q_count(str, x) + 1);
-	while (str[x])
-	{
-		l = chacke_q(str[x], &q);
-		if ((l == 1 && str[x] == '"') || (l == 2 && str[x] == '\''))
-			re[c++] = str[x];
-		else if (str[x] != '"' && str[x] != '\'')
-			re[c++] = str[x];
-		x++;
-	}
-	re[c] = '\0';
-	return (re);
+	if (str[x + 1] && (ft_strncmp(str[x], "<", 2) == 0
+			|| ft_strncmp(str[x], ">", 2) == 0
+			|| ft_strncmp(str[x], "<<", 3) == 0
+			|| ft_strncmp(str[x], ">>", 3) == 0))
+		return (1);
+	return (0);
 }
 
 static int	get_args_count(char **str)
 {
-	int	x;
-	int	c;
+	int		x;
+	int		c;
+	char	**ss; 
 
-	x = 0;
+	x = -1;
 	c = 0;
-	while (str[x])
+	while (str[++x])
 	{
-		if (str[x + 1] && (ft_strncmp(str[x], "<", 2) == 0
-				|| ft_strncmp(str[x], ">", 2) == 0
-				|| ft_strncmp(str[x], "<<", 3) == 0
-				|| ft_strncmp(str[x], ">>", 3) == 0))
+		if (get_args_count_if(str, x))
 			x++;
+		else if (check_wildcards(str[x]))
+		{
+			ss = get_name_of_files(str[x]);
+			if (ft_strlen_doubl(ss) > 0)
+				c += ft_strlen_doubl(ss);
+			else
+				c++;
+			free_double_str(ss);
+		}
 		else
 			c++;
-		x++;
 	}
 	return (c);
+}
+
+static void	grt_arg_one(char **str, int x, char **re, int *c)
+{
+	char	**ss;
+	int		j;
+
+	j = 0;
+	ss = get_name_of_files((str[x]));
+	if (ft_strlen_doubl(ss) > 0)
+	{
+		j = 0;
+		while (ss[j])
+			re[(*c)++] = ss[j++];
+	}
+	else
+		re[(*c)++] = whithout_q(str[x], 0);
+	free(ss);
 }
 
 char	**get_args(char **str)
@@ -101,8 +83,12 @@ char	**get_args(char **str)
 				|| ft_strncmp(str[x], "<<", 3) == 0
 				|| ft_strncmp(str[x], ">>", 3) == 0))
 			x++;
+		else if (check_wildcards(str[x]))
+		{
+			grt_arg_one(str, x, re, &c);
+		}
 		else
-			re[c++] = whithout_q(str[x]);
+			re[c++] = whithout_q(str[x], 0);
 		x++;
 	}
 	re[c] = NULL;
