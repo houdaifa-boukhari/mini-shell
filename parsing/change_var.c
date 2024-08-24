@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/23 18:07:10 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:51:53 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,30 @@ static void	change_var_one(int *x, char *re, int *i)
 	(*x)++;
 }
 
-static void	change_var_tow(t_args_var *args, char *str, int *err, char **envp)
+static void	change_var_tow(t_args_var *args, char *str, char **envp)
 {
 	int		j;
 	char	*ss;
 	char	*var;
-	char	*tmp;
 
-	(void)err;
 	j = args->x;
 	ss = get_name_var(str + args->x, &(*args).x);
-	tmp = ft_strdup(search_in_env(envp, ss));
-	var = ft_strtrim(tmp, "\t ", args->l);
+	var = search_in_env(envp, ss);
 	free(ss);
 	j = 0;
-	if (var && var[j] && args->l != 2)
-		args->re[args->i++] = '"';
 	while (var && var[j])
 	{
-		if (j - 1 >= 0 && args->l != 2 && is_sp(var[j - 1]) && !is_sp(var[j]))
+		if (!args->l && (var[j] == '\'' || var[j] == '<' 
+				|| var[j] == '>' || var[j] == '|'))
+		{
 			args->re[args->i++] = '"';
-		args->re[args->i++] = var[j];
-		if (args->l != 2 && !is_sp(var[j]) && (is_sp(var[j + 1])
-				|| var[j + 1] == '\0'))
+			args->re[args->i++] = var[j];
 			args->re[args->i++] = '"';
+		}
+		else
+			args->re[args->i++] = var[j];
 		j++;
 	}
-	return (free(tmp), free(var));
 }
 
 // cat << $USER stoop in $USER not value of $USER
@@ -109,7 +106,7 @@ char	*change_var(char *str, char **envp, int *err)
 				change_var_one(&args.x, args.re, &args.i);
 			else if (!(is_sp(str[args.x + 1]) || str[args.x + 1] == '\''
 					|| str[args.x + 1] == '"'))
-				change_var_tow(&args, str, err, envp);
+				change_var_tow(&args, str, envp);
 		}
 		else
 			args.re[args.i++] = str[args.x];

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:21:41 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/23 17:57:44 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:51:57 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,20 @@ static int	check_speace_in_var(char *var)
 
 //$hhbhb@fh$USER
 
+int	is_all_space(char *str)
+{
+	int	x;
+
+	x = 0;
+	while (is_sp(str[x]))
+	{
+		x++;
+	}
+	if (!str[x])
+		return (1);
+	return (0);
+}
+
 static int	check_ambiguous_one(char *str, char **envp, t_args_var_err *args)
 {
 	char	*var;
@@ -57,10 +71,13 @@ static int	check_ambiguous_one(char *str, char **envp, t_args_var_err *args)
 	{
 		ss = get_name_var(str + args->x, &args->x);
 		var = search_in_env(envp, ss);
-		if (check_speace_in_var(var))
-			return (free(ss), free(str), free(args->re), 1);
-		if (var)
-			args->re = strjoin_parsing(args->re, var);
+		if (!is_all_space(var))
+		{
+			if (check_speace_in_var(var))
+				return (free(ss), free(str), free(args->re), 1);
+			if (var)
+				args->re = strjoin_parsing(args->re, var);
+		}
 		free(ss);
 	}
 	else

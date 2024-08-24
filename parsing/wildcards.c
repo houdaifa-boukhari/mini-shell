@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:37:51 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/23 18:08:16 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:50:17 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ typedef struct s_wildcards_arg
 	int		l;
 	int		i;
 
-}			t_wildcards_arg;
+}	t_wildcards_arg;
+
+
 
 static int	first_wildcards(char *str, int x)
 {
@@ -38,13 +40,13 @@ static int	first_wildcards(char *str, int x)
 	return (1);
 }
 
-static int	is_equal_one(char *str, char *name, t_wildcards_arg *args)
+static int is_equal_one(char *str, char *name ,t_wildcards_arg *args)
 {
 	char	*ss;
 
 	if (last_wildcards(str, args->x))
 		args->i = -1;
-	if (!args->l && str[args->x] == '*' && args->x - 1 >= 0 && args->i != -1)
+	if (!args->l && str[args->x] == '*' && args->x - 1 >= 0 && args->i != - 1)
 	{
 		ss = whithout_q(chech_be(str, args->x), 1);
 		if (!first_wildcards(str, args->x - 1) && ch_m(ss, name, &args->i))
@@ -56,7 +58,7 @@ static int	is_equal_one(char *str, char *name, t_wildcards_arg *args)
 	else if (args->i == -1)
 	{
 		ss = whithout_q(check_aft(str, args->x, args->x), 1);
-		if (ch_l(ss, name))
+		if (ch_l(ss,name))
 			return (free(ss), 0);
 		free(ss);
 	}
@@ -82,7 +84,7 @@ static int	is_equal(char *str, char *name)
 	return (1);
 }
 
-char	**get_name_of_files(char *str)
+char	**get_name_of_files(char *str )
 {
 	struct dirent	*entry;
 	DIR				*dp;
