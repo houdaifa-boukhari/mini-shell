@@ -1,0 +1,1 @@
+env | awk -F = '{print $1}' | tr '\n' ' '

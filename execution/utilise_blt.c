@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 21:28:06 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 12:23:07 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	ft_exit(t_args_n **args, char **cmd)
 
 int	print_env(t_envp *envp)
 {
+	if (!envp)
+		return (0);
 	while (envp)
 	{
 		ft_putendl_fd(envp->env, STDOUT_FILENO);

@@ -2,7 +2,7 @@ NAME = minishell
 HEADER = mini_shell.h
 SRC = ./execution/env.c ./execution/execution.c ./execution/tools_list.c \
 	./execution/utilise_blt1.c ./execution/utilise2.c ./execution/utilise3.c ./execution/herdoc.c \
-	./execution/utilise_blt.c ./execution/utilise.c ./execution/utilise1.c \
+	./execution/utilise_blt.c ./execution/utilise.c ./execution/utilise1.c ./execution/utilise4.c\
 	./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
 	./parsing/change_var_ulit.c ./parsing/get_inp.c ./parsing/set_speace_line.c \
 	./parsing/change_var.c ./parsing/check_errors.c ./parsing/get_args2.c ./parsing/get_out.c \
@@ -26,7 +26,7 @@ libft:
 	@make bonus -C ./libft
 
 $(NAME) : $(OBJS)
-	@$(CC)  $(CFLAGS) $(LIBS) $(Debugs) $(READLINE) $(OBJS) -o $(NAME)
+	@$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(OBJS) -o $(NAME)
 %.o : %.c $(HEADER) 
 	$(CC) $(CFLAGS) $(OREAD) -c $< -o $@
 

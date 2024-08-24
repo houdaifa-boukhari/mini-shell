@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 21:06:32 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 12:04:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:34:20 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,13 @@ void	unset(t_envp **env, t_envp *pos)
 	t_envp	*next;
 
 	if (pos && size_env(*env) == 1)
-		return (free(pos->env), free(pos), *env = NULL, free(NULL));
+		return (free(pos->env), free(pos), (*env) = NULL, free(NULL));
 	else if (pos == *env)
-		return ((*env) = pos->next, (*env)->prev = NULL, free(pos));
+	{
+		(*env) = pos->next;	
+		(*env)->prev = NULL;
+		return (free(pos->env), free(pos));
+	}
 	else if (pos)
 	{
 		prev = pos->prev;

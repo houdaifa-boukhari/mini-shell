@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 09:59:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:58:40 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,31 +50,25 @@ int	*allocation_array(int size)
 	return (tab);
 }
 
-void	built_array(t_env *envirement)
+void	built_array(t_env *o_env)
 {
-	int		i;
-	int		size;
 	t_env	*env;
 	t_envp	*envp;
 
-	i = 0;
-	if (!envirement || !envirement->check)
+	if (o_env && !o_env->env)
+	{
+		free_env(&(o_env->env));
+		free_arrays(o_env->envp);
+		o_env->envp = NULL;
 		return ;
-	envirement->check = false;
-	env = envirement;
+	}
+	if (!o_env || !o_env->check)
+		return ;
+	o_env->check = false;
+	env = o_env;
 	envp = env->env;
 	free_arrays(env->envp);
-	size = size_env(envp);
-	env->envp = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!env->envp)
-		return ;
-	while (i < size)
-	{
-		env->envp[i] = ft_strdup(envp->env);
-		envp = envp->next;
-		i++;
-	}
-	env->envp[i] = NULL;
+	env->envp = assign_envp(env->env);
 }
 
 bool	valid_export(char *str)

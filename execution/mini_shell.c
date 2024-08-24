@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 21:24:02 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 15:27:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ char	*get_line(bool *ctl_d)
 
 void	initilze_struct(t_env *env, char **envp, t_fd *fd)
 {
-	env->envp = NULL;
 	env->env = NULL;
-	env->check = true;
+	parsing_env(&(env->env), envp);
+	env->envp = assign_envp(env->env);
+	env->check = false;
 	fd->save_in = dup(STDIN_FILENO);
 	fd->save_out = dup(STDOUT_FILENO);
-	parsing_env(&(env->env), envp);
 }
 
 void	read_line(t_fd fd, t_env *env)
@@ -62,12 +62,12 @@ void	read_line(t_fd fd, t_env *env)
 	while (1)
 	{
 		clear_list(&cmd);
+		built_array(env);
 		line = get_line(&ctl_d);
 		if ((!isatty(STDIN_FILENO) && !line) || ctl_d)
 			break ;
 		else if (!line)
 			continue ;
-		built_array(env);
 		cmd = initialization_list(line, env->envp);
 		free(line);
 		fd.fd_in = fd.save_in;
@@ -81,6 +81,11 @@ void	read_line(t_fd fd, t_env *env)
 	}
 }
 
+void	ll()
+{
+	system("leaks minishell");
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_env	env;
@@ -88,6 +93,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	// atexit(ll);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);
