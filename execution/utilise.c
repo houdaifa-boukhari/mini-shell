@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 11:38:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 12:03:50 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,13 @@ int	unset_hadnling(t_envp **env, char **cmd)
 {
 	int		i;
 	t_envp	*pos;
-	t_envp	*prev;
-	t_envp	*next;
 
-	i = -1;
-	while (cmd[++i])
+	i = 0;
+	while (cmd[i])
 	{
 		pos = search_env(*env, cmd[i]);
-		if (pos && size_env(*env) == 1)
-			return (free(pos->env), free(pos), *env = NULL, 0);
-		else if (pos == *env)
-			return ((*env) = pos->next, (*env)->prev = NULL, free(pos), 0);
-		else if (pos)
-		{
-			prev = pos->prev;
-			next = pos->next;
-			if (prev)
-				prev->next = next;
-			if (next)
-				next->prev = prev;
-			return (free(pos->env), free(pos), 0);
-		}
+		unset(env, pos);
+		i++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 21:06:32 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 09:44:58 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 12:04:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,25 @@ bool	error_fork(t_fd fd)
 		return (true);
 	}
 	return (false);
+}
+
+void	unset(t_envp **env, t_envp *pos)
+{
+	t_envp	*prev;
+	t_envp	*next;
+
+	if (pos && size_env(*env) == 1)
+		return (free(pos->env), free(pos), *env = NULL, free(NULL));
+	else if (pos == *env)
+		return ((*env) = pos->next, (*env)->prev = NULL, free(pos));
+	else if (pos)
+	{
+		prev = pos->prev;
+		next = pos->next;
+		if (prev)
+			prev->next = next;
+		if (next)
+			next->prev = prev;
+		return (free(pos->env), free(pos));
+	}
 }
