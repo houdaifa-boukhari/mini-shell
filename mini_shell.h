@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 18:06:05 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 10:25:14 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,33 +145,26 @@ bool				is_builtin(t_args_n **args, char **cmd, t_env *env,
 char				**ft_split_pip(char *s, char c);
 char				**split_part(char *s);
 char				*set_speece(char *str);
-
 char				*change_var(char *str, char **envp, int *err);
 int					change_var_count(char *str, char **envp);
 char				*get_name_var(char *str, int *j);
 char				*search_in_env(char **envp, char *str);
-
 char				**get_args(char **str);
 t_out				*get_out(char **str);
 t_inp				*get_inp(char **str);
-
 t_args_n			*initialization_list(char *line, char **envp);
 void				ft_lstadd_backk(t_args_n **lst, t_args_n *new);
 t_args_n			*ft_lstnew_one(char **str);
 void				ft_lstiterr(t_args_n *lst);
 void				clear_list(t_args_n **lst);
-
 char				*whithout_q(char *str, int is_wildcardss);
-
 int					check_errors(char *str, int err);
 int					chacke_q(char c, t_quote *q);
 int					is_sp(char c);
-
 int					check_ambiguous(char *str, char **envp, int err);
 char				*check_erroe_var(char *str, int x);
 char				*strjoin_parsing(char *start, char *buff);
 void				free_double_str(char **str);
-
 int					check_wildcards(char *str);
 char				**get_name_of_files(char *str);
 int					last_wildcards(char *str, int x);

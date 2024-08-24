@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 09:55:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 10:34:00 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ t_envp	*search_env(t_envp *env, char *str)
 	len_str = ft_strlen(s1);
 	while (env)
 	{
-		if (!ft_strncmp(env->env, s1, len_str))
-		{
-			free(s1);
-			return (env);
-		}
+		if (ft_strcmp(env->env, s1) == 0)
+			return (free(s1), env);
 		env = env->next;
 	}
 	free(s1);
@@ -58,26 +55,28 @@ t_envp	*search_env(t_envp *env, char *str)
 int	unset_hadnling(t_envp **env, char **cmd)
 {
 	int		i;
+	int		count;
 	t_envp	*pos;
 	t_envp	*prev;
 	t_envp	*next;
 
-	i = 1;
-	while (cmd[i])
+	i = -1;
+	while (cmd[++i])
 	{
+		count = size_env(*env);
 		pos = search_env(*env, cmd[i]);
-		if (pos)
+		if (pos && count == 1)
+			return (free(pos->env), free(pos), *env = NULL, 0);
+		else if (pos)
 		{
 			prev = pos->prev;
 			next = pos->next;
-			free(pos->env);
-			free(pos);
 			if (prev)
 				prev->next = next;
 			if (next)
 				next->prev = prev;
+			return (free(pos->env), free(pos), 0);
 		}
-		i++;
 	}
 	return (0);
 }
