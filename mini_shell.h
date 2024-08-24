@@ -6,23 +6,23 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 15:17:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:00:47 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINI_SHELL_H
 # define MINI_SHELL_H
 
+# include "./libft/libft.h"
 # include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
-# include "./libft/libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
 
 extern int			g_exit_status;
 
@@ -112,7 +112,7 @@ int					*allocation_array(int size);
 void				unset(t_envp **env, t_envp *pos);
 bool				run_allherdoc(t_args_n *cmd, t_env *env);
 bool				managing_herdoc(char **delim, t_env *env);
-char    			**assign_envp(t_envp *envp);
+char				**assign_envp(t_envp *envp);
 char				*get_path(char *cmd, char **envp);
 void				change_fd_ouput(int fd, int cfd);
 void				signal_handler(int signal);

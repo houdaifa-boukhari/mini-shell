@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 15:27:48 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:01:05 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,6 @@ void	read_line(t_fd fd, t_env *env)
 	}
 }
 
-void	ll()
-{
-	system("leaks minishell");
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_env	env;
@@ -93,7 +88,6 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	// atexit(ll);
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
 	initilze_struct(&env, envp, &fd);
