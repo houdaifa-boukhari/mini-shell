@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/23 21:33:57 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/26 10:34:40 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,5 @@ bool	export_handling(char **cmd, t_envp **env)
 			adding_env(env, cmd[i]);
 		i++;
 	}
-	return (status);
+	return (status == false);
 }
