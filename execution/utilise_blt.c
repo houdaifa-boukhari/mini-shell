@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:55 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 18:00:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/26 13:04:45 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,26 @@ void	ft_exit(t_args_n **args, char **cmd)
 
 	flag = 0;
 	status = 0;
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
 	if (count_arrays(cmd) >= 2)
 	{
 		status = atoi_(cmd[1], &flag);
 		if (flag == 1)
 		{
-			printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
-			return (close(3), close(4), exit(255));
+			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+			ft_putstr_fd(cmd[1], STDERR_FILENO);
+			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+			return (clear_list(args), close(3), close(4), exit(255));
 		}
 		else if (count_arrays(cmd) > 2)
 		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 			g_exit_status = EXIT_FAILURE;
 			return ;
 		}
 		exit(status);
 	}
-	clear_list(args);
-	return (close(3), close(4), exit(g_exit_status));
+	return (clear_list(args), close(3), close(4), exit(g_exit_status));
 }
 
 int	print_env(t_envp *envp)

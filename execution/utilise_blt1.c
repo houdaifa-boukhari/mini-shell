@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/26 10:34:40 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/26 14:16:47 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,29 +84,30 @@ int	get_current_path(void)
 int	change_directory(char **cmd, char **env)
 {
 	int		status;
-	int		n_args;
+	int		count;
 	char	*path;
 
 	status = 0;
-	n_args = count_arrays(cmd);
+	count = count_arrays(cmd);
 	path = search_in_env(env, "HOME");
-	if (n_args == 1 || (n_args == 2 && !ft_strcmp("~", cmd[1])))
+	if (count == 1 || (count == 2 && !ft_strcmp("~", cmd[1])))
 	{
 		status = chdir(path);
 		if (!path)
-			ft_putendl_fd("minishell: cd: HOME not set", 2);
+			return (ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO), 1);
 	}
-	else if (n_args == 2)
-		status = chdir(cmd[1]);
 	else
-		ft_putendl_fd("minishell: cd: too many arguments", 2);
-	if (status == -1 && n_args != 1)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(cmd[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		status = chdir(cmd[1]);
+		if (status == -1)
+		{
+			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(cmd[1], STDERR_FILENO);
+			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+			return (1);
+		}
 	}
-	return (status == -1);
+	return (0);
 }
 
 bool	export_handling(char **cmd, t_envp **env)
