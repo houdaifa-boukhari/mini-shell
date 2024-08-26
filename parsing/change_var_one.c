@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/24 17:52:50 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/26 12:24:28 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 	char	*ss;
 
 	ss = get_name_var(str + *x, x);
-	var = ft_strdup(search_in_env(envp, ss));
+	var = search_in_env(envp, ss);
 	i = 0;
 	free(ss);
 	j = 0;
