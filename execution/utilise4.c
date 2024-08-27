@@ -21,8 +21,8 @@ char	**assign_envp(t_envp *envp)
 	i = 0;
 	size = size_env(envp);
 	env = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!env)
-		return (NULL);
+	if (!env || size == 0)
+		return (free(env), NULL);
 	while (i < size)
 	{
 		env[i] = ft_strdup(envp->env);
