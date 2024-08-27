@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:24:21 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:54:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*search_in_env(char **envp, char *str)
 
 	x = 0;
 	l = ft_strlen(str);
+	if (!envp)
+		return (NULL);
 	while (envp[x])
 	{
 		if (ft_strnstr(envp[x], str, l) && envp[x][l] && envp[x][l] == '=')
