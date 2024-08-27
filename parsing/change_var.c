@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/24 17:51:53 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:12:13 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,15 @@ static void	change_var_tow(t_args_var *args, char *str, char **envp)
 	j = 0;
 	while (var && var[j])
 	{
-		if (!args->l && (var[j] == '\'' || var[j] == '<' 
-				|| var[j] == '>' || var[j] == '|'))
+		if (check_doub(var) && args->l == 2 && (var[j] == '"'))
 		{
 			args->re[args->i++] = '"';
 			args->re[args->i++] = var[j];
-			args->re[args->i++] = '"';
+		}
+		else if (!args->l && (var[j] == '\'' || var[j] == '<' 
+				|| var[j] == '>' || var[j] == '|' || var[j] == '"'))
+		{
+			change_var_tow_one(args, var, j);
 		}
 		else
 			args->re[args->i++] = var[j];

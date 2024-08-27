@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/26 12:24:28 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:23:45 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ static int	change_var_count_one(int *x)
 	return (i);
 }
 
+int	check_doub(char *str)
+{
+	int	x;
+
+	x = 0;
+	while (str[x])
+	{
+		if (str[x] == '"')
+			return (1);
+		x++;
+	}
+	return (0);
+}
+
 static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 {
 	int		j;
@@ -39,8 +53,10 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 	j = 0;
 	while (var && var[j])
 	{
-		if (!l && (var[j] == '\'' || var[j] == '<' 
-				|| var[j] == '>' || var[j] == '|'))
+		if (check_doub(var) && l == 2 && (var[j] == '"'))
+			i++;
+		else if (!l && (var[j] == '\'' || var[j] == '<' || var[j] == '>'
+				|| var[j] == '|' || var[j] == '"'))
 			i += 2;
 		i++;
 		j++;
@@ -49,7 +65,7 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 }
 
 // cat << $USER stoop in $USER not value of $USER
-static int	count_check_and_her_var(char *str, int x, int j, int l )
+static int	count_check_and_her_var(char *str, int x, int j, int l)
 {
 	int	ll;
 
@@ -64,8 +80,8 @@ static int	count_check_and_her_var(char *str, int x, int j, int l )
 			ll = 1;
 		x--;
 	}
-	if (!ll && str[j] == '$' && l != 1 && str[j + 1]
-		&& !is_sp(str[j + 1]) && str[j + 1] != '$')
+	if (!ll && str[j] == '$' && l != 1 && str[j + 1] && !is_sp(str[j + 1])
+		&& str[j + 1] != '$')
 		return (1);
 	return (0);
 }

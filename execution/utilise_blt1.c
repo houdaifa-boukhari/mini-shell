@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 16:38:35 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/26 14:16:47 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:21:02 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	change_directory(char **cmd, char **env)
 	{
 		status = chdir(path);
 		if (!path)
-			return (ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO), 1);
+			return (ft_putstr_fd("minishell: cd: HOME not set\n", 2), 1);
 	}
 	else
 	{

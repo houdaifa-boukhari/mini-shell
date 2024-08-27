@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 18:01:05 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:17:56 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_line(bool *ctl_d)
 		if (!line)
 		{
 			*ctl_d = true;
-			printf("exit\n");
+			ft_putendl_fd("exit", STDERR_FILENO);
 		}
 	}
 	else

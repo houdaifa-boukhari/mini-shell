@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/25 10:59:06 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:13:58 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,11 @@ bool				is_builtin(t_args_n **args, char **cmd, t_env *env,
 
 /*parsing functions*/
 
+int					check_doub(char *str);
 char				**ft_split_pip(char *s, char c);
 char				**split_part(char *s);
 char				*set_speece(char *str);
+void				change_var_tow_one(t_args_var *args, char *var, int j);
 char				*change_var(char *str, char **envp, int *err);
 int					change_var_count(char *str, char **envp);
 char				*get_name_var(char *str, int *j);
@@ -158,7 +160,6 @@ t_inp				*get_inp(char **str);
 t_args_n			*initialization_list(char *line, char **envp);
 void				ft_lstadd_backk(t_args_n **lst, t_args_n *new);
 t_args_n			*ft_lstnew_one(char **str);
-void				ft_lstiterr(t_args_n *lst);
 void				clear_list(t_args_n **lst);
 char				*whithout_q(char *str, int is_wildcardss);
 int					check_errors(char *str, int err);

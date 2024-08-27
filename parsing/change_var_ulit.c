@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/24 15:55:27 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:24:21 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ char	*search_in_env(char **envp, char *str)
 	int	l;
 
 	x = 0;
-	if (!envp)
-		return (NULL);
 	l = ft_strlen(str);
 	while (envp[x])
 	{
@@ -34,9 +32,9 @@ char	*search_in_env(char **envp, char *str)
 
 static int	get_name_var_count(char *str)
 {
-	int		x;
-	int		is_v;
-	int		i;
+	int	x;
+	int	is_v;
+	int	i;
 
 	x = 0;
 	is_v = 0;
@@ -45,8 +43,8 @@ static int	get_name_var_count(char *str)
 	{
 		if (is_v)
 		{
-			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) 
-				&& str[x] != '_' && str[x - 1] != '$')
+			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) && str[x] != '_'
+				&& str[x - 1] != '$')
 				break ;
 			i++;
 			if (!ft_isalpha(str[x]) && str[x - 1] == '$' && str[x] != '_')
@@ -74,8 +72,8 @@ char	*get_name_var(char *str, int *j)
 	{
 		if (is_v)
 		{
-			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) 
-				&& str[x] != '_' && str[x - 1] != '$')
+			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) && str[x] != '_'
+				&& str[x - 1] != '$')
 				break ;
 			re[i++] = str[x];
 			(*j)++;
@@ -86,4 +84,17 @@ char	*get_name_var(char *str, int *j)
 			is_v = 1;
 	}
 	return (re[i] = '\0', (re));
+}
+
+void	change_var_tow_one(t_args_var *args, char *var, int j)
+{
+	if (var[j] == '"')
+		args->re[args->i++] = '\'';
+	else
+		args->re[args->i++] = '"';
+	args->re[args->i++] = var[j];
+	if (var[j] == '"')
+		args->re[args->i++] = '\'';
+	else
+		args->re[args->i++] = '"';
 }

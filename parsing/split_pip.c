@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:40:48 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/23 17:57:44 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/08/27 09:15:14 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,21 +105,3 @@ char	**ft_split_pip(char *s, char c)
 	re[j] = NULL;
 	return (re);
 }
-
-// char **get_parts_by_pip(char *str)
-// {
-//     char **re;
-//     re = ft_split(str,'|');
-//     return re;
-// }
-// int main ()
-// {
-//     int x =0;
-// 	char *str ="> out cat -e out1 | wc -c" ;
-// 	printf("cmd = %s\n",str);
-//     while (ft_split_pip(str,'|')[x])
-//     {
-//     	printf("%s\n",ft_split_pip(str ,'|')[x]);
-//         x++;
-//     }
-// }
