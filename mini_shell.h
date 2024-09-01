@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/27 09:13:58 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:02:01 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ bool				error_fork(t_fd fd);
 void				error_files(char *file);
 void				give_error(t_args_n *cmd);
 int					check_line(char *str);
+bool				valid_add(char *str);
 int					size_env(t_envp *lst);
 void				free_env(t_envp **env);
 int					get_current_path(void);

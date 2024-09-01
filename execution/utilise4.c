@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 12:29:46 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 18:02:14 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:06:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,16 @@ char	**assign_envp(t_envp *envp)
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+bool	valid_add(char	*str)
+{
+	char	*tmp;
+
+	if (!str || !*str)
+		return (false);
+	tmp = ft_strchr(str, '=');
+	if (!tmp)
+		return (false);
+	return (true);
 }

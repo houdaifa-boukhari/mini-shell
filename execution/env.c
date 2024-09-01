@@ -6,11 +6,41 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/27 09:19:44 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:52:29 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
+
+bool	check_is_dir(char *cmd)
+{
+	DIR		*dir;
+
+	dir = opendir(cmd);
+	if (dir && ft_strchr(cmd, '/'))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": is a directory\n", 2);
+		closedir(dir);
+		return (true);
+	}
+	else if (ft_strchr(cmd, '/') && access(cmd, F_OK) == -1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(127);
+	}
+	else if (ft_strchr(cmd, '/') && access(cmd, X_OK) == -1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return (true);
+	}
+	return (false);
+}
 
 char	*get_path(char *cmd, char **env)
 {
@@ -22,6 +52,8 @@ char	*get_path(char *cmd, char **env)
 	i = 0;
 	if (!cmd)
 		return (NULL);
+	if (check_is_dir(cmd))
+		exit(126);
 	full_path = ft_split(search_in_env(env, "PATH"), ':');
 	if (access(cmd, X_OK) == 0 && ((!full_path) || (ft_strchr(cmd, '/'))))
 		return (free_arrays(full_path), cmd);

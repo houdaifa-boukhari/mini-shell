@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:01:33 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 18:01:47 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/01 20:49:13 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ bool	error_fork(t_fd fd)
 		close(fd.fd_p[1]);
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		perror("fork");
+		g_exit_status = 1;
 		return (true);
 	}
 	return (false);

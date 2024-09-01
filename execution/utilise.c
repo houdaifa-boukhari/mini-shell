@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 12:03:50 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/01 21:04:43 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,25 @@ t_envp	*search_env(t_envp *env, char *str)
 int	unset_hadnling(t_envp **env, char **cmd)
 {
 	int		i;
+	bool	check;
 	t_envp	*pos;
 
 	i = 0;
+	check = false;
 	while (cmd[i])
 	{
+		if (!valid_export(cmd[i]))
+		{
+			ft_putstr_fd("minishell: unset: '", 2);
+			ft_putstr_fd(cmd[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			check = true;
+		}
 		pos = search_env(*env, cmd[i]);
 		unset(env, pos);
 		i++;
 	}
-	return (0);
+	return (check);
 }
 
 bool	adding_env(t_envp **env, char *str)
@@ -85,6 +94,8 @@ bool	adding_env(t_envp **env, char *str)
 		pos = search_env(*env, str);
 		if (pos)
 		{
+			if (!valid_add(str))
+				return (status);
 			free(pos->env);
 			pos->env = ft_strdup(str);
 			return (status);
