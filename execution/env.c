@@ -6,39 +6,42 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/01 21:52:29 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 11:38:55 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
-bool	check_is_dir(char *cmd)
+bool	error_path(char *msg, char *cmd, bool check)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	return (check);
+}
+
+bool	check_is_dir(char *cmd, char *path)
 {
 	DIR		*dir;
 
 	dir = opendir(cmd);
-	if (dir && ft_strchr(cmd, '/'))
+	if (ft_strcmp(cmd, ".") == 0)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": is a directory\n", 2);
+		ft_putstr_fd("minishell: .: filename argument required\n", STDERR_FILENO);
+		ft_putstr_fd(".: usage: . filename [arguments]\n", STDERR_FILENO);
+		return (closedir(dir), exit(2), true);
+	}
+	else if (dir && (ft_strchr(cmd, '/') || !path))
+		return (closedir(dir), error_path(": is a directory\n", cmd, true));
+	else if (dir)
 		closedir(dir);
-		return (true);
-	}
-	else if (ft_strchr(cmd, '/') && access(cmd, F_OK) == -1)
+	else if ((ft_strchr(cmd, '/') || !path )  && access(cmd, F_OK) == -1)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit(127);
+		error_path(": No such file or directory\n", cmd, true);
+		return (exit(127), true);
 	}
-	else if (ft_strchr(cmd, '/') && access(cmd, X_OK) == -1)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": Permission denied\n", 2);
-		return (true);
-	}
+	else if ((ft_strchr(cmd, '/') || !path ) && access(cmd, X_OK) == -1)
+		return (error_path(": Permission denied\n", cmd, true));
 	return (false);
 }
 
@@ -52,7 +55,7 @@ char	*get_path(char *cmd, char **env)
 	i = 0;
 	if (!cmd)
 		return (NULL);
-	if (check_is_dir(cmd))
+	if (check_is_dir(cmd, search_in_env(env, "PATH")))
 		exit(126);
 	full_path = ft_split(search_in_env(env, "PATH"), ':');
 	if (access(cmd, X_OK) == 0 && ((!full_path) || (ft_strchr(cmd, '/'))))

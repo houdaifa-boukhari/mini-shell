@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/01 21:02:01 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:14:20 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_inp
 {
 	char			*inp;
 	bool			is_h;
+	bool			is_q;
 }					t_inp;
 
 typedef struct s_out
@@ -111,8 +112,9 @@ int					count_cmds(t_args_n *lst);
 void				print_export(t_envp *envp);
 int					*allocation_array(int size);
 void				unset(t_envp **env, t_envp *pos);
+bool				error_path(char *msg, char *cmd, bool check);
 bool				run_allherdoc(t_args_n *cmd, t_env *env);
-bool				managing_herdoc(char **delim, t_env *env);
+bool				managing_herdoc(char **delim, t_env *env, bool check_q);
 char				**assign_envp(t_envp *envp);
 char				*get_path(char *cmd, char **envp);
 void				change_fd_ouput(int fd, int cfd);
@@ -179,5 +181,6 @@ int					ch_f(char *str, char *name, int *i);
 int					ch_m(char *str, char *name, int *i);
 int					ch_l(char *str, char *name);
 int					ft_strlen_doubl(char **str);
+int					chack_p(char *str, int x);
 
 #endif

@@ -6,18 +6,20 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:23:45 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:11:22 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
 // $? g_exit_status
-static int	change_var_count_one(int *x)
+static int	change_var_count_one(char *ss, int *x)
 {
 	char	*str;
 	int		i;
 
+	if (chack_p(ss, *x))
+		return (1);
 	str = ft_itoa(g_exit_status);
 	i = ft_strlen(str);
 	(*x)++;
@@ -103,7 +105,7 @@ int	change_var_count(char *str, char **envp)
 		if (count_check_and_her_var(str, x, x, l))
 		{
 			if (str[x + 1] == '?')
-				i = i + change_var_count_one(&x);
+				i = i + change_var_count_one(str, &x);
 			else if (!(is_sp(str[x + 1]) || str[x + 1] == '\''
 					|| str[x + 1] == '"'))
 				i = i + (change_var_count_tow(envp, l, &x, str));

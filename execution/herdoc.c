@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/22 18:02:21 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:13:58 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	run_allherdoc(t_args_n *cmd, t_env *env)
 		while (cmd->inp[i].inp)
 		{
 			if (cmd->inp[i].is_h)
-				check = managing_herdoc(&(cmd->inp[i].inp), env);
+				check = managing_herdoc(&(cmd->inp[i].inp), env, cmd->inp[i].is_q);
 			signal(SIGINT, signal_handler);
 			if (!check)
 			{
@@ -76,7 +76,7 @@ void	signal_herdoc(int signal)
 	}
 }
 
-void	read_herdoc(char *delim, int tmp_fd, t_env *env)
+void	read_herdoc(char *delim, int tmp_fd, t_env *env, bool check_q)
 {
 	char	*line;
 	char	*line_tmp;
@@ -90,20 +90,21 @@ void	read_herdoc(char *delim, int tmp_fd, t_env *env)
 			break ;
 		if (line)
 		{
-			line_tmp = catch_env(line, env);
+			if (!check_q)
+				line_tmp = catch_env(line, env);
+			else
+				line_tmp = line;
 			write(tmp_fd, line_tmp, ft_strlen(line_tmp));
 			free(line_tmp);
 		}
 		else
 			break ;
 	}
-	free(line);
 	close(tmp_fd);
-	free(delim);
-	exit(0);
+	return (free(delim), free(line), exit(0));
 }
 
-bool	managing_herdoc(char **delim, t_env *env)
+bool	managing_herdoc(char **delim, t_env *env, bool check_q)
 {
 	char	*file;
 	int		tmp_fd;
@@ -119,7 +120,7 @@ bool	managing_herdoc(char **delim, t_env *env)
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
-		read_herdoc(*delim, tmp_fd, env);
+		read_herdoc(*delim, tmp_fd, env, check_q);
 	else
 	{
 		waitpid(0, &status, 0);

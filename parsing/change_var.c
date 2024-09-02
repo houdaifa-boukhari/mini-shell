@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:12:13 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:10:04 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,15 @@ static int	is_her(char *str, int x)
 }
 
 //$? g_exit_status
-static void	change_var_one(int *x, char *re, int *i)
+static void	change_var_one(char *ss, int *x, char *re, int *i)
 {
 	char	*str;
 	int		a;
 
-	str = ft_itoa(g_exit_status);
+	if (chack_p(ss, *x))
+		str = ft_strdup("0");
+	else
+		str = ft_itoa(g_exit_status);
 	a = 0;
 	while (str[a])
 	{
@@ -55,8 +58,8 @@ static void	change_var_tow(t_args_var *args, char *str, char **envp)
 			args->re[args->i++] = '"';
 			args->re[args->i++] = var[j];
 		}
-		else if (!args->l && (var[j] == '\'' || var[j] == '<' 
-				|| var[j] == '>' || var[j] == '|' || var[j] == '"'))
+		else if (!args->l && (var[j] == '\'' || var[j] == '<' || var[j] == '>'
+				|| var[j] == '|' || var[j] == '"'))
 		{
 			change_var_tow_one(args, var, j);
 		}
@@ -94,19 +97,19 @@ char	*change_var(char *str, char **envp, int *err)
 
 	args.q.in_double_quote = 0;
 	args.q.in_single_quote = 0;
-	args.re = malloc (change_var_count(str, envp) + 1);
+	args.re = malloc(change_var_count(str, envp) + 1);
 	args.x = -1;
 	args.i = 0;
 	while (str[++args.x])
 	{
 		args.l = chacke_q(str[args.x], &args.q);
-		if (!is_her(str, args.x) && !args.l 
-			&& (str[args.x] == '<' || str[args.x] == '>'))
+		if (!is_her(str, args.x) && !args.l && (str[args.x] == '<'
+				|| str[args.x] == '>'))
 			*err = check_ambiguous(check_erroe_var(str, args.x), envp, *err);
 		if (check_and_her_var(str, args.x, args))
 		{
 			if (str[args.x + 1] == '?')
-				change_var_one(&args.x, args.re, &args.i);
+				change_var_one(str, &args.x, args.re, &args.i);
 			else if (!(is_sp(str[args.x + 1]) || str[args.x + 1] == '\''
 					|| str[args.x + 1] == '"'))
 				change_var_tow(&args, str, envp);

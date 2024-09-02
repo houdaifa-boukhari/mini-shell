@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/01 21:04:43 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:47:34 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,33 @@ t_envp	*search_env(t_envp *env, char *str)
 	return (NULL);
 }
 
+bool	valid_unset(char *str)
+{
+	int	i;
+
+	i = 1;
+	if (!ft_isalpha(str[0]) && str[0] != '_')
+		return (false);
+	while (str[i])
+	{
+		if ((!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '_'))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 int	unset_hadnling(t_envp **env, char **cmd)
 {
 	int		i;
 	bool	check;
 	t_envp	*pos;
 
-	i = 0;
+	i = 1;
 	check = false;
 	while (cmd[i])
 	{
-		if (!valid_export(cmd[i]))
+		if (!valid_unset(cmd[i]))
 		{
 			ft_putstr_fd("minishell: unset: '", 2);
 			ft_putstr_fd(cmd[i], 2);

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:54:48 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/02 10:11:04 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,23 @@ void	change_var_tow_one(t_args_var *args, char *var, int j)
 		args->re[args->i++] = '\'';
 	else
 		args->re[args->i++] = '"';
+}
+
+int	chack_p(char *str, int x)
+{
+	t_quote	q;
+	int		l;
+	int		i;
+
+	i = 0;
+	q.in_double_quote = 0;
+	q.in_single_quote = 0;
+	while (i < x)
+	{
+		l = chacke_q(str[i], &q);
+		if (str[i] == '|' && !l)
+			return (1);
+		i++;
+	}
+	return (0);
 }
