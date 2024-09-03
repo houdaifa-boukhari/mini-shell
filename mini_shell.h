@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/02 12:14:20 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:10:28 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void				built_array(t_env *env);
 int					count_cmds(t_args_n *lst);
 void				print_export(t_envp *envp);
 int					*allocation_array(int size);
+bool				check_is_dir(char *cmd, char *path);
 void				unset(t_envp **env, t_envp *pos);
 bool				error_path(char *msg, char *cmd, bool check);
 bool				run_allherdoc(t_args_n *cmd, t_env *env);
