@@ -6,44 +6,11 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:47:23 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/02 11:38:55 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:58:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
-
-bool	error_path(char *msg, char *cmd, bool check)
-{
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	return (check);
-}
-
-bool	check_is_dir(char *cmd, char *path)
-{
-	DIR		*dir;
-
-	dir = opendir(cmd);
-	if (ft_strcmp(cmd, ".") == 0)
-	{
-		ft_putstr_fd("minishell: .: filename argument required\n", STDERR_FILENO);
-		ft_putstr_fd(".: usage: . filename [arguments]\n", STDERR_FILENO);
-		return (closedir(dir), exit(2), true);
-	}
-	else if (dir && (ft_strchr(cmd, '/') || !path))
-		return (closedir(dir), error_path(": is a directory\n", cmd, true));
-	else if (dir)
-		closedir(dir);
-	else if ((ft_strchr(cmd, '/') || !path )  && access(cmd, F_OK) == -1)
-	{
-		error_path(": No such file or directory\n", cmd, true);
-		return (exit(127), true);
-	}
-	else if ((ft_strchr(cmd, '/') || !path ) && access(cmd, X_OK) == -1)
-		return (error_path(": Permission denied\n", cmd, true));
-	return (false);
-}
 
 char	*get_path(char *cmd, char **env)
 {
@@ -52,7 +19,7 @@ char	*get_path(char *cmd, char **env)
 	char	*path;
 	char	**full_path;
 
-	i = 0;
+	i = -1;
 	if (!cmd)
 		return (NULL);
 	if (check_is_dir(cmd, search_in_env(env, "PATH")))
@@ -63,14 +30,13 @@ char	*get_path(char *cmd, char **env)
 	path = ft_strjoin("/", cmd);
 	if (!full_path || ft_strcmp(path, "/") == 0 || ft_strchr(path, '.'))
 		return (free(path), free_arrays(full_path), NULL);
-	while (full_path[i])
+	while (full_path[++i])
 	{
 		tmp = ft_strjoin(full_path[i], path);
 		if (access(tmp, X_OK) == 0)
 			break ;
 		free(tmp);
 		tmp = NULL;
-		i++;
 	}
 	return (free(path), free_arrays(full_path), tmp);
 }
@@ -86,9 +52,14 @@ bool	controle_fd_blt(t_args_n *cmds, t_fd *fd)
 	check = managing_input(cmds->inp, fd, count, &flag);
 	if (flag == false)
 		return (false);
+	if (check)
+		close(fd->fd_in);
 	check = managing_output(cmds->out, fd, count, &flag);
 	if (check && flag)
+	{
 		dup2(fd->fd_out, STDOUT_FILENO);
+		close(fd->fd_out);
+	}
 	if (!flag)
 		return (false);
 	return (true);

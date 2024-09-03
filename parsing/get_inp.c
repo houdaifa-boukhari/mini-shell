@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 20:49:05 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/02 12:08:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:01:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static int	get_inp_count(char **str)
 	c = 0;
 	while (str[x])
 	{
-		if ((!ft_strncmp(str[x], "<", 2)
-				|| !ft_strncmp(str[x], "<<", 3)) && str[x + 1])
+		if ((!ft_strncmp(str[x], "<", 2) || !ft_strncmp(str[x], "<<", 3))
+			&& str[x + 1])
 			c++;
 		x++;
 	}
 	return (c);
 }
 
-static int is_quote(char *str)
+static int	is_quote(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -43,15 +43,14 @@ static int is_quote(char *str)
 	return (0);
 }
 
-static void	get_inp_v(t_inp	*inp, int *c, bool bol, char *str)
+static void	get_inp_v(t_inp *inp, int *c, bool bol, char *str)
 {
-	if(is_quote(str))
-		inp[*c].is_q=true;
+	if (is_quote(str))
+		inp[*c].is_q = true;
 	else
-		inp[*c].is_q=false;
+		inp[*c].is_q = false;
 	inp[*c].inp = whithout_q(str, 0);
 	inp[*c].is_h = bol;
-
 	(*c)++;
 }
 
@@ -66,8 +65,8 @@ t_inp	*get_inp(char **str)
 	x = 0;
 	while (str[x])
 	{
-		if ((!ft_strncmp(str[x], "<", 2)
-				|| !ft_strncmp(str[x], "<<", 3)) && str[x + 1])
+		if ((!ft_strncmp(str[x], "<", 2) || !ft_strncmp(str[x], "<<", 3))
+			&& str[x + 1])
 		{
 			if (!ft_strncmp(str[x], "<", 2))
 				get_inp_v(inp, &c, false, str[x + 1]);

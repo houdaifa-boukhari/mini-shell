@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 16:58:36 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/02 12:13:58 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/03 11:00:17 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ bool	run_allherdoc(t_args_n *cmd, t_env *env)
 		while (cmd->inp[i].inp)
 		{
 			if (cmd->inp[i].is_h)
-				check = managing_herdoc(&(cmd->inp[i].inp), env, cmd->inp[i].is_q);
+				check = managing_herdoc(&(cmd->inp[i].inp), env,
+						cmd->inp[i].is_q);
 			signal(SIGINT, signal_handler);
 			if (!check)
 			{

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 12:06:15 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/24 15:26:40 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:16:35 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ bool	managing_input(t_inp *input, t_fd *fd, int count, bool *flag)
 		return (false);
 	while (input[i].inp)
 	{
-		close(fd->fd_in);
+		if (fd->fd_in != fd->save_in)
+			close(fd->fd_in);
 		fd->fd_in = open(input[i].inp, O_RDONLY);
 		if (fd->fd_in < 0)
 		{

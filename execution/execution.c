@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/01 21:40:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/03 10:57:14 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		execve(path, (*cmd)->arguments, env->envp);
 		exit(EXIT_FAILURE);
 	}
-	wait_child(fd);
+	if (fd.pid > 0)
+		wait_child(fd);
 }
 
 void	wait_children(int *fd, int *pids, int size, int i)
@@ -112,11 +113,10 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 	int			i;
 	t_args_n	*cmd;
 
-	i = count_cmds(*cmds);
-	pids = allocation_array(i);
-	pipe_r = allocation_array(i);
-	cmd = *cmds;
 	i = 0;
+	cmd = *cmds;
+	pids = allocation_array(count_cmds(*cmds));
+	pipe_r = allocation_array(count_cmds(*cmds));
 	while (cmd)
 	{
 		pipe(fd.fd_p);
@@ -131,5 +131,6 @@ void	execut_(t_args_n **cmds, t_env *env, t_fd fd)
 		fd.fd_in = fd.fd_p[0];
 		cmd = (cmd)->next;
 	}
-	wait_children(pipe_r, pids, i, i);
+	if (fd.pid > 0)
+		wait_children(pipe_r, pids, i, i);
 }
