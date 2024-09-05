@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:08:16 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:12:13 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,23 @@ static int	check_p_finel(char *str, int x)
 	return (0);
 }
 
+static int	check_pp(char *str, int x)
+{
+	x++;
+	while (str[x])
+	{
+		if (str[x] == '|')
+			return (1);
+		if (!is_sp(str[x]))
+			break ;
+		x++;
+	}
+	return (0);
+}
+
 int	check_errors_p(char *str, int l, int *x, int first_p)
 {
-	if ((!l && str[(*x) + 1] == '|' && str[(*x)] == '|' ) 
+	if ((!l && str[(*x)] == '|' && check_pp(str,*x)) 
 		|| (!l && (!str[(*x) + 1] 
 				|| check_p_finel(str, (*x) + 1)) && str[(*x)] == '|') 
 		|| (!l && str[(*x)] == '|' && (first_p) == *x))

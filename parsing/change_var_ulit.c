@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:23:37 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/02 10:11:04 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ char	*search_in_env(char **envp, char *str)
 
 	x = 0;
 	l = ft_strlen(str);
-	if (!envp)
-		return (NULL);
 	while (envp[x])
 	{
 		if (ft_strnstr(envp[x], str, l) && envp[x][l] && envp[x][l] == '=')
@@ -34,9 +32,9 @@ char	*search_in_env(char **envp, char *str)
 
 static int	get_name_var_count(char *str)
 {
-	int	x;
-	int	is_v;
-	int	i;
+	int		x;
+	int		is_v;
+	int		i;
 
 	x = 0;
 	is_v = 0;
@@ -45,8 +43,8 @@ static int	get_name_var_count(char *str)
 	{
 		if (is_v)
 		{
-			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) && str[x] != '_'
-				&& str[x - 1] != '$')
+			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) 
+				&& str[x] != '_' && str[x - 1] != '$')
 				break ;
 			i++;
 			if (!ft_isalpha(str[x]) && str[x - 1] == '$' && str[x] != '_')
@@ -74,8 +72,8 @@ char	*get_name_var(char *str, int *j)
 	{
 		if (is_v)
 		{
-			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) && str[x] != '_'
-				&& str[x - 1] != '$')
+			if (!ft_isalpha(str[x]) && !ft_isdigit(str[x]) 
+				&& str[x] != '_' && str[x - 1] != '$')
 				break ;
 			re[i++] = str[x];
 			(*j)++;
@@ -99,23 +97,4 @@ void	change_var_tow_one(t_args_var *args, char *var, int j)
 		args->re[args->i++] = '\'';
 	else
 		args->re[args->i++] = '"';
-}
-
-int	chack_p(char *str, int x)
-{
-	t_quote	q;
-	int		l;
-	int		i;
-
-	i = 0;
-	q.in_double_quote = 0;
-	q.in_single_quote = 0;
-	while (i < x)
-	{
-		l = chacke_q(str[i], &q);
-		if (str[i] == '|' && !l)
-			return (1);
-		i++;
-	}
-	return (0);
 }

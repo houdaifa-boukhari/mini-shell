@@ -6,9 +6,10 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:52:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:24:05 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../mini_shell.h"
 
@@ -102,6 +103,8 @@ int	ch_l(char *str, char *name)
 	int	x;
 	int	i;
 
+	x = 0;
+	i = 0;
 	x = ft_strlen(str);
 	i = ft_strlen(name);
 	while (x > 0)

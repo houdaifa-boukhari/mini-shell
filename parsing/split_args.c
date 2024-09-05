@@ -6,12 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 15:52:14 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:15:09 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
+//1=>'  2=>"
 int	chacke_q(char c, t_quote *q)
 {
 	if (c == '"' && !q->in_single_quote)
@@ -106,3 +107,20 @@ char	**split_part(char *s)
 	free(s);
 	return (re);
 }
+
+// int main()
+// {
+//     char *str0 ="ls \"\" -a \"\" -l";
+//     char *str1 ="l\"s\"> \"hello  <'worde\"  \"-l -a\" \"\">\"\" 'out'";
+//     char *str2 ="l\"s\"< 'hello  \">> worde'  \"-l -a\">> out >f";
+//     char *str3 ="'cat'\"<\" \" min '2\" -e";
+//     printf("%s\n",str3);
+//    printf("%s\n", set_speece(str3));
+// char ** str =split_part(set_speece(str3));
+// int x =0;
+// while (str[x])
+// {
+//     printf("%s\n",str[x]);
+//     x++;
+// }
+// }

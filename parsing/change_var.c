@@ -6,13 +6,13 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/02 10:10:04 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:32:49 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
-static int	is_her(char *str, int x)
+int	is_her(char *str, int x)
 {
 	if (str[x] == '<' && str[x + 1] == '<')
 		return (1);
@@ -22,15 +22,12 @@ static int	is_her(char *str, int x)
 }
 
 //$? g_exit_status
-static void	change_var_one(char *ss, int *x, char *re, int *i)
+static void	change_var_one(int *x, char *re, int *i)
 {
 	char	*str;
 	int		a;
 
-	if (chack_p(ss, *x))
-		str = ft_strdup("0");
-	else
-		str = ft_itoa(g_exit_status);
+	str = ft_itoa(g_exit_status);
 	a = 0;
 	while (str[a])
 	{
@@ -58,8 +55,8 @@ static void	change_var_tow(t_args_var *args, char *str, char **envp)
 			args->re[args->i++] = '"';
 			args->re[args->i++] = var[j];
 		}
-		else if (!args->l && (var[j] == '\'' || var[j] == '<' || var[j] == '>'
-				|| var[j] == '|' || var[j] == '"'))
+		else if (!args->l && (var[j] == '\'' || var[j] == '<' 
+				|| var[j] == '>' || var[j] == '|' || var[j] == '"'))
 		{
 			change_var_tow_one(args, var, j);
 		}
@@ -72,44 +69,60 @@ static void	change_var_tow(t_args_var *args, char *str, char **envp)
 // cat << $USER stoop in $USER not value of $USER
 static int	check_and_her_var(char *str, int x, t_args_var args)
 {
-	int	l;
+	
+	// printf("str_var=%s,x=%d\n",str,x);
 
-	l = 0;
-	while (x >= 0)
+	if(x > 0)
+		x--;
+	if(x>0 &&str[x] != '<' &&  str[x] != '>')
 	{
-		while (x >= 0 && (is_sp(str[x])))
+		while (x>=0)
 		{
+			if(is_sp(str[x]))
+			{
+				break ;
+			}
 			x--;
 		}
-		if (x >= 0 && str[x] == '<' && x - 1 >= 0 && str[x - 1] == '<')
-			l = 1;
-		x--;
+		
 	}
-	if (!l && str[args.x] == '$' && args.l != 1 && str[args.x + 1]
+	if ( str[args.x] == '$' && args.l != 1 && str[args.x + 1]
 		&& !is_sp(str[args.x + 1]) && str[args.x + 1] != '$')
-		return (1);
+		while (x >= 0)
+		{
+			
+
+			if (x >= 0 && (str[x] == '<' ||  str[x] == '>'))
+				return (0);
+			if(!is_sp(str[x]))
+			{
+				return (1);
+			}
+			x--;
+		}
+	
 	return (0);
 }
-
-char	*change_var(char *str, char **envp, int *err)
+// $arg < $arg < $ARG $arg
+char	*change_var(char *str, char **envp)
 {
 	t_args_var	args;
 
 	args.q.in_double_quote = 0;
 	args.q.in_single_quote = 0;
-	args.re = malloc(change_var_count(str, envp) + 1);
+	args.re = malloc (change_var_count(str, envp) + 1);
 	args.x = -1;
 	args.i = 0;
 	while (str[++args.x])
 	{
 		args.l = chacke_q(str[args.x], &args.q);
-		if (!is_her(str, args.x) && !args.l && (str[args.x] == '<'
-				|| str[args.x] == '>'))
-			*err = check_ambiguous(check_erroe_var(str, args.x), envp, *err);
+		// if (!is_her(str, args.x) && !args.l 
+		// 	&& (str[args.x] == '<' || str[args.x] == '>'))
+		// 	*err = check_ambiguous(check_erroe_var(str, args.x), envp, *err);
 		if (check_and_her_var(str, args.x, args))
 		{
 			if (str[args.x + 1] == '?')
-				change_var_one(str, &args.x, args.re, &args.i);
+				change_var_one(&args.x, args.re, &args.i);
 			else if (!(is_sp(str[args.x + 1]) || str[args.x + 1] == '\''
 					|| str[args.x + 1] == '"'))
 				change_var_tow(&args, str, envp);

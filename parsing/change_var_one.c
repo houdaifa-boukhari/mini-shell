@@ -6,20 +6,18 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/02 10:11:22 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
 
 // $? g_exit_status
-static int	change_var_count_one(char *ss, int *x)
+static int	change_var_count_one(int *x)
 {
 	char	*str;
 	int		i;
 
-	if (chack_p(ss, *x))
-		return (1);
 	str = ft_itoa(g_exit_status);
 	i = ft_strlen(str);
 	(*x)++;
@@ -55,10 +53,10 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 	j = 0;
 	while (var && var[j])
 	{
-		if (check_doub(var) && l == 2 && (var[j] == '"'))
+		if (check_doub(var)&& l==2 && (var[j] == '"'))
 			i++;
-		else if (!l && (var[j] == '\'' || var[j] == '<' || var[j] == '>'
-				|| var[j] == '|' || var[j] == '"'))
+		else if (!l && (var[j] == '\'' || var[j] == '<' 
+				|| var[j] == '>' || var[j] == '|' || var[j] == '"'))
 			i += 2;
 		i++;
 		j++;
@@ -67,24 +65,36 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 }
 
 // cat << $USER stoop in $USER not value of $USER
-static int	count_check_and_her_var(char *str, int x, int j, int l)
+static int	count_check_and_her_var(char *str, int x, int j, int l )
 {
-	int	ll;
-
-	ll = 0;
-	while (x >= 0)
+	if(x > 0)
+		x--;
+	if(x>0 &&str[x] != '<' &&  str[x] != '>')
 	{
-		while (x >= 0 && (is_sp(str[x])))
+		while (x>=0)
 		{
+			if(is_sp(str[x]))
+			{
+				break ;
+			}
 			x--;
 		}
-		if (x >= 0 && str[x] == '<' && x - 1 >= 0 && str[x - 1] == '<')
-			ll = 1;
-		x--;
+		
 	}
-	if (!ll && str[j] == '$' && l != 1 && str[j + 1] && !is_sp(str[j + 1])
-		&& str[j + 1] != '$')
-		return (1);
+	if ( str[j] == '$' && l != 1 && str[j + 1]
+		&& !is_sp(str[j + 1]) && str[j + 1] != '$')
+		while (x >= 0)
+		{
+			
+			if ((str[x] == '<' ||  str[x] == '>'))
+				return (0);
+			if(!is_sp(str[x]))
+			{
+				return (1);
+			}
+			x--;
+		}
+		
 	return (0);
 }
 
@@ -105,7 +115,7 @@ int	change_var_count(char *str, char **envp)
 		if (count_check_and_her_var(str, x, x, l))
 		{
 			if (str[x + 1] == '?')
-				i = i + change_var_count_one(str, &x);
+				i = i + change_var_count_one(&x);
 			else if (!(is_sp(str[x + 1]) || str[x + 1] == '\''
 					|| str[x + 1] == '"'))
 				i = i + (change_var_count_tow(envp, l, &x, str));

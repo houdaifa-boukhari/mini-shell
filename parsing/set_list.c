@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 20:59:58 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/02 10:07:17 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:37:33 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_double_str(char **str)
 	str = (NULL);
 }
 
-t_args_n	*ft_lstnew_one(char **str)
+t_args_n	*ft_lstnew_one(char **str,char **envp)
 {
 	t_args_n	*new_node;
 
@@ -35,8 +35,9 @@ t_args_n	*ft_lstnew_one(char **str)
 	if (!new_node)
 		return (NULL);
 	new_node->arguments = get_args(str);
-	new_node->inp = get_inp(str);
-	new_node->out = get_out(str);
+	new_node->files = get_files(str,envp);
+	new_node->inp =  get_inp(new_node->files);
+	new_node->out = get_out(new_node->files);
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -73,7 +74,8 @@ t_args_n	*initialization_list(char *line, char **envp)
 	x = 0;
 	if (!line || !line[0])
 		return (NULL);
-	change_var_str = change_var(line, envp, &x);
+	change_var_str = change_var(line, envp);
+	// printf("change var=%s\n",change_var_str);
 	if (check_errors(line, x))
 		return (free(change_var_str), NULL);
 	split_p = ft_split_pip(change_var_str, '|');
@@ -82,7 +84,13 @@ t_args_n	*initialization_list(char *line, char **envp)
 	while (split_p[x])
 	{
 		str = split_part(set_speece(split_p[x]));
-		ft_lstadd_backk(&list, ft_lstnew_one(str));
+		// int j =0;
+		// while (str[j])
+		// {
+		// 	printf("str[j]=%s\n",str[j++]);
+		// }
+		
+		ft_lstadd_backk(&list, ft_lstnew_one(str,envp));
 		free_double_str(str);
 		x++;
 	}

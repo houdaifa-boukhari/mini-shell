@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/03 10:57:14 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:51:43 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 {
 	char	*path;
 
+	if (!opens_files((*cmd)->files))
+		return ;
 	if (is_builtin(cmd, (*cmd)->arguments, env, fd))
 		return ;
 	fd.pid = fork();
@@ -89,6 +91,8 @@ void	execute_child(t_args_n *cmd, t_args_n **cmds, t_env *env, t_fd fd)
 	char	*path;
 
 	path = NULL;
+	if (!opens_files(cmd->files))
+		exit(g_exit_status);
 	controle_fd(cmd, cmds, fd);
 	if (is_builtin(cmds, cmd->arguments, env, fd))
 		exit(g_exit_status);

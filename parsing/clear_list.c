@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:37:16 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:22:47 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 12:36:03 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ void	clear_list(t_args_n **lst)
 			free((*lst)->arguments[i++]);
 		free((*lst)->arguments);
 		i = 0;
-		while ((*lst)->inp[i].inp)
-			free((*lst)->inp[i++].inp);
-		free((*lst)->inp);
+		while ((*lst)->files[i].last)
+			free((*lst)->files[i++].file);
+		free((*lst)->files);
 		i = 0;
-		while ((*lst)->out[i].out)
-			free((*lst)->out[i++].out);
-		free((*lst)->out);
 		free(*lst);
 		*lst = nexttte;
 	}

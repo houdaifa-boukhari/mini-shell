@@ -6,11 +6,12 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 13:37:51 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/08/27 09:22:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:56:32 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
+
 
 typedef struct s_wildcards_arg
 {
@@ -42,8 +43,6 @@ static int	is_equal_one(char *str, char *name, t_wildcards_arg *args)
 {
 	char	*ss;
 
-	if (last_wildcards(str, args->x))
-		args->i = -1;
 	if (!args->l && str[args->x] == '*' && args->x - 1 >= 0 && args->i != -1)
 	{
 		ss = whithout_q(chech_be(str, args->x), 1);
@@ -60,6 +59,8 @@ static int	is_equal_one(char *str, char *name, t_wildcards_arg *args)
 			return (free(ss), 0);
 		free(ss);
 	}
+	if (!args->l && last_wildcards(str, args->x) == 2)
+		args->i = -1;
 	return (1);
 }
 
@@ -82,6 +83,44 @@ static int	is_equal(char *str, char *name)
 	return (1);
 }
 
+int	ft_strcmpp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	while (s1[i] != '\0' && s1[i] == s2[i])
+		i++;
+	if (s1[i] == s2[i])
+		return (0);
+	else
+		return (s1[i] - s2[i]);
+}
+static void	swapp(int ac, char **av)
+{
+	char	*c;
+	int		x;
+	int		xx;
+
+	x = 0;
+	while (x < ac)
+	{
+		xx = x + 1;
+		while (av[xx])
+		{
+			if (ft_strcmpp(av[x], av[xx]) > 0)
+			{
+				c = av[x];
+				av[x] = av[xx];
+				av[xx] = c;
+			}
+			xx++;
+		}
+		x++;
+	}
+}
+
 char	**get_name_of_files(char *str)
 {
 	struct dirent	*entry;
@@ -98,11 +137,12 @@ char	**get_name_of_files(char *str)
 		if (entry && entry->d_name[0] != '.' && is_equal(str, entry->d_name))
 		{
 			str_j = strjoin_parsing(str_j, entry->d_name);
-			str_j = strjoin_parsing(str_j, " ");
+			str_j = strjoin_parsing(str_j, "/");
 		}
 		entry = readdir(dp);
 	}
-	re = ft_split(str_j, ' ');
+	re = ft_split(str_j, '/');
+	swapp(ft_strlen_doubl(re),re);
 	free(str_j);
 	closedir(dp);
 	return (re);
