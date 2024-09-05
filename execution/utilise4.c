@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 12:29:46 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/05 13:51:33 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:31:55 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,45 +96,4 @@ void	free_env(t_envp **env)
 	}
 	*env = NULL;
 	env = NULL;
-}
-
-//> 1
-//>> 2
-//< 3
-//<< 4
- 
-bool	opens_files(t_files *file)
-{
-	int	i;
-	int	fd;
-
-	i = 0;
-	fd = -1;
-	while (file[i].last)
-	{
-		if (file[i].is_am)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(file[i].file, STDERR_FILENO);
-			ft_putendl_fd(ERR_AMBG, STDERR_FILENO);
-			return (false);
-		}
-		if (file[i].typ == 1 && !file[i].is_am)
-			fd = open(file[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else if (file[i].typ == 2)
-			fd = open(file[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (file[i].typ == 3)
-			fd = open(file[i].file, O_RDONLY);
-		if (fd < 0)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			if (!ft_strcmp(file[i].file, ""))
-				ft_putstr_fd(": ", STDERR_FILENO);
-			perror(file[i].file);
-			return (false);
-		}
-		close(fd);
-		i++;
-	}
-	return (true);
 }

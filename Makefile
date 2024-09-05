@@ -3,7 +3,7 @@ HEADER = mini_shell.h
 SRC = ./execution/env.c ./execution/execution.c ./execution/tools_list.c \
 	./execution/utilise_blt1.c ./execution/utilise2.c ./execution/utilise3.c ./execution/herdoc.c \
 	./execution/utilise_blt.c ./execution/utilise.c ./execution/utilise1.c ./execution/utilise4.c\
-	./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c \
+	./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c ./execution/utilise5.c \
 	./parsing/change_var_ulit.c  ./parsing/set_speace_line.c ./parsing/get_in_out.c \
 	./parsing/change_var.c ./parsing/check_errors.c ./parsing/get_args2.c ./parsing/get_out.c \
 	./parsing/change_var_one.c ./parsing/clear_list.c ./parsing/get_files.c ./parsing/set_list.c \
@@ -11,9 +11,9 @@ SRC = ./execution/env.c ./execution/execution.c ./execution/tools_list.c \
 	./parsing/wildcards.c ./parsing/wildcards_one.c ./parsing/wildcards_tow.c ./parsing/quote.c
 
 OBJS = $(SRC:.c=.o)
-READLINE = -lreadline -L/goinfre/hel-bouk/homebrew/opt/readline/lib
+READLINE = -lreadline -L/goinfre/$(USER)/homebrew/opt/readline/lib
 CFLAGS = -Wall -Wextra -Werror
-OREAD =  -I/goinfre/hel-bouk/homebrew/opt/readline/include
+OREAD =  -I/goinfre/$(USER)/homebrew/opt/readline/include
 LIBS =  -L./libft -lft
 RM = rm -f
 CC = cc
