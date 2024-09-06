@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:33:20 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/03 11:00:59 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:13:51 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ t_envp	*search_env(t_envp *env, char *str)
 	s1 = ft_strdup(str);
 	s1[find_char(str, '=')] = '\0';
 	len_str = ft_strlen(s1);
+	if (s1[len_str - 1] == '+')
+		len_str--;
 	while (env)
 	{
-		if (ft_strncmp(env->env, s1, len_str) == 0 && env->env[len_str] == '=')
+		if (ft_strncmp(env->env, s1, len_str) == 0 && (env->env[len_str] == '='
+				|| !env->env[len_str]))
 			return (free(s1), env);
 		env = env->next;
 	}
@@ -103,14 +106,14 @@ bool	adding_env(t_envp **env, char *str)
 		ft_putstr_fd("minishell: export: '", 2);
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
-		status = false;
+		return (false);
 	}
 	else
 	{
 		pos = search_env(*env, str);
 		if (pos)
 		{
-			if (!valid_add(str))
+			if (!valid_add(str) || !check_join(pos, &str))
 				return (status);
 			free(pos->env);
 			pos->env = ft_strdup(str);

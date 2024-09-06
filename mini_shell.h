@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 12:08:11 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:45:36 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int					count_cmds(t_args_n *lst);
 bool				opens_files(t_files *file);
 void				print_export(t_envp *envp);
 int					*allocation_array(int size);
+bool				check_join(t_envp *pos, char **str);
 bool				check_is_dir(char *cmd, char *path);
 void				unset(t_envp **env, t_envp *pos);
 bool				error_path(char *msg, char *cmd, bool check);

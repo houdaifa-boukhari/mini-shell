@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilise1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 12:05:51 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/09/06 17:48:30 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ bool	valid_export(char *str)
 		return (false);
 	while (str[i] && str[i] != '=')
 	{
+		if (str[i] == '+' && str[i + 1] && str[i + 1] == '=')
+			return (true);
 		if ((!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '_'))
 			return (false);
 		i++;
