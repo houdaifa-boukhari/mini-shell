@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 10:15:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 18:36:54 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*get_line(bool *ctl_d)
 {
 	char	*line;
 
+	*ctl_d = false;
 	if (isatty(STDIN_FILENO))
 	{
 		line = readline("minishell$ ");
