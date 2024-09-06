@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_tow.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:05:06 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:05:08 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,28 @@ int	ft_strlen_doubl(char **str)
 		x++;
 	}
 	return (x);
+}
+
+void	swapp(int ac, char **av)
+{
+	char	*c;
+	int		x;
+	int		xx;
+
+	x = 0;
+	while (x < ac)
+	{
+		xx = x + 1;
+		while (av[xx])
+		{
+			if (ft_strcmp(av[x], av[xx]) > 0)
+			{
+				c = av[x];
+				av[x] = av[xx];
+				av[xx] = c;
+			}
+			xx++;
+		}
+		x++;
+	}
 }

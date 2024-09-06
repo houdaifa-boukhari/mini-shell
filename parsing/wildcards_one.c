@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   wildcards_one.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:52:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:05:02 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../mini_shell.h"
 

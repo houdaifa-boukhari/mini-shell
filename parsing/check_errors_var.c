@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors_var.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 19:21:41 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:24:01 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ static int	check_ambiguous_one(char *str, char **envp, t_args_var_err *args)
 
 int	check_ambiguous(char *str, char **envp)
 {
-	// printf("%s\n",str);
 	t_args_var_err	args;
 
 	if (!str)

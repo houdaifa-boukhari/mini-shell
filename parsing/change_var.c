@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 09:46:48 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 11:23:34 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,40 +69,32 @@ static void	change_var_tow(t_args_var *args, char *str, char **envp)
 // cat << $USER stoop in $USER not value of $USER
 static int	check_and_her_var(char *str, int x, t_args_var args)
 {
-	
-	// printf("str_var=%s,x=%d\n",str,x);
-
-	if(x > 0)
+	if (x > 0)
 		x--;
-	if(x>0 &&str[x] != '<' &&  str[x] != '>')
+	if (x > 0 && str[x] != '<' && str[x] != '>')
 	{
-		while (x>=0)
-		{
-			if(is_sp(str[x]))
-			{
-				break ;
-			}
-			x--;
-		}
-		
-	}
-	if ( str[args.x] == '$' && args.l != 1 && str[args.x + 1]
-		&& !is_sp(str[args.x + 1]) && str[args.x + 1] != '$')
 		while (x >= 0)
 		{
-			
-
-			if (!args.l && x >= 0 && (str[x] == '<' ||  str[x] == '>'))
-				return (0);
-			if(!is_sp(str[x]))
-			{
-				return (1);
-			}
+			if (is_sp(str[x]))
+				break ;
 			x--;
 		}
-	
+	}
+	if (str[args.x] == '$' && args.l != 1 && str[args.x + 1]
+		&& !is_sp(str[args.x + 1]) && str[args.x + 1] != '$')
+	{
+		while (x >= 0)
+		{
+			if (!args.l && x >= 0 && (str[x] == '<' || str[x] == '>'))
+				return (0);
+			if (!is_sp(str[x]))
+				return (1);
+			x--;
+		}
+	}
 	return (0);
 }
+
 // $arg < $arg < $ARG $arg
 char	*change_var(char *str, char **envp)
 {
@@ -116,9 +108,6 @@ char	*change_var(char *str, char **envp)
 	while (str[++args.x])
 	{
 		args.l = chacke_q(str[args.x], &args.q);
-		// if (!is_her(str, args.x) && !args.l 
-		// 	&& (str[args.x] == '<' || str[args.x] == '>'))
-		// 	*err = check_ambiguous(check_erroe_var(str, args.x), envp, *err);
 		if (check_and_her_var(str, args.x, args))
 		{
 			if (str[args.x + 1] == '?')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_shell.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 10:47:26 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:08:11 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ extern int			g_exit_status;
 	"minishell: syntax error near unexpected token \
 `newline'\n"
 # define ERR_AMBG ": ambiguous redirect"
+
 typedef struct s_envp
 {
 	char			*env;
@@ -54,7 +55,6 @@ typedef struct s_quote
 
 }					t_quote;
 
-
 typedef struct s_args_var
 {
 	int				x;
@@ -66,12 +66,12 @@ typedef struct s_args_var
 
 typedef struct s_files
 {
-	char	*file;
-	int		typ;
-	char	*last;
-	bool	is_q;
-	bool	is_am;
-}	t_files;
+	char			*file;
+	int				typ;
+	char			*last;
+	bool			is_q;
+	bool			is_am;
+}					t_files;
 
 typedef struct s_inp
 {
@@ -162,49 +162,49 @@ bool				is_builtin(t_args_n **args, char **cmd, t_env *env,
 
 /*parsing functions*/
 
-char		**ft_split_pip(char *s, char c);
-char		**split_part(char *s);
-char		*set_speece( char *str);
+char				**ft_split_pip(char *s, char c);
+char				**split_part(char *s);
+char				*set_speece(char *str);
 
-char		*change_var(char *str, char **envp);
-int			change_var_count(char *str, char **envp);
-char		*get_name_var(char *str, int *j);
-char		*search_in_env(char **envp, char *str);
+char				*change_var(char *str, char **envp);
+int					change_var_count(char *str, char **envp);
+char				*get_name_var(char *str, int *j);
+char				*search_in_env(char **envp, char *str);
 
-char		**get_args(char **str);
-t_files		*get_files(char **str,char **envp);
+char				**get_args(char **str);
+t_files				*get_files(char **str, char **envp);
 
-t_args_n	*initialization_list(char *line, char **envp);
-void		ft_lstadd_backk(t_args_n **lst, t_args_n *new);
-t_args_n	*ft_lstnew_one(char **str,char **envp);
-void		ft_lstiterr(t_args_n *lst);
-void		clear_list(t_args_n **lst);
+t_args_n			*initialization_list(char *line, char **envp);
+void				ft_lstadd_backk(t_args_n **lst, t_args_n *new);
+t_args_n			*ft_lstnew_one(char **str, char **envp);
+void				ft_lstiterr(t_args_n *lst);
+void				clear_list(t_args_n **lst);
 
-char		*whithout_q(char *str,int is_wildcardss);
+char				*whithout_q(char *str, int is_wildcardss);
 
-int			check_errors(char *str, int err);
-int			chacke_q(char c, t_quote *q);
-int			is_sp(char c);
+int					check_errors(char *str, int err);
+int					chacke_q(char c, t_quote *q);
+int					is_sp(char c);
 
-int			check_ambiguous(char *str, char **envp);
-char		*check_erroe_var(char *str, int x );
-char		*strjoin_parsing(char *start, char *buff);
-void		free_double_str(char **str);
+int					check_ambiguous(char *str, char **envp);
+char				*check_erroe_var(char *str, int x);
+char				*strjoin_parsing(char *start, char *buff);
+void				free_double_str(char **str);
 
-int check_wildcards(char *str);
-char **get_name_of_files(char *str );
-int	last_wildcards(char *str, int x);
-char	*chech_be(char *str, int x);
-char	*check_aft(char *str, int x, int xx);
-int	ch_f(char *str, char *name, int *i);
-int	ch_m(char *str, char *name, int *i);
-int	ch_l(char *str, char *name);
-int	ft_strlen_doubl(char **str);
+int					check_wildcards(char *str);
+char				**get_name_of_files(char *str);
+int					last_wildcards(char *str, int x);
+char				*chech_be(char *str, int x);
+char				*check_aft(char *str, int x, int xx);
+int					ch_f(char *str, char *name, int *i);
+int					ch_m(char *str, char *name, int *i);
+int					ch_l(char *str, char *name);
+int					ft_strlen_doubl(char **str);
 
-
-int check_doub(char *str);
-void	change_var_tow_one(t_args_var *args, char *var, int j);
-t_out *get_out(t_files *files);
-t_inp *get_inp(t_files *files);
+int					check_doub(char *str);
+void				change_var_tow_one(t_args_var *args, char *var, int j);
+t_out				*get_out(t_files *files);
+t_inp				*get_inp(t_files *files);
+void				swapp(int ac, char **av);
 
 #endif
