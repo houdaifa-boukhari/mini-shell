@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_one.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 09:47:30 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:03:41 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 	j = 0;
 	while (var && var[j])
 	{
-		if (check_doub(var)&& l==2 && (var[j] == '"'))
+		if (check_doub(var) && l == 2 && (var[j] == '"'))
 			i++;
 		else if (!l && (var[j] == '\'' || var[j] == '<' 
 				|| var[j] == '>' || var[j] == '|' || var[j] == '"'))
@@ -67,34 +67,29 @@ static int	change_var_count_tow(char **envp, int l, int *x, char *str)
 // cat << $USER stoop in $USER not value of $USER
 static int	count_check_and_her_var(char *str, int x, int j, int l )
 {
-	if(x > 0)
+	if (x > 0)
 		x--;
-	if(x>0 &&str[x] != '<' &&  str[x] != '>')
+	if (x > 0 && str[x] != '<' && str[x] != '>')
 	{
-		while (x>=0)
-		{
-			if(is_sp(str[x]))
-			{
-				break ;
-			}
-			x--;
-		}
-		
-	}
-	if ( str[j] == '$' && l != 1 && str[j + 1]
-		&& !is_sp(str[j + 1]) && str[j + 1] != '$')
 		while (x >= 0)
 		{
-			
-			if (!l && (str[x] == '<' ||  str[x] == '>'))
-				return (0);
-			if(!is_sp(str[x]))
-			{
-				return (1);
-			}
+			if (is_sp(str[x]))
+				break ;
 			x--;
 		}
-		
+	}
+	if (str[j] == '$' && l != 1 && str[j + 1]
+		&& !is_sp(str[j + 1]) && str[j + 1] != '$')
+	{
+		while (x >= 0)
+		{
+			if (!l && (str[x] == '<' || str[x] == '>'))
+				return (0);
+			if (!is_sp(str[x]))
+				return (1);
+			x--;
+		}
+	}
 	return (0);
 }
 

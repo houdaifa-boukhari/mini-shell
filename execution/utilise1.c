@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilise1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 18:09:41 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 10:20:30 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:05:51 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_error(t_args_n **cmd, char *msg, int status)
 	exit(status);
 }
 
-void		remove_file(t_inp *inp)
+void	remove_file(t_inp *inp)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_args2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:50:38 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:04:20 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static int	get_args_count_if(char **str, int x)
 {
 	if (str[x + 1] && (ft_strncmp(str[x], "<", 2) == 0
-		|| ft_strncmp(str[x], ">", 2) == 0
-		|| ft_strncmp(str[x], "<<", 3) == 0
-		|| ft_strncmp(str[x], ">>", 3) == 0))
+			|| ft_strncmp(str[x], ">", 2) == 0
+			|| ft_strncmp(str[x], "<<", 3) == 0
+			|| ft_strncmp(str[x], ">>", 3) == 0))
 		return (1);
 	return (0);
 }
@@ -89,7 +89,7 @@ char	**get_args(char **str)
 		}
 		else
 			re[c++] = whithout_q(str[x], 0);
-		if(str[x])
+		if (str[x])
 			x++;
 	}
 	re[c] = NULL;

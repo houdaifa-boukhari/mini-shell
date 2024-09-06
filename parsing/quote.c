@@ -6,7 +6,7 @@
 /*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 16:22:36 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 11:17:53 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/09/06 11:59:48 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static int	whithout_q_count(char *str, int x)
 
 char	*whithout_q(char *str, int is_wildcardss)
 {
-	char *re;
-	int x;
-	int c;
-	int l;
-	t_quote q;
+	char	*re;
+	int		x;
+	int		c;
+	int		l;
+	t_quote	q;
 
 	q.in_double_quote = 0;
 	q.in_single_quote = 0;
