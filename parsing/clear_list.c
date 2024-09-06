@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:37:16 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 09:56:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:12:50 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	clear_in_ou(t_args_n **lst)
 {
 	int	i;
 
-	i = 0;
+	free((*lst)->inp);
+	(*lst)->inp = NULL;
+	free((*lst)->out);
+	(*lst)->out = NULL;
 	while ((*lst)->files[i].last)
 	{
 		free((*lst)->files[i].file);
@@ -27,17 +30,8 @@ void	clear_in_ou(t_args_n **lst)
 	}
 	free((*lst)->files);
 	(*lst)->files = NULL;
-	i = 0;
-	while ((*lst)->inp[i].inp)
-		free((*lst)->inp[i++].inp);
-	free((*lst)->inp);
-	(*lst)->inp = NULL;
-	i = 0;
-	while ((*lst)->out[i].out)
-		free((*lst)->out[i++].out);
-	free((*lst)->out);
-	(*lst)->out = NULL;
 }
+
 void	clear_list(t_args_n **lst)
 {
 	t_args_n	*nexttte;
