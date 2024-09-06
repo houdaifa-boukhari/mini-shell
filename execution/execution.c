@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 10:42:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/05 16:35:42 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 12:35:31 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		|| is_builtin(cmd, (*cmd)->arguments, env, fd))
 		return ;
 	fd.pid = fork();
-	error_fork(fd);
 	if (fd.pid == 0)
 	{
 		if (managing_input((*cmd)->inp, &fd, 2, NULL))
@@ -37,8 +36,7 @@ void	execution(t_args_n **cmd, t_env *env, t_fd fd)
 		execve(path, (*cmd)->arguments, env->envp);
 		exit(EXIT_FAILURE);
 	}
-	if (fd.pid > 0)
-		wait_child(fd);
+	wait_child(fd);
 }
 
 void	wait_children(int *fd, int *pids, int size, int i)
