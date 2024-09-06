@@ -6,7 +6,7 @@
 /*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 12:03:41 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/09/06 12:48:21 by zbakkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,14 @@ static int	count_check_and_her_var(char *str, int x, int j, int l )
 	{
 		while (x >= 0)
 		{
-			if (!l && (str[x] == '<' || str[x] == '>'))
+			if ((!l || (x > 0 && str[x - 1] == '<')) 
+				&& (str[x] == '<' || str[x] == '>'))
 				return (0);
 			if (!is_sp(str[x]))
 				return (1);
 			x--;
 		}
+		return (1);
 	}
 	return (0);
 }
