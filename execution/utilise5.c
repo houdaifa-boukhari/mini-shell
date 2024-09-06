@@ -41,7 +41,8 @@ bool	opens_files(t_files *file)
 			fd = open(file[i].file, O_RDONLY);
 		if (fd == -1)
 			return (error_files(file[i].file), g_exit_status = 1, false);
-		close(fd);
+		if (fd >= 0)
+			close(fd);
 	}
 	return (true);
 }
