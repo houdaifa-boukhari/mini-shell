@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:19:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 10:27:14 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:44:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,12 @@ t_inp *get_inp(t_files *files)
     in = malloc((x+1)* sizeof(t_inp));
     i =0;
     x =0;
-    initilize_inp(&(in[x]));
     while (files[i].last)
     {
         if(files[i].typ== 4 || files[i].typ== 3)
         {
             initilize_inp(&(in[x]));
-            in[x].inp = files[i].file;
+            in[x].inp = ft_strdup(files[i].file);
             if(files[i].typ== 4)
                 in[x].is_h = true;
             in[x].is_am = files[i].is_am;
@@ -52,6 +51,7 @@ t_inp *get_inp(t_files *files)
         }
         i++;
     }
+    initilize_inp(&(in[x]));
     return (in);
 }
 
@@ -77,7 +77,7 @@ t_out *get_out(t_files *files)
     {
         if(files[i].typ== 1 || files[i].typ== 2)
         {
-            out[x].out = files[i].file;
+            out[x].out = ft_strdup(files[i].file);
             if(files[i].typ== 2)
                 out[x].is_a = true;
             out[x].is_am = files[i].is_am;

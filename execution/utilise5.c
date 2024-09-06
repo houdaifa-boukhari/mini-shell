@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:31:27 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/05 16:39:13 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:54:34 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	opens_files(t_files *file)
 	int	fd;
 
 	i = -1;
-	fd = -1;
+	fd = -2;
 	while (file[++i].last)
 	{
 		if (file[i].is_am)
@@ -35,11 +35,11 @@ bool	opens_files(t_files *file)
 		}
 		if (file[i].typ == 1 && !file[i].is_am)
 			fd = open(file[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else if (file[i].typ == 2)
+		else if (file[i].typ == 2 && !file[i].is_am)
 			fd = open(file[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (file[i].typ == 3)
+		else if (file[i].typ == 3 && !file[i].is_am)
 			fd = open(file[i].file, O_RDONLY);
-		if (fd < 0)
+		if (fd == -1)
 			return (error_files(file[i].file), g_exit_status = 1 ,false);
 		close(fd);
 	}

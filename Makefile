@@ -17,7 +17,7 @@ OREAD =  -I/goinfre/$(USER)/homebrew/opt/readline/include
 LIBS =  -L./libft -lft
 RM = rm -f
 CC = cc
-Debugs = -fsanitize=address -g
+Debugs = -g -fsanitize=address
 
 all: libft $(NAME)
 
@@ -26,9 +26,9 @@ libft:
 	@make bonus -C ./libft
 
 $(NAME) : $(OBJS)
-	@$(CC)  $(CFLAGS) $(LIBS) $(READLINE) $(OBJS) -o $(NAME)
+	@$(CC)  $(CFLAGS) $(LIBS) $(Debugs) $(READLINE) $(OBJS) -o $(NAME)
 %.o : %.c $(HEADER) 
-	$(CC) $(CFLAGS) $(OREAD) -c $< -o $@
+	$(CC) $(CFLAGS) $(Debugs) $(OREAD) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJS)
