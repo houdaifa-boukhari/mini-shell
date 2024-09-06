@@ -59,7 +59,7 @@ static void	get_files_v(t_files	*file, int *c, int typ, char *str,char **envp)
 	else
 		file[*c].is_am = false;
 	if(typ!=4 && !check_ambiguous(str,envp))
-		file[*c].file = whithout_q(change_var(str,envp),0);
+		file[*c].file = whithout_q(change_var(str,envp),1);
 	else
 		file[*c].file = whithout_q(str,0);
 

@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:31:32 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:47:30 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	count_check_and_her_var(char *str, int x, int j, int l )
 		while (x >= 0)
 		{
 			
-			if ((str[x] == '<' ||  str[x] == '>'))
+			if (!l && (str[x] == '<' ||  str[x] == '>'))
 				return (0);
 			if(!is_sp(str[x]))
 			{

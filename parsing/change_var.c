@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:32:49 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:46:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	check_and_her_var(char *str, int x, t_args_var args)
 		{
 			
 
-			if (x >= 0 && (str[x] == '<' ||  str[x] == '>'))
+			if (!args.l && x >= 0 && (str[x] == '<' ||  str[x] == '>'))
 				return (0);
 			if(!is_sp(str[x]))
 			{

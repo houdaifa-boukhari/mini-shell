@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:41:54 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/08/27 09:17:56 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:44:45 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	read_line(t_fd fd, t_env *env)
 			execution(&cmd, env, fd);
 		else if (cmd)
 			execut_(&cmd, env, fd);
+		system("leaks -q minishell");
 	}
 }
 
