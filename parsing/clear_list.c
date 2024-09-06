@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 21:37:16 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 09:45:52 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 09:56:03 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	clear_list(t_args_n **lst)
 	t_args_n	*nexttte;
 	int			i;
 
-	if (!lst)
+	if (!lst || !*lst)
 		return ;
 	while (*lst)
 	{
