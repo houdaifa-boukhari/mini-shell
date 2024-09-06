@@ -6,11 +6,19 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 10:19:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/05 12:39:51 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/06 10:27:14 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini_shell.h"
+
+void    initilize_inp(t_inp *inp)
+{
+    inp->inp = NULL;
+	inp->is_h = false;
+	inp->is_q = false;
+	inp->is_am = false;
+}
 
 t_inp *get_inp(t_files *files)
 {
@@ -29,10 +37,12 @@ t_inp *get_inp(t_files *files)
     in = malloc((x+1)* sizeof(t_inp));
     i =0;
     x =0;
+    initilize_inp(&(in[x]));
     while (files[i].last)
     {
         if(files[i].typ== 4 || files[i].typ== 3)
         {
+            initilize_inp(&(in[x]));
             in[x].inp = files[i].file;
             if(files[i].typ== 4)
                 in[x].is_h = true;
@@ -42,10 +52,6 @@ t_inp *get_inp(t_files *files)
         }
         i++;
     }
-    in[x].inp = NULL;
-    in[x].is_am =false;
-    in[x].is_h =false;
-    in[x].is_q=false;
     return (in);
 }
 
