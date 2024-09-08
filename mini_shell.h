@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 13:10:44 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 17:45:36 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/08 10:18:21 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ typedef struct s_fd
 	int				pid;
 }					t_fd;
 
-bool				error_fork(t_fd fd);
 void				error_files(char *file);
 void				give_error(t_args_n *cmd);
 int					check_line(char *str);
@@ -129,6 +128,7 @@ bool				check_is_dir(char *cmd, char *path);
 void				unset(t_envp **env, t_envp *pos);
 bool				error_path(char *msg, char *cmd, bool check);
 bool				run_allherdoc(t_args_n *cmd, t_env *env);
+bool				error_fork(t_fd fd, int *pipe, int *pids, int size);
 bool				managing_herdoc(char **delim, t_env *env, bool check_q);
 char				**assign_envp(t_envp *envp);
 char				*get_path(char *cmd, char **envp);

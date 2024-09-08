@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:01:33 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 10:45:41 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2024/09/08 10:19:30 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,25 @@ void	ctl_error(char *msg, bool *check)
 	*check = false;
 }
 
-bool	error_fork(t_fd fd)
+bool	error_fork(t_fd fd, int *pipe, int *pids, int size)
 {
+	int	i;
+
+	i = 0;
 	if (fd.pid < 0)
 	{
+		while (i < size)
+		{
+			if (pipe[i] != 0)
+				close(pipe[i]);
+			i++;
+		}
 		close(fd.fd_p[0]);
 		close(fd.fd_p[1]);
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		perror("fork");
 		g_exit_status = 1;
-		return (true);
+		return (free(pipe), free(pids), true);
 	}
 	return (false);
 }

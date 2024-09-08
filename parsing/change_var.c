@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 15:45:21 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 12:47:41 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/09/08 10:27:23 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,8 @@ static int	check_and_her_var(char *str, int x, t_args_var args)
 			if ((!args.l || (x > 0 && str[x - 1] == '<'))
 				&& (str[x] == '<' || str[x] == '>'))
 				return (0);
-			if (!is_sp(str[x]))
+			if (!is_sp(str[x--]))
 				return (1);
-			x--;
 		}
 		return (1);
 	}

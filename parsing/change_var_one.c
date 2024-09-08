@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   change_var_one.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbakkas <zouhirbakkas@gmail.com>           +#+  +:+       +#+        */
+/*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 20:27:17 by zbakkas           #+#    #+#             */
-/*   Updated: 2024/09/06 12:48:21 by zbakkas          ###   ########.fr       */
+/*   Updated: 2024/09/08 10:27:16 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,8 @@ static int	count_check_and_her_var(char *str, int x, int j, int l )
 			if ((!l || (x > 0 && str[x - 1] == '<')) 
 				&& (str[x] == '<' || str[x] == '>'))
 				return (0);
-			if (!is_sp(str[x]))
+			if (!is_sp(str[x--]))
 				return (1);
-			x--;
 		}
 		return (1);
 	}
