@@ -6,7 +6,7 @@
 /*   By: hel-bouk <hel-bouk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 16:31:27 by hel-bouk          #+#    #+#             */
-/*   Updated: 2024/09/06 19:20:03 by hel-bouk         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:58:48 by hel-bouk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ bool	opens_files(t_files *file)
 			return (g_exit_status = 1, false);
 		}
 		if (file[i].typ == 1 && !file[i].is_am)
-			fd = open(file[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		else if (file[i].typ == 2 && !file[i].is_am)
 			fd = open(file[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (file[i].typ == 2 && !file[i].is_am)
+			fd = open(file[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else if (file[i].typ == 3 && !file[i].is_am)
 			fd = open(file[i].file, O_RDONLY);
 		if (fd == -1)
